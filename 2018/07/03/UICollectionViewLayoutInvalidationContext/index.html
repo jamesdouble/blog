@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
-<head><meta name="generator" content="Hexo 3.9.0">
-    <meta charset="utf-8">
-<title>UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例 - JamesDouble iOS</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
 
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例 - JamesDouble iOS</title>
 
 
     <meta name="description" content="起步基础  UICollectionViewLayout 基本使用  UICollectionViewLayoutAttributes    Attributes赋值这里泛指了以下两个主函数，就不在赘述两个功能，以及 UICollectionViewLayoutAttributes 需处理的变量。 1234567891011class AutoSizingLayout: UICollectionV">
@@ -15,25 +18,14 @@
 <meta property="og:site_name" content="JamesDouble iOS">
 <meta property="og:description" content="起步基础  UICollectionViewLayout 基本使用  UICollectionViewLayoutAttributes    Attributes赋值这里泛指了以下两个主函数，就不在赘述两个功能，以及 UICollectionViewLayoutAttributes 需处理的变量。 1234567891011class AutoSizingLayout: UICollectionV">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/29/1644abf889a0a4e5?w=1874&h=276&f=png&s=7674">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/29/1644b33d5e125d05?w=298&h=124&f=png&s=18062">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/29/1644b00d4cc60c26?w=2330&h=526&f=png&s=166850">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/29/1644b3a62bce6591?w=1862&h=490&f=png&s=134123">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/29/1644b5aca219b133?w=409&h=123&f=png&s=23355">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/16458c6bd0aa6cfd?w=1370&h=458&f=png&s=71437">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/16459904878e9412?w=2262&h=684&f=png&s=289052">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/16458eb0a0593662?w=381&h=102&f=png&s=17633">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/16459839ad61e2f3?w=876&h=274&f=png&s=50249">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/1645986385eacdf8?w=623&h=223&f=png&s=40793">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/164599692ac94274?w=1024&h=706&f=png&s=143759">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/16459b1f3e5476d1?w=912&h=144&f=png&s=31330">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/16459c0666eb36a9?w=366&h=125&f=png&s=20483">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/2/16459bbfc752b480?w=1200&h=442&f=png&s=128384">
 <meta property="og:updated_time" content="2019-04-12T02:06:10.309Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例">
 <meta name="twitter:description" content="起步基础  UICollectionViewLayout 基本使用  UICollectionViewLayoutAttributes    Attributes赋值这里泛指了以下两个主函数，就不在赘述两个功能，以及 UICollectionViewLayoutAttributes 需处理的变量。 1234567891011class AutoSizingLayout: UICollectionV">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/6/29/1644abf889a0a4e5?w=1874&h=276&f=png&s=7674">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/2/16459904878e9412?w=2262&h=684&f=png&s=289052">
+
+
 
 
 
@@ -50,48 +42,32 @@
 
     
     
-    
-    <style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
-    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
 
     
     
-    
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
-    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
 
     
     
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
 
-
     
     
     
     
-
 <link rel="stylesheet" href="/blog/css/back-to-top.css">
 
-
-    
-    
-
     
     
     
     
-
     
     
-<link rel="stylesheet" href="/blog/css/progressbar.css">
+    
+    <link rel="stylesheet" href="/blog/css/progressbar.css">
 <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
-
-    
-    
-    
-
     
     
     
@@ -105,7 +81,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/blog/">
             
-                <img src="/blog/images/logo.svg" alt="UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例" height="28">
+                <img src="/blog/images/logo.png" alt="UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例" height="28">
             
             </a>
         </div>
@@ -113,23 +89,27 @@
             
             <div class="navbar-start">
                 
-                <a class="navbar-item" href="/blog/">Home</a>
+                <a class="navbar-item"
+                href="/blog/">首頁</a>
                 
-                <a class="navbar-item" href="/blog/archives">Archives</a>
+                <a class="navbar-item"
+                href="/blog/archives">Archives</a>
                 
-                <a class="navbar-item" href="/blog/categories">Categories</a>
+                <a class="navbar-item"
+                href="/blog/categories">分類</a>
                 
-                <a class="navbar-item" href="/blog/tags">Tags</a>
+                <a class="navbar-item"
+                href="/blog/tags">標籤</a>
                 
-                <a class="navbar-item" href="/blog/about">About</a>
+                <a class="navbar-item"
+                href="https://jamesdouble.github.io/">關於我</a>
                 
             </div>
             
             <div class="navbar-end">
                 
                     
-                    
-                    <a class="navbar-item" target="_blank" title="Download on GitHub" href="http://github.com/ppoffice/hexo-theme-icarus">
+                    <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/jamesdouble">
                         
                         <i class="fab fa-github"></i>
                         
@@ -150,10 +130,11 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
     
     <div class="card-image">
-        <span class="image is-7by1">
+        <span  class="image is-7by1">
             <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/7/2/16459904878e9412?w=2262&amp;h=684&amp;f=png&amp;s=289052" alt="UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例">
         </span>
     </div>
@@ -346,6 +327,30 @@
 </div>
 
 
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '2d5ab80087b6beec7d25',
+        clientSecret: '631cfa9c75e7b4f09f5253c01872e41fc179726d',
+        id: '5da819d1efcf00d0737d5948a6277e20',
+        repo: 'JamesDoubleiOSBlogGitTalk',
+        owner: 'jamesdouble',
+        admin: "jamesdouble",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
 </div>
                 
 
@@ -358,25 +363,26 @@
 <div class="card widget">
     <div class="card-content">
         <nav class="level">
-            <div class="level-item has-text-centered">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
                 <div>
                     
-                        <img class="image is-128x128 has-mb-6" src="/blog/images/avatar.png" alt="Your name">
-                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="/blog/images/avatar.png" alt="郭介騵">
+                    </figure>
                     
                     <p class="is-size-4 is-block">
-                        Your name
+                        郭介騵
                     </p>
                     
                     
                     <p class="is-size-6 is-block">
-                        Your title
+                        一位快禿頂的iOS程序員
                     </p>
                     
                     
                     <p class="is-size-6 is-flex is-flex-center has-text-grey">
                         <i class="fas fa-map-marker-alt has-mr-7"></i>
-                        <span>Your location</span>
+                        <span>Shanghai, China</span>
                     </p>
                     
                 </div>
@@ -388,9 +394,11 @@
                     <p class="heading">
                         Posts
                     </p>
-                    <p class="title has-text-weight-normal">
-                        10
-                    </p>
+                    <a href="/blog/archives">
+                        <p class="title has-text-weight-normal">
+                            10
+                        </p>
+                    </a>
                 </div>
             </div>
             <div class="level-item has-text-centered is-marginless">
@@ -398,9 +406,11 @@
                     <p class="heading">
                         Categories
                     </p>
-                    <p class="title has-text-weight-normal">
-                        9
-                    </p>
+                    <a href="/blog/categories">
+                        <p class="title has-text-weight-normal">
+                            9
+                        </p>
+                    </a>
                 </div>
             </div>
             <div class="level-item has-text-centered is-marginless">
@@ -408,45 +418,40 @@
                     <p class="heading">
                         Tags
                     </p>
-                    <p class="title has-text-weight-normal">
-                        19
-                    </p>
+                    <a href="/blog/tags">
+                        <p class="title has-text-weight-normal">
+                            19
+                        </p>
+                    </a>
                 </div>
             </div>
         </nav>
+        
         <div class="level">
-            <a class="level-item button is-link is-rounded" href="http://github.com/ppoffice">
+            <a class="level-item button is-link is-rounded" href="https://github.com/jamesdouble" target="_blank">
                 Follow</a>
         </div>
         
         
+        
         <div class="level is-mobile">
             
-            <a class="level-item button is-white is-marginless" target="_blank" title="Github" href="http://github.com/ppoffice">
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="Github" href="https://github.com/jamesdouble">
                 
                 <i class="fab fa-github"></i>
                 
             </a>
             
-            <a class="level-item button is-white is-marginless" target="_blank" title="Facebook" href="http://facebook.com">
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="Facebook" href="https://facebook.com">
                 
                 <i class="fab fa-facebook"></i>
                 
             </a>
             
-            <a class="level-item button is-white is-marginless" target="_blank" title="Twitter" href="http://twitter.com">
-                
-                <i class="fab fa-twitter"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="Dribbble" href="http://dribbble.com">
-                
-                <i class="fab fa-dribbble"></i>
-                
-            </a>
-            
-            <a class="level-item button is-white is-marginless" target="_blank" title="RSS" href="/blog/">
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="RSS" href="/blog/">
                 
                 <i class="fas fa-rss"></i>
                 
@@ -459,9 +464,7 @@
     
         
     
-        
-
-<div class="card widget">
+        <div class="card widget">
     <div class="card-content">
         <div class="menu">
         <h3 class="menu-label">
@@ -470,12 +473,12 @@
         <ul class="menu-list">
         
             <li>
-                <a class="level is-mobile" href="https://hexo.io" target="_blank">
+                <a class="level is-mobile" href="https://juejin.im/user/5ae1a9aaf265da0b7451dfad" target="_blank">
                     <span class="level-left">
-                        <span class="level-item">Hexo</span>
+                        <span class="level-item">我的掘金</span>
                     </span>
                     <span class="level-right">
-                        <span class="level-item tag">hexo.io</span>
+                        <span class="level-item tag">juejin.im</span>
                     </span>
                 </a>
             </li>
@@ -483,7 +486,7 @@
             <li>
                 <a class="level is-mobile" href="https://github.com/ppoffice" target="_blank">
                     <span class="level-left">
-                        <span class="level-item">PPOffice</span>
+                        <span class="level-item">Hexo主題作者</span>
                     </span>
                     <span class="level-right">
                         <span class="level-item tag">github.com</span>
@@ -495,7 +498,6 @@
         </div>
     </div>
 </div>
-
 
     
         
@@ -576,8 +578,7 @@
     </div>
 </div>
     
-        
-<div class="card widget">
+        <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
             Tag Cloud
@@ -585,13 +586,11 @@
         <a href="/blog/tags/CGContext/" style="font-size: 10px;">CGContext</a> <a href="/blog/tags/Clang/" style="font-size: 10px;">Clang</a> <a href="/blog/tags/Codable/" style="font-size: 10px;">Codable</a> <a href="/blog/tags/ColletionView/" style="font-size: 10px;">ColletionView</a> <a href="/blog/tags/Compiler/" style="font-size: 10px;">Compiler</a> <a href="/blog/tags/Framework/" style="font-size: 10px;">Framework</a> <a href="/blog/tags/LLVM/" style="font-size: 10px;">LLVM</a> <a href="/blog/tags/MapKit/" style="font-size: 10px;">MapKit</a> <a href="/blog/tags/Model/" style="font-size: 10px;">Model</a> <a href="/blog/tags/SpriteKit/" style="font-size: 10px;">SpriteKit</a> <a href="/blog/tags/UIKit/" style="font-size: 16.67px;">UIKit</a> <a href="/blog/tags/UI控件/" style="font-size: 13.33px;">UI控件</a> <a href="/blog/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/blog/tags/Xcode/" style="font-size: 13.33px;">Xcode</a> <a href="/blog/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/blog/tags/地圖/" style="font-size: 10px;">地圖</a> <a href="/blog/tags/庫/" style="font-size: 10px;">庫</a> <a href="/blog/tags/網路/" style="font-size: 10px;">網路</a> <a href="/blog/tags/過場動畫/" style="font-size: 13.33px;">過場動畫</a>
     </div>
 </div>
-
     
     
         <div class="column-right-shadow is-hidden-widescreen ">
         
-            
-<div class="card widget">
+            <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
             Recent
@@ -608,7 +607,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/Clang/" class="has-link-black-ter is-size-6">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
+                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
                     </p>
@@ -627,7 +626,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/frameworkEasy/" class="has-link-black-ter is-size-6">年轻人，听说你想使用Framework - 基礎觀念</a>
+                    <a href="/blog/2018/11/19/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Framework/">Framework</a>
                     </p>
@@ -646,7 +645,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T16:21:00.000Z">2018-07-03</time></div>
-                    <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="has-link-black-ter is-size-6">UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例</a>
+                    <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="title has-link-black-ter is-size-6 has-text-weight-normal">UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/性能優化/">性能優化</a>
                     </p>
@@ -665,7 +664,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-04-23T16:21:00.000Z">2018-04-24</time></div>
-                    <a href="/blog/2018/04/24/CodableModel/" class="has-link-black-ter is-size-6">别只将Codable用来解Json,-玩转你的模型吧---</a>
+                    <a href="/blog/2018/04/24/CodableModel/" class="title has-link-black-ter is-size-6 has-text-weight-normal">别只将Codable用来解Json,-玩转你的模型吧---</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
                     </p>
@@ -684,7 +683,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-07-14T16:21:00.000Z">2017-07-15</time></div>
-                    <a href="/blog/2017/07/15/HeatMap/" class="has-link-black-ter is-size-6">如何实作原生IOS热度图-CG直接做图+MapKit</a>
+                    <a href="/blog/2017/07/15/HeatMap/" class="title has-link-black-ter is-size-6 has-text-weight-normal">如何实作原生IOS热度图-CG直接做图+MapKit</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
                     </p>
@@ -694,7 +693,6 @@
         
     </div>
 </div>
-
         
             <div class="card widget">
     <div class="card-content">
@@ -932,8 +930,7 @@
 
 <div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
     
-        
-<div class="card widget">
+        <div class="card widget">
     <div class="card-content">
         <h3 class="menu-label">
             Recent
@@ -950,7 +947,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/Clang/" class="has-link-black-ter is-size-6">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
+                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
                     </p>
@@ -969,7 +966,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/frameworkEasy/" class="has-link-black-ter is-size-6">年轻人，听说你想使用Framework - 基礎觀念</a>
+                    <a href="/blog/2018/11/19/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Framework/">Framework</a>
                     </p>
@@ -988,7 +985,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T16:21:00.000Z">2018-07-03</time></div>
-                    <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="has-link-black-ter is-size-6">UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例</a>
+                    <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="title has-link-black-ter is-size-6 has-text-weight-normal">UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/性能優化/">性能優化</a>
                     </p>
@@ -1007,7 +1004,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-04-23T16:21:00.000Z">2018-04-24</time></div>
-                    <a href="/blog/2018/04/24/CodableModel/" class="has-link-black-ter is-size-6">别只将Codable用来解Json,-玩转你的模型吧---</a>
+                    <a href="/blog/2018/04/24/CodableModel/" class="title has-link-black-ter is-size-6 has-text-weight-normal">别只将Codable用来解Json,-玩转你的模型吧---</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
                     </p>
@@ -1026,7 +1023,7 @@
             <div class="media-content">
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-07-14T16:21:00.000Z">2017-07-15</time></div>
-                    <a href="/blog/2017/07/15/HeatMap/" class="has-link-black-ter is-size-6">如何实作原生IOS热度图-CG直接做图+MapKit</a>
+                    <a href="/blog/2017/07/15/HeatMap/" class="title has-link-black-ter is-size-6 has-text-weight-normal">如何实作原生IOS热度图-CG直接做图+MapKit</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
                     </p>
@@ -1036,7 +1033,6 @@
         
     </div>
 </div>
-
     
         <div class="card widget">
     <div class="card-content">
@@ -1275,19 +1271,19 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/blog/">
                 
-                    <img src="/blog/images/logo.svg" alt="UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例" height="28">
+                    <img src="/blog/images/logo.png" alt="UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例" height="28">
                 
                 </a>
                 <p class="is-size-7">
                 &copy; 2019 郭介騵&nbsp;
-                Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> & <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
                 
                 </p>
             </div>
             <div class="level-end">
             
                 <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
-                
                 
                 <p class="control">
                     <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
@@ -1306,7 +1302,7 @@
                 </p>
                 
                 <p class="control">
-                    <a class="button is-white is-large" target="_blank" title="Download on GitHub" href="http://github.com/ppoffice/hexo-theme-icarus">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/jamesdouble">
                         
                         <i class="fab fa-github"></i>
                         
@@ -1323,24 +1319,34 @@
 <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
 <script>moment.locale("en");</script>
 
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
 
     
     
-    
-    <script src="/blog/js/animation.js"></script>
-    
+<script src="/blog/js/animation.js"></script>
 
     
     
-    
-    <script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
-    <script src="/blog/js/gallery.js" defer></script>
-    
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/blog/js/gallery.js" defer></script>
 
     
     
-
 <div id="outdated">
     <h6>Your browser is out-of-date!</h6>
     <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
@@ -1358,10 +1364,8 @@
     });
 </script>
 
-
     
-    
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     MathJax.Hub.Config({
@@ -1383,33 +1387,21 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
-
     
     
-
 <a id="back-to-top" title="Back to Top" href="javascript:;">
     <i class="fas fa-chevron-up"></i>
 </a>
 <script src="/blog/js/back-to-top.js" defer></script>
 
-
-    
-    
-
-    
-    
-    
-    
-
     
     
     
     
     
-    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
-    <script src="/blog/js/clipboard.js" defer></script>
     
-
+    
+    
     
     
     
@@ -1421,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', function () {
     <div class="searchbox ins-search">
     <div class="searchbox-container ins-search-container">
         <div class="searchbox-input-wrapper">
-            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something...">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
             <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
         </div>
         <div class="searchbox-result-wrapper ins-section-wrapper">
