@@ -7,19 +7,23 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Tag: Xcode - JamesDouble iOS</title>
+<title>WebView如何处理不受信任的http网路凭证 - JamesDouble iOS</title>
 
 
-    <meta name="keywords" content="iOS">
-<meta property="og:type" content="website">
-<meta property="og:title" content="JamesDouble iOS">
-<meta property="og:url" content="https://jamesdouble.github.io/tags/Xcode/index.html">
+    <meta name="description" content="##本篇使用Swift 并附上官方文档前阵子接了（公司Ａ）一个专案，再加上要毕业了，学校各种忙碌，距离上一篇文章也有好大一段时间…，也是因为这个专案碰到了些小问题，才想来写写笔记。 一、起因公司Ａ有个只限内网用的公文系统（似乎是用java写的网页?），到目前为止都是单纯在Windows上的小程式利用『URL Scheme』跟这个系统互相丢接资料，我则是要负责写一个IOS App 跟此系统做一样的事">
+<meta name="keywords" content="iOS,WebView,網路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebView如何处理不受信任的http网路凭证">
+<meta property="og:url" content="https://jamesdouble.github.io/2017/06/06/oldFormat/WebViewVerify/index.html">
 <meta property="og:site_name" content="JamesDouble iOS">
+<meta property="og:description" content="##本篇使用Swift 并附上官方文档前阵子接了（公司Ａ）一个专案，再加上要毕业了，学校各种忙碌，距离上一篇文章也有好大一段时间…，也是因为这个专案碰到了些小问题，才想来写写笔记。 一、起因公司Ａ有个只限内网用的公文系统（似乎是用java写的网页?），到目前为止都是单纯在Windows上的小程式利用『URL Scheme』跟这个系统互相丢接资料，我则是要负责写一个IOS App 跟此系统做一样的事">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://jamesdouble.github.io/blog/images/og_image.png">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/3776017-73515d4a81345864.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-04-12T02:06:10.309Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JamesDouble iOS">
-<meta name="twitter:image" content="https://jamesdouble.github.io/blog/images/og_image.png">
+<meta name="twitter:title" content="WebView如何处理不受信任的http网路凭证">
+<meta name="twitter:description" content="##本篇使用Swift 并附上官方文档前阵子接了（公司Ａ）一个专案，再加上要毕业了，学校各种忙碌，距离上一篇文章也有好大一段时间…，也是因为这个专案碰到了些小问题，才想来写写笔记。 一、起因公司Ａ有个只限内网用的公文系统（似乎是用java写的网页?），到目前为止都是单纯在Windows上的小程式利用『URL Scheme』跟这个系统互相丢接资料，我则是要负责写一个IOS App 跟此系统做一样的事">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/3776017-73515d4a81345864.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -85,7 +89,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/blog/">
             
-                <img src="/blog/images/logo.png" alt="JamesDouble iOS" height="28">
+                <img src="/blog/images/logo.png" alt="WebView如何处理不受信任的http网路凭证" height="28">
             
             </a>
         </div>
@@ -134,41 +138,30 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/blog/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Xcode</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
     <div class="card-image">
-        <a href="/blog/2018/11/19/oldFormat/Clang/" class="image is-7by1">
-            <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&amp;h=1488&amp;f=png&amp;s=939364" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
-        </a>
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="http://upload-images.jianshu.io/upload_images/3776017-73515d4a81345864.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="WebView如何处理不受信任的http网路凭证">
+        </span>
     </div>
     
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
             <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time>
+                <time class="level-item has-text-grey" datetime="2017-06-05T16:21:00.000Z">2017-06-06</time>
                 
                 <div class="level-item">
-                <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/LLVM/">LLVM</a>
+                <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/blog/categories/iOS/Http/">Http</a>
                 </div>
                 
                 
                 <span class="level-item has-text-grey">
                     
                     
-                    13 minutes read (About 1900 words)
+                    12 minutes read (About 1768 words)
                 </span>
                 
                 
@@ -177,105 +170,121 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/blog/2018/11/19/oldFormat/Clang/">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
+                WebView如何处理不受信任的http网路凭证
             
         </h1>
         <div class="content">
-            <blockquote>
-<p>本文为笔记型式呈现，并非全部原创，来源见文末</p>
-</blockquote>
-<h1 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h1><p><img src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1100385acf?w=1766&amp;h=294&amp;f=png&amp;s=47146" alt="Three-Phase编译器架构"></p>
-<h1 id="Clang-LLVM"><a href="#Clang-LLVM" class="headerlink" title="Clang - LLVM"></a>Clang - LLVM</h1><p>Apple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。</p>
-<p>Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-end），目的是输出程式码对应的抽象语法树（Abstract Syntax Tree, AST），并将程式码编译成LLVM Bitcode。接着在后端（back-end）使用LLVM编译成平台相关的机器语言 。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&amp;h=1488&amp;f=png&amp;s=939364" alt="MDCC2016的 session"></p>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog/2018/11/19/oldFormat/Clang/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
-    </div>
-</div>
-
-
-
-
-
-
-
-
-    
-<div class="card">
-    
-    <div class="card-image">
-        <a href="/blog/2018/11/19/oldFormat/frameworkEasy/" class="image is-7by1">
-            <img class="thumbnail" src="https://www.bignerdranch.com/assets/img/blog/2018/01/frameworky.png" alt="年轻人，听说你想使用Framework - 基礎觀念">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
-        
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/blog/categories/Xcode/Framework/">Framework</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    20 minutes read (About 2950 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog/2018/11/19/oldFormat/frameworkEasy/">年轻人，听说你想使用Framework - 基礎觀念</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Frameworks"><a href="#Frameworks" class="headerlink" title="Frameworks"></a>Frameworks</h1><blockquote>
-<p>本文為譯文，並已取得作者Nick Teissler同意。<br>原文鏈接：<a href="https://www.bignerdranch.com/blog/it-looks-like-you-are-trying-to-use-a-framework/" target="_blank" rel="noopener">原文</a></p>
-</blockquote>
-<p><img src="https://www.bignerdranch.com/assets/img/blog/2018/01/frameworky.png" alt="Framework這小子問了幾個很好的問題"></p>
+            <p>##本篇使用Swift 并附上官方文档<br>前阵子接了（公司Ａ）一个专案，再加上要毕业了，学校各种忙碌，距离上一篇文章也有好大一段时间…，也是因为这个专案碰到了些小问题，才想来写写笔记。</p>
+<h3 id="一、起因"><a href="#一、起因" class="headerlink" title="一、起因"></a>一、起因</h3><p>公司Ａ有个只限内网用的公文系统（似乎是用java写的网页?），到目前为止都是单纯在Windows上的小程式利用『<strong>URL Scheme</strong>』跟这个系统互相丢接资料，我则是要负责写一个IOS App 跟此系统做一样的事。但我是承包的，无法在公司Ａ的内网下测试，经过一番讨论，他们决定将系统做个测试用的灌在windows虚拟机上，我在Mac上执行就等于我跟这个系统相同内网。</p>
+<a id="more"></a>
+<h3 id="二、前置测试-🖥️"><a href="#二、前置测试-🖥️" class="headerlink" title="二、前置测试 🖥️"></a>二、前置测试 🖥️</h3><p>假设各个内网ip如下：</p>
 <blockquote>
-<p><em>本文章適合初學Framework的讀者。</em></p>
+<p>(A)Mac：192.168.1.1</p>
+<p>(B)Mac上的Windows虚拟机:192.168.1.2</p>
+<p>(C)实机Iphone：192.168.1.3</p>
+<p>(D)系统网址：<a href="https://192.168.1.2:8888/Domain" target="_blank" rel="noopener">https://192.168.1.2:8888/Domain</a></p>
 </blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Apple 已經將 iOS, macOS 的代碼分成  Modules, libraries, frameworks。</p>
-<p>Frameworks 的設計不單單只是為了封裝資源跟模塊化代碼，更不只是為了減少代碼的重編譯時間而已。</p>
-<p>要想減輕代碼量、加速Debug、增加代碼復用性，就不能只知道Framework是一個可以拖來拖去的工具箱，必須更近一步的了解這些：</p>
-<ul>
-<li>靜態庫 - Static Libraries</li>
-<li>動態庫 - Dynamic Libraries</li>
-<li>Framework的結構</li>
-<li>Linking 鏈接 與 Embed 嵌入的不同</li>
-<li>Q &amp; A</li>
+<p>A ping B,C -&gt; OK 👌、 B ping A,C -&gt; OK 👌</p>
+<p>A 预览 D -&gt; OK 👌、 B 预览 D -&gt; OK 👌</p>
+<p><strong>接下来让我们看看我要说的 C 预览 D 的状况</strong></p>
+<h3 id="三、问题一-UIWebView-预览-D-🤔"><a href="#三、问题一-UIWebView-预览-D-🤔" class="headerlink" title="三、问题一  (UIWebView 预览 D) 🤔"></a>三、问题一  (UIWebView 预览 D) 🤔</h3><ul>
+<li><p><strong><em>第一种尝试是利用WebView, 为什么首选它呢？</em></strong></p>
+<p> 因为业主不希望在两个App之间做过多的切换(一整个流程下来可能跳转两~三次），也不希望使用者在下次开启Safari时，还停留在系统的页面。</p>
+</li>
+<li><p><strong><em>NSURLErrorDomain: -1003？</em></strong></p>
+<p> WebView就在我LoadRequest时跳出这么一个错误，看到ErrorDomain时，我也没有多想，就直接认为应该是我DNS没设定好之类的问题，于是又重开了虚拟机，重启站台...!@#!$🙄🙄</p>
+</li>
+<li><p><strong><em>Safari可开启？</em></strong></p>
+<p>  会突然使用Safari是因为我不想一直重新Build，内心想说结果一样，没想到，跳出来一个这样的提示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/3776017-73515d4a81345864.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Safari开启系统"></p>
+<p>按下”Continue”后，就显示出系统的页面了！</p>
+</li>
+<li><p><strong><em>不信任的的凭证</em></strong></p>
+<p>  有了这个弹窗的提醒，我才明白问题的症结点原来是“凭证”，原来是之前IOS9的新设定：<strong>App Transport Security (ATS)</strong></p>
+<blockquote>
+<pre><code>ATS参考网址：https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW33
+</code></pre></blockquote>
+<blockquote>
+<p>基本上ATS就是为了要确保你的App更安全，会挡两样东西一个就是没有Security的Http一个是不信任凭证的Https，不会无意间跑到钓鱼网站之类的。</p>
+</blockquote>
+</li>
 </ul>
+<h3 id="三、问题一解法📖"><a href="#三、问题一解法📖" class="headerlink" title="三、问题一解法📖"></a>三、问题一解法📖</h3><ul>
+<li><p><strong><em>设定Info.plist</em></strong></p>
+<p> 第一个方法最简单就是直接关掉ATS，直接在Info.plist增加以下其中一对Key Value Pair<br> <img src="http://upload-images.jianshu.io/upload_images/3776017-a7e8213dd9647bd3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Info.plist"><strong>1.Allow Arbitary Loads （NSAllowArbitrayLoads)</strong><br>   <img src="http://upload-images.jianshu.io/upload_images/3776017-384f2b8f02405292.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt>用途是？解除所有连线的ATS限制，这里指的所有连线包括URLRequest,URLConnection,URLSession,UIWebView….等。</p>
+<p> 但是官方文件里也很表明写了，只要Allow Arbitary Loads这个值被设为True，就没有办法通过上架审核，所以我不采用此方法。</p>
+<hr>
+<p> <strong>2.Exception Domain （NSExceptionDomains)</strong><br> <img src="http://upload-images.jianshu.io/upload_images/3776017-6cf1eb34acc6c0fc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt>用途是？排除某个Domain使其不受ATS的限制。<br> 个人认为这个Key比较适合拿来使用，如果你明确知道自己会在某个Domain之下的话。<br> 这个Key我不知道会不会影响上架？    </p>
 <blockquote>
-<p>以下內容適用 macOS, tvOS, iOS. 可能會隨時間有改動。</p>
+<p>官方文档：<a href="https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW35" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW35</a></p>
 </blockquote>
+</li>
+</ul>
+<hr>
+<ul>
+<li><p><strong><em>HTTPS Server Trust Evaluation</em></strong></p>
+<blockquote>
+<p><a href="https://developer.apple.com/library/content/technotes/tn2232/_index.html#//apple_ref/doc/uid/DTS40012884-CH1-SECWEBVIEW" target="_blank" rel="noopener">https://developer.apple.com/library/content/technotes/tn2232/_index.html#//apple_ref/doc/uid/DTS40012884-CH1-SECWEBVIEW</a></p>
+</blockquote>
+<p> 另一种方法就是实作官方文档里的『Trust Customization for Specific APIs』，也就是自定义某个要求的凭证检查</p>
+<p> 1.URLSession<br><img src="http://upload-images.jianshu.io/upload_images/3776017-92ccc19ce1cebb61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt>依照官方文档，我们需要实作 urlSession(_:task:didReceive:completionHandler:)，如果凭证无法验证，会发出一个Challenge供你判断你要拒绝这个连线还是提供一个凭证来解决：</p>
+<ul>
+<li><p>遵守URLSessionDelegate</p>
+<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">let</span> session = <span class="hljs-type">Foundation</span>.<span class="hljs-type">URLSession</span>(configuration: sessionConfig, delegate: <span class="hljs-keyword">self</span>, delegateQueue: <span class="hljs-literal">nil</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>*     处理 - **『Challenge』**
+
+    challenge : URLAuthenticationChallenge 
+
+    Challenge这个词并不是ios或CocoaFrameWork才有的，而是互联网中伺服器向使用者端发出的『**Challenge–response authentication**』，是一个用来验证用户或网络提供者的协议，会要求使用者回传一些资讯，帐号、密码、凭证...等，在下面会说说有哪些。
+
+    &gt; https://developer.apple.com/reference/foundation/urlauthenticationchallenge
+
+    &gt;https://zh.wikipedia.org/zh-cn/CHAP
+
+    <figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">urlSession</span><span class="hljs-params">(<span class="hljs-number">_</span> session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping <span class="hljs-params">(URLSession.AuthChallengeDisposition, URLCredential?)</span></span></span> -&gt; <span class="hljs-type">Swift</span>.<span class="hljs-type">Void</span>)</span><br><span class="line">  &#123;</span><br><span class="line">  		<span class="hljs-comment">//1</span></span><br><span class="line">      	<span class="hljs-keyword">let</span> protectionspace = challenge.protectionSpace</span><br><span class="line">      	<span class="hljs-comment">//2</span></span><br><span class="line">      	<span class="hljs-keyword">let</span> authMethod = protectionspace.authenticationMethod</span><br><span class="line">      	<span class="hljs-keyword">if</span> authMethod == <span class="hljs-type">NSURLAuthenticationMethodServerTrust</span></span><br><span class="line">      	&#123;</span><br><span class="line">         		<span class="hljs-comment">//3</span></span><br><span class="line">         		<span class="hljs-keyword">let</span> credential = <span class="hljs-type">URLCredential</span>(trust: 	challenge.protectionSpace.serverTrust!)</span><br><span class="line">         		<span class="hljs-comment">//4</span></span><br><span class="line">          	<span class="hljs-keyword">let</span> input:<span class="hljs-type">URLSession</span>.<span class="hljs-type">AuthChallengeDisposition</span> = .useCredential</span><br><span class="line">          	<span class="hljs-comment">//5</span></span><br><span class="line">           	completionHandler(input, credential)</span><br><span class="line">      	&#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+    1.***Challenge.protectionSpace*** : URLProtectionSpace -&gt; 包含了这个 authentication request的host,port...等，让你判断该用什么**credential（证书）**应付。
+
+    2.***authenticationMethod*** ： 这是我刚刚提到的，伺服器要求认证的方法，这个方法就会决定接下来要做的事，像是：NSURLAuthenticationMethodHTTPBasic:要求使用者回传帐号跟密码，而我们要处理的是NSURLAuthenticationMethodServerTrust，要求使用者回传一个凭证。
+
+    3.***URLCredential*** : 这个类有几种差异满大的Init()，主要就是看authenticationMethod来决定你要回传的是什么。![image.png](http://upload-images.jianshu.io/upload_images/3776017-a0fe3c2e078cbed5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)我们这次要做的是凭证的处理，所以用第二个建构。
+
+    &gt;https://developer.apple.com/reference/foundation/urlprotectionspace/nsurlprotectionspace_authentication_methods
+
+    4.URLSession.***AuthChallengeDisposition*** : 表示行为，包括要使用凭证、取消此次要求、执行预设动作...等列举，我们要用凭证所以用.useCredential。
+
+    5.利用completionHandle告知结果：（使用凭证,这个凭证）
+
+----
+
+2.UIWebView - 回归正题我们要用UIWebView，但官方文档即提到无法自定义Https server trust，但我们还是要用上面的方法解决。![](http://upload-images.jianshu.io/upload_images/3776017-143fdc33d6eadd87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)棘手的地方是UIWebView只能单纯LoadingRequest跟管理URLSession，必须绕道而行。
+</code></pre><ul>
+<li><p>实作UIWebViewDelegate记住失败的Request，并且建立一个URLConnection。</p>
+<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">webView</span><span class="hljs-params">(<span class="hljs-number">_</span> webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType)</span></span> -&gt; <span class="hljs-type">Bool</span></span><br><span class="line"> &#123;</span><br><span class="line">     	<span class="hljs-type">LastRequest</span> = request</span><br><span class="line">    		<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span></span><br><span class="line"> &#125;</span><br><span class="line">		</span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">webView</span><span class="hljs-params">(<span class="hljs-number">_</span> webView: UIWebView, didFailLoadWithError error: Error)</span></span></span><br><span class="line"> &#123;</span><br><span class="line">     	<span class="hljs-type">FailRequest</span> = <span class="hljs-type">LastRequest</span></span><br><span class="line">     	<span class="hljs-keyword">if</span>(<span class="hljs-type">FailRequest</span> != <span class="hljs-literal">nil</span>)</span><br><span class="line">     	&#123;</span><br><span class="line">     		<span class="hljs-keyword">let</span> <span class="hljs-number">_</span>:<span class="hljs-type">NSURLConnection</span> = <span class="hljs-type">NSURLConnection</span>(request: <span class="hljs-type">FailRequest</span>! , delegate: <span class="hljs-keyword">self</span>)!</span><br><span class="line">     	&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>虽然刚刚讲的是URLSession，但两个用法其实是相同的，所以我们遵守NSURLConnectionDelegate，并在最后重新Loading一次Request，这样同个Request就可以通了。</p>
+<figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">connection</span><span class="hljs-params">(<span class="hljs-number">_</span> connection: NSURLConnection, willSendRequestFor challenge: URLAuthenticationChallenge)</span></span></span><br><span class="line">&#123;</span><br><span class="line">      	<span class="hljs-keyword">if</span> challenge.protectionSpace.authenticationMethod == <span class="hljs-type">NSURLAuthenticationMethodServerTrust</span>  &#123;</span><br><span class="line">          <span class="hljs-built_in">print</span>(<span class="hljs-string">"send credential Server Trust"</span>)</span><br><span class="line">          <span class="hljs-keyword">let</span> credential = <span class="hljs-type">URLCredential</span>(trust: challenge.protectionSpace.serverTrust!)</span><br><span class="line">          challenge.sender!.use(credential, <span class="hljs-keyword">for</span>: challenge)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="hljs-keyword">else</span>&#123;</span><br><span class="line">          challenge.sender!.performDefaultHandling!(<span class="hljs-keyword">for</span>: challenge)</span><br><span class="line">      &#125;</span><br><span class="line">      	connection.cancel()</span><br><span class="line">      	<span class="hljs-type">SystemWebView</span>.loadRequest(<span class="hljs-type">FailRequest</span>!)</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog/2018/11/19/oldFormat/frameworkEasy/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/blog/tags/WebView/">WebView</a>, <a class="has-link-grey -link" href="/blog/tags/iOS/">iOS</a>, <a class="has-link-grey -link" href="/blog/tags/網路/">網路</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -285,9 +294,52 @@
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blog/2017/07/15/HeatMap/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">如何实作原生IOS热度图-CG直接做图+MapKit</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog/2017/01/18/oldFormat/Hero_Part2/">
+                <span class="level-item">向Hero致敬與分析-(二)</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '2d5ab80087b6beec7d25',
+        clientSecret: '631cfa9c75e7b4f09f5253c01872e41fc179726d',
+        id: 'd9afed963cd850d3a38e394c37c383cc',
+        repo: 'JamesDoubleiOSBlogGitTalk',
+        owner: 'jamesdouble',
+        admin: "jamesdouble",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
 </div>
                 
 
@@ -1208,7 +1260,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/blog/">
                 
-                    <img src="/blog/images/logo.png" alt="JamesDouble iOS" height="28">
+                    <img src="/blog/images/logo.png" alt="WebView如何处理不受信任的http网路凭证" height="28">
                 
                 </a>
                 <p class="is-size-7">

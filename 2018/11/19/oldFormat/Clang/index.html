@@ -7,19 +7,23 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 
-<title>Tag: Xcode - JamesDouble iOS</title>
+<title>(Xcode) 編譯器小白筆記 - LLVM前端Clang - JamesDouble iOS</title>
 
 
-    <meta name="keywords" content="iOS">
-<meta property="og:type" content="website">
-<meta property="og:title" content="JamesDouble iOS">
-<meta property="og:url" content="https://jamesdouble.github.io/tags/Xcode/index.html">
+    <meta name="description" content="本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-end），目的是输出程式码对应的抽象语法树（Abstract">
+<meta name="keywords" content="Xcode,Compiler,Clang,LLVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
+<meta property="og:url" content="https://jamesdouble.github.io/2018/11/19/oldFormat/Clang/index.html">
 <meta property="og:site_name" content="JamesDouble iOS">
+<meta property="og:description" content="本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-end），目的是输出程式码对应的抽象语法树（Abstract">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://jamesdouble.github.io/blog/images/og_image.png">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&h=1488&f=png&s=939364">
+<meta property="og:updated_time" content="2019-04-12T02:06:10.309Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JamesDouble iOS">
-<meta name="twitter:image" content="https://jamesdouble.github.io/blog/images/og_image.png">
+<meta name="twitter:title" content="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
+<meta name="twitter:description" content="本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-end），目的是输出程式码对应的抽象语法树（Abstract">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&h=1488&f=png&s=939364">
 
 
 
@@ -85,7 +89,7 @@
         <div class="navbar-brand is-flex-center">
             <a class="navbar-item navbar-logo" href="/blog/">
             
-                <img src="/blog/images/logo.png" alt="JamesDouble iOS" height="28">
+                <img src="/blog/images/logo.png" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang" height="28">
             
             </a>
         </div>
@@ -134,24 +138,13 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main"><div class="card">
-    <div class="card-content">
-        <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-            <li><a href="/blog/tags">Tags</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Xcode</a></li>
-        </ul>
-        </nav>
-    </div>
-</div>
-
-    
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
     <div class="card-image">
-        <a href="/blog/2018/11/19/oldFormat/Clang/" class="image is-7by1">
+        <span  class="image is-7by1">
             <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&amp;h=1488&amp;f=png&amp;s=939364" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
-        </a>
+        </span>
     </div>
     
     <div class="card-content article ">
@@ -177,7 +170,7 @@
         
         <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
             
-                <a class="has-link-black-ter" href="/blog/2018/11/19/oldFormat/Clang/">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
+                (Xcode) 編譯器小白筆記 - LLVM前端Clang
             
         </h1>
         <div class="content">
@@ -188,16 +181,84 @@
 <h1 id="Clang-LLVM"><a href="#Clang-LLVM" class="headerlink" title="Clang - LLVM"></a>Clang - LLVM</h1><p>Apple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。</p>
 <p>Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-end），目的是输出程式码对应的抽象语法树（Abstract Syntax Tree, AST），并将程式码编译成LLVM Bitcode。接着在后端（back-end）使用LLVM编译成平台相关的机器语言 。</p>
 <p><img src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&amp;h=1488&amp;f=png&amp;s=939364" alt="MDCC2016的 session"></p>
+<a id="more"></a>
+<h2 id="先看结果"><a href="#先看结果" class="headerlink" title="先看结果"></a>先看结果</h2><p><strong><em>main.m</em></strong></p>
+<figure class="highlight objectivec hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#import <span class="hljs-meta-string">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#define DEFINEEight 8</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">int</span> main()&#123;</span><br><span class="line">    <span class="hljs-keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> eight = DEFINEEight;</span><br><span class="line">        <span class="hljs-keyword">int</span> six = <span class="hljs-number">6</span>;</span><br><span class="line">        <span class="hljs-built_in">NSString</span>* site = [[<span class="hljs-built_in">NSString</span> alloc] initWithUTF8String:<span class="hljs-string">"starming"</span>];</span><br><span class="line">        <span class="hljs-keyword">int</span> rank = eight + six;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@ rank %d"</span>, site, rank);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>直接编译成执行档</p>
+<p><strong><code>clang -fmodules  main.m</code></strong></p>
+<p>产出 .out (executable)</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/10/19/1668bb0e51c50834?w=498&amp;h=30&amp;f=png&amp;s=19270" alt="clang "></p>
+<h1 id="Clang-Frontend前端"><a href="#Clang-Frontend前端" class="headerlink" title="Clang (Frontend前端)"></a>Clang (Frontend前端)</h1><p>是一个C、C++、Objective-C和Objective-C++程式语言的编译器前端</p>
+<h2 id="Clang源码结构"><a href="#Clang源码结构" class="headerlink" title="Clang源码结构"></a>Clang源码结构</h2><p><img src="https://user-gold-cdn.xitu.io/2018/10/22/1669ace950e69613?w=346&amp;h=502&amp;f=png&amp;s=28013" alt="source:https://llvm.org/devmtg/2017-06/2-Hal-Finkel-LLVM-2017.pdf"></p>
+<h2 id="Clang步骤"><a href="#Clang步骤" class="headerlink" title="Clang步骤"></a>Clang步骤</h2><p><strong><code>clang -ccc-print-phases main.m</code></strong></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/10/19/1668bb1af7142110" alt="Clang-LLVM步骤"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/10/22/1669a9b4b00cfbe9?w=3108&amp;h=2048&amp;f=png&amp;s=1238136" alt="source: https://blog.csdn.net/u014795020/article/details/72514109"></p>
+<h3 id="1-Input-Driver"><a href="#1-Input-Driver" class="headerlink" title="1.Input (Driver)"></a>1.Input (Driver)</h3><p>指定语言 , 架构, 输入file</p>
+<p><code>clang -x objective-c main.m</code></p>
+<h3 id="2-Preprocessor-预处理"><a href="#2-Preprocessor-预处理" class="headerlink" title="2.Preprocessor(预处理)"></a>2.Preprocessor(预处理)</h3><p>import 头文件, include头文件等 ,macro宏展开，处理’#’开头指令</p>
+<p><strong>单做预处理, 并取得预处理结果</strong></p>
+<p><code>clang -E main.m</code></p>
+<p>预处理最终结果：</p>
+<figure class="highlight c hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># <span class="hljs-number">1</span> <span class="hljs-string">"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Foundation.framework/Headers/FoundationLegacySwiftCompatibility.h"</span> <span class="hljs-number">1</span> <span class="hljs-number">3</span></span><br><span class="line"># <span class="hljs-number">185</span> <span class="hljs-string">"/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.14.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h"</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span></span><br><span class="line"># <span class="hljs-number">2</span> <span class="hljs-string">"main.m"</span> <span class="hljs-number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;</span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> eight = <span class="hljs-number">8</span>;</span><br><span class="line">        <span class="hljs-keyword">int</span> six = <span class="hljs-number">6</span>;</span><br><span class="line">        NSString* site = [[NSString alloc] initWithUTF8String:<span class="hljs-string">"starming"</span>];</span><br><span class="line">        <span class="hljs-keyword">int</span> rank = eight + six;</span><br><span class="line">        NSLog(@<span class="hljs-string">"%@ rank %d"</span>, site, rank);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>依据上面的结果能明显看到 header被换成了明确的全局位置，常量<code>DEFINEEight</code>也被替换进代码里，讲到import 就不得不提 modules</p>
+<h4 id="2-1-Modules-模块-fmodules"><a href="#2-1-Modules-模块-fmodules" class="headerlink" title="2.1 Modules 模块 (-fmodules)"></a>2.1 Modules 模块 (-fmodules)</h4><blockquote>
+<p>参考 <a href="https://clang.llvm.org/docs/Modules.html" target="_blank" rel="noopener">LLVM modules文档</a></p>
+</blockquote>
+<p>文章里提及：<br>Modules provide an alternative, simpler way to use software libraries that provides better compile-time scalability and eliminates many of the problems inherent to using the C preprocessor to access the API of a library.</p>
+<p>Clang 以简单的 <code>import std.io</code> 概念取代 原本冗余的函数库(libraries)引进 <code>#include &lt;stdio.h&gt;</code>，类似java的package，目前Clang </p>
+<ol>
+<li><p>#include的机制是 编译器会去递回检查每个Header，header inculde的 header<br>文章里提了几个弱点：<br><strong>Compile-time scalability</strong>：耗时编译<br><strong>Fragility</strong>：多引入顺序或导致宏冲突<br><strong>Conventional workarounds</strong>：C语言长久的息惯，导致代码较丑<br> <strong>Tool confusion</strong></p>
+</li>
+<li><p>然而编译器在碰到import时，会直接载入module对应的二进制文件并取得他的api，一个module不依赖外部header，只编译一次，api也只解析一次，<br>当然module也有些缺点包括 namesspace（可能重名）, 改库代码, 无法适应各种机器的Arch。</p>
+</li>
+</ol>
+<h3 id="3-Lexical-Analysis-词法分析-Lex-Tokenization-gt-i-Tokens"><a href="#3-Lexical-Analysis-词法分析-Lex-Tokenization-gt-i-Tokens" class="headerlink" title="3 Lexical Analysis (词法分析 Lex, Tokenization) -&gt;  .i (Tokens)"></a>3 Lexical Analysis (词法分析 Lex, Tokenization) -&gt;  .i (Tokens)</h3><p>此步骤是Compiler里的基本程序，将字符一个一个的读进Lexer里，并根据构词规则识别 Token(单词)，此处还不会校验语法</p>
+<p>做词法分析并把Token分析结果展示出来</p>
+<p><code>clang -fmodules -fsyntax-only -Xclang -dump-tokens main.m</code></p>
+<p>每一个标记都包含了对应的源码内容和其在源码中的位置。注意这里的位置是宏展开之前的位置，这样一来，如果编译过程中遇到什么问题，clang 能够在源码中指出出错的具体位置。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/10/22/1669a8637c685066?w=643&amp;h=97&amp;f=png&amp;s=45906" alt="展示Token(部分)"></p>
+<p><code>-fsyntax-only</code>: Run the preprocessor, parser and type checking stages.</p>
+<h3 id="4-语法分析-Semantic-Analysis-gt-AST"><a href="#4-语法分析-Semantic-Analysis-gt-AST" class="headerlink" title="4 语法分析(Semantic Analysis) -&gt; AST"></a>4 语法分析(Semantic Analysis) -&gt; AST</h3><p>语法分析，在Clang中有Parser和Sema两个模块配合完成，验证语法是否正确，并给出正确的提示。</p>
+<h4 id="4-1-Parser"><a href="#4-1-Parser" class="headerlink" title="4.1 Parser"></a>4.1 Parser</h4><p>遍历每个Token做词句分析，生成一个 节点（<strong>Nodes</strong>）该有的资讯</p>
+<h4 id="4-2-Semantic"><a href="#4-2-Semantic" class="headerlink" title="4.2 Semantic"></a>4.2 Semantic</h4><p>在Lex 跟 syntax Analysis之后, 也就是在这个阶段已经确保 词 句 语法已经是正确的形式了，semantic 接着做return values, size boundaries, uninitialized variables 等检查，之后根据当前的资讯，生成语意节点（<strong>Nodes</strong>），并将所有节点组合成抽象语法书(<strong>AST</strong>)</p>
+<p>做 语法分析 并展示 AST</p>
+<p><code>clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</code></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/10/22/1669b41a2889f5b7?w=820&amp;h=361&amp;f=png&amp;s=212408" alt="AST"></p>
+<h3 id="5-抽象语法树-Abstract-Syntax-Tree"><a href="#5-抽象语法树-Abstract-Syntax-Tree" class="headerlink" title="5 抽象语法树 Abstract Syntax Tree"></a>5 抽象语法树 Abstract Syntax Tree</h3><p>可以说是Clang的核心，大部分的优化, 判断都在AST处理（例如寻找Class, 替换代码…等)</p>
+<p>此步骤会将 <strong>Clang Attr</strong>  转换成 AST 上的 <strong>AttributeList</strong>，能在clang插件上透过 <code>Decl::getAttr&lt;T&gt;</code> 获取</p>
+<blockquote>
+<p><strong>Clang Attributes</strong>  是 Clang 提供的一种<strong>源码注解</strong>，方便开发者向编译器表达某种要求，参与控制如 Static Analyzer、Name Mangling、Code Generation 等过程, 一般以 <code>__attribute__(xxx)</code> 的形式出现在代码中, Ex: NS_CLASS_AVAILABLE_IOS(9_0)</p>
+</blockquote>
+<p>结构跟其他Compiler的AST相同与其他编译器不同的是 Clang的AST是由C++构成类似Class,Variable的层级表示，其他的则是以汇编语言编写。</p>
+<p>这代表着AST也能有对应的api，这让AST操作, 获取信息 都比较容易，甚至还夹带着地址跟代码位置。</p>
+<p>AST Context: 存储所有AST相关资讯, 且提供ASTMatcher等遍历方法</p>
+<p>Node三大Class <code>Decl - Declarations(声明), Stmt - Statements(陈述句), type(类型)</code> 子类过于详细不在这多写</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/10/22/1669af213c2a968f?w=2184&amp;h=1530&amp;f=png&amp;s=502455" alt="source: https://blog.csdn.net/u014795020/article/details/72514109"></p>
+<h3 id="6-代码生成-CodeGen-gt-IR中间代码-ll"><a href="#6-代码生成-CodeGen-gt-IR中间代码-ll" class="headerlink" title="6 代码生成 CodeGen -&gt; IR中间代码(.ll)"></a>6 代码生成 CodeGen -&gt; IR中间代码(.ll)</h3><p>CodeGen负责将语法树从顶至下遍历，翻译成LLVM IR，是LLVM Backend 的输入，是前后端的桥接语言。</p>
+<p>产出IR: <code>clang -S -fobjc-arc -emit-llvm main.m -o main.ll</code></p>
+<p>LLVM IR 有三种表示格式，第一种是 bitcode 这样的存储格式，以 .bc 做后缀，第二种是可读的以 .ll，第三种是用于开发时操作 LLVM IR 的内存格式。</p>
+<p>产出Bit <code>clang -emit-llvm -c main.m -o main.bc</code></p>
+<p>查看BitCode <code>llvm-dis &lt; main.bc | less</code></p>
+<h4 id="6-1-IR-优化-Optimization"><a href="#6-1-IR-优化-Optimization" class="headerlink" title="6.1 IR 优化 Optimization"></a>6.1 IR 优化 Optimization</h4><p>IR提供了多种优化选项，-01 -02 -03 -0s…. 对应着不同的入参，有比如类似死代码清理，内联化，表达式重组，循环变量移动这样的 Pass。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/7/166ed41d99b2ff83?w=710&amp;h=126&amp;f=png&amp;s=76067" alt="project Build Setting"></p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/7/166ed4f060601917?w=1013&amp;h=524&amp;f=png&amp;s=83963" alt="http://clang.llvm.org/docs/CommandGuide/clang.html#code-generation-options"></p>
+<h2 id="Extra-Clang-插件"><a href="#Extra-Clang-插件" class="headerlink" title="Extra: Clang 插件"></a>Extra: Clang 插件</h2><h3 id="使用-libclan-g-clang-LibTooling-插件"><a href="#使用-libclan-g-clang-LibTooling-插件" class="headerlink" title="使用 libclan g, clang,  LibTooling 插件"></a>使用 libclan g, clang,  LibTooling 插件</h3><p>可以改变 clang 生成代码的方式，增加更强的类型检查，或者按照自己的定义进行代码的检查分析等等。要想达成以上的目标，</p>
+<p>reference:</p>
+<blockquote>
+<p><a href="https://www.jianshu.com/p/c27b77f70616" target="_blank" rel="noopener">Clang插件</a><br><a href="https://www.stephenw.cc/2018/01/08/clang-ast/" target="_blank" rel="noopener">了解Clang-ast</a><br><a href="https://jonasdevlieghere.com/understanding-the-clang-ast/#clangfrontendast" target="_blank" rel="noopener">Understanding the Clang AST</a><br><a href="https://llvm.org/devmtg/2013-04/klimek-slides.pdf" target="_blank" rel="noopener">AST Detail</a><br><a href="http://clang.llvm.org/docs/IntroductionToTheClangAST.html" target="_blank" rel="noopener">ClangAST</a><br><a href="https://clang.llvm.org/" target="_blank" rel="noopener">https://clang.llvm.org/</a><br><a href="https://github.com/ming1016/study/wiki/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90-iOS-%E7%BC%96%E8%AF%91-Clang---LLVM" target="_blank" rel="noopener"># 深入剖析-iOS-编译-Clang</a><br><a href="https://llvm.org/devmtg/2017-06/2-Hal-Finkel-LLVM-2017.pdf" target="_blank" rel="noopener">https://llvm.org/devmtg/2017-06/2-Hal-Finkel-LLVM-2017.pdf</a><br><a href="https://blog.csdn.net/u014795020/article/details/72514109" target="_blank" rel="noopener"># 从Swift桥接文件到Clang-LLVM</a></p>
+</blockquote>
+
         </div>
         
-        
-        <div class="level is-mobile">
+        <div class="level is-size-7 is-uppercase">
             <div class="level-start">
                 <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog/2018/11/19/oldFormat/Clang/#more">Read More</a>
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/blog/tags/Clang/">Clang</a>, <a class="has-link-grey -link" href="/blog/tags/Compiler/">Compiler</a>, <a class="has-link-grey -link" href="/blog/tags/LLVM/">LLVM</a>, <a class="has-link-grey -link" href="/blog/tags/Xcode/">Xcode</a>
                 </div>
             </div>
         </div>
+        
         
         
     </div>
@@ -207,87 +268,45 @@
 
 
 
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog/2018/11/19/oldFormat/frameworkEasy/">
+                <span class="level-item">年轻人，听说你想使用Framework - 基礎觀念</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
 
 
 
-    
 <div class="card">
-    
-    <div class="card-image">
-        <a href="/blog/2018/11/19/oldFormat/frameworkEasy/" class="image is-7by1">
-            <img class="thumbnail" src="https://www.bignerdranch.com/assets/img/blog/2018/01/frameworky.png" alt="年轻人，听说你想使用Framework - 基礎觀念">
-        </a>
-    </div>
-    
-    <div class="card-content article ">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
         
-        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
-            <div class="level-left">
-                <time class="level-item has-text-grey" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time>
-                
-                <div class="level-item">
-                <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/blog/categories/Xcode/Framework/">Framework</a>
-                </div>
-                
-                
-                <span class="level-item has-text-grey">
-                    
-                    
-                    20 minutes read (About 2950 words)
-                </span>
-                
-                
-            </div>
-        </div>
-        
-        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
-            
-                <a class="has-link-black-ter" href="/blog/2018/11/19/oldFormat/frameworkEasy/">年轻人，听说你想使用Framework - 基礎觀念</a>
-            
-        </h1>
-        <div class="content">
-            <h1 id="Frameworks"><a href="#Frameworks" class="headerlink" title="Frameworks"></a>Frameworks</h1><blockquote>
-<p>本文為譯文，並已取得作者Nick Teissler同意。<br>原文鏈接：<a href="https://www.bignerdranch.com/blog/it-looks-like-you-are-trying-to-use-a-framework/" target="_blank" rel="noopener">原文</a></p>
-</blockquote>
-<p><img src="https://www.bignerdranch.com/assets/img/blog/2018/01/frameworky.png" alt="Framework這小子問了幾個很好的問題"></p>
-<blockquote>
-<p><em>本文章適合初學Framework的讀者。</em></p>
-</blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>Apple 已經將 iOS, macOS 的代碼分成  Modules, libraries, frameworks。</p>
-<p>Frameworks 的設計不單單只是為了封裝資源跟模塊化代碼，更不只是為了減少代碼的重編譯時間而已。</p>
-<p>要想減輕代碼量、加速Debug、增加代碼復用性，就不能只知道Framework是一個可以拖來拖去的工具箱，必須更近一步的了解這些：</p>
-<ul>
-<li>靜態庫 - Static Libraries</li>
-<li>動態庫 - Dynamic Libraries</li>
-<li>Framework的結構</li>
-<li>Linking 鏈接 與 Embed 嵌入的不同</li>
-<li>Q &amp; A</li>
-</ul>
-<blockquote>
-<p>以下內容適用 macOS, tvOS, iOS. 可能會隨時間有改動。</p>
-</blockquote>
-        </div>
-        
-        
-        <div class="level is-mobile">
-            <div class="level-start">
-                <div class="level-item">
-                <a class="button is-size-7 is-light" href="/blog/2018/11/19/oldFormat/frameworkEasy/#more">Read More</a>
-                </div>
-            </div>
-        </div>
-        
-        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '2d5ab80087b6beec7d25',
+        clientSecret: '631cfa9c75e7b4f09f5253c01872e41fc179726d',
+        id: '93fea0c808971a9506faf90f57cc0fb4',
+        repo: 'JamesDoubleiOSBlogGitTalk',
+        owner: 'jamesdouble',
+        admin: "jamesdouble",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
     </div>
 </div>
-
-
-
-
-
-
-
-
 </div>
                 
 
@@ -1208,7 +1227,7 @@
             <div class="level-start has-text-centered-mobile">
                 <a class="footer-logo is-block has-mb-6" href="/blog/">
                 
-                    <img src="/blog/images/logo.png" alt="JamesDouble iOS" height="28">
+                    <img src="/blog/images/logo.png" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang" height="28">
                 
                 </a>
                 <p class="is-size-7">
