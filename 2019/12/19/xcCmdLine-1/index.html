@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html  lang="en">
+<head>
+    <meta charset="utf-8" />
+
+<meta name="generator" content="Hexo 3.9.0" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+<title>深入淺出 Xcode Command Lines Tool(1) - 初探 - JamesDouble iOS</title>
+
+
+    <meta name="description" content="Xcode命令列 = Xcode Command Lines Tool  如果你是一個iOS/Mac Developer  或是你在用Mac開發什麼壞壞的事 你一定對這個畫面不陌生，  然後我們只需要按下安裝，  之後就能繼續開發啦！  本文結束.... Ok, 所以…. 這個Dialog到底幫我們安裝了什麼？ 安裝在哪？ 為何要安裝？">
+<meta name="keywords" content="Xcode,Command Line Tools,xcode-select">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入淺出 Xcode Command Lines Tool(1) - 初探">
+<meta property="og:url" content="https://jamesdouble.github.io/2019/12/19/xcCmdLine-1/index.html">
+<meta property="og:site_name" content="JamesDouble iOS">
+<meta property="og:description" content="Xcode命令列 = Xcode Command Lines Tool  如果你是一個iOS/Mac Developer  或是你在用Mac開發什麼壞壞的事 你一定對這個畫面不陌生，  然後我們只需要按下安裝，  之後就能繼續開發啦！  本文結束.... Ok, 所以…. 這個Dialog到底幫我們安裝了什麼？ 安裝在哪？ 為何要安裝？">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png">
+<meta property="og:updated_time" content="2019-12-23T10:21:15.705Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入淺出 Xcode Command Lines Tool(1) - 初探">
+<meta name="twitter:description" content="Xcode命令列 = Xcode Command Lines Tool  如果你是一個iOS/Mac Developer  或是你在用Mac開發什麼壞壞的事 你一定對這個畫面不陌生，  然後我們只需要按下安裝，  之後就能繼續開發啦！  本文結束.... Ok, 所以…. 這個Dialog到底幫我們安裝了什麼？ 安裝在哪？ 為何要安裝？">
+<meta name="twitter:image" content="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png">
+
+
+
+
+
+
+
+<link rel="icon" href="/blog/images/favicon.svg">
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.7.2/css/bulma.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu:400,600|Source+Code+Pro">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css">
+
+
+    
+    
+<style>body>.footer,body>.navbar,body>.section{opacity:0}</style>
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css">
+
+    
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css">
+
+    
+    
+    
+    
+<link rel="stylesheet" href="/blog/css/back-to-top.css">
+
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89089224-4"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-89089224-4');
+</script>
+
+    
+    
+    
+    
+    
+    <link rel="stylesheet" href="/blog/css/progressbar.css">
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    
+    
+    
+
+
+<link rel="stylesheet" href="/blog/css/style.css">
+</head>
+<body class="is-3-column">
+    <nav class="navbar navbar-main">
+    <div class="container">
+        <div class="navbar-brand is-flex-center">
+            <a class="navbar-item navbar-logo" href="/blog/">
+            
+                <img src="/blog/images/logo.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探" height="28">
+            
+            </a>
+        </div>
+        <div class="navbar-menu">
+            
+            <div class="navbar-start">
+                
+                <a class="navbar-item"
+                href="/blog/">首頁</a>
+                
+                <a class="navbar-item"
+                href="/blog/archives">Archives</a>
+                
+                <a class="navbar-item"
+                href="/blog/categories">分類</a>
+                
+                <a class="navbar-item"
+                href="/blog/tags">標籤</a>
+                
+                <a class="navbar-item"
+                href="https://jamesdouble.github.io/">關於我</a>
+                
+            </div>
+            
+            <div class="navbar-end">
+                
+                    
+                    <a class="navbar-item" target="_blank" title="GitHub" href="https://github.com/jamesdouble">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                    
+                
+                
+                
+                <a class="navbar-item search" title="Search" href="javascript:;">
+                    <i class="fas fa-search"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+</nav>
+    
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
+<div class="card">
+    
+    <div class="card-image">
+        <span  class="image is-7by1">
+            <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+        </span>
+    </div>
+    
+    <div class="card-content article ">
+        
+        <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
+            <div class="level-left">
+                <time class="level-item has-text-grey" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time>
+                
+                <div class="level-item">
+                <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a>&nbsp;/&nbsp;<a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                </div>
+                
+                
+                <span class="level-item has-text-grey">
+                    
+                    
+                    9 minutes read (About 1401 words)
+                </span>
+                
+                
+            </div>
+        </div>
+        
+        <h1 class="title is-size-3 is-size-4-mobile has-text-weight-normal">
+            
+                深入淺出 Xcode Command Lines Tool(1) - 初探
+            
+        </h1>
+        <div class="content">
+            <blockquote>
+<p>Xcode命令列 = Xcode Command Lines Tool</p>
+</blockquote>
+<p>如果你是一個iOS/Mac Developer  <del>或是你在用Mac開發什麼壞壞的事</del></p>
+<p>你一定對這個畫面不陌生，</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu34455.png" alt="截圖 2019-11-13 下午3.44.55"></p>
+<p>然後我們只需要按下安裝，</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu42541.png" alt="截圖 2019-11-13 下午4.25.41"></p>
+<p>之後就能繼續開發啦！</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/c1db1108ae404b01a717dd59733e2fd6.gif" alt="C1DB1108-AE40-4B01-A717-DD59733E2FD6"></p>
+<p><del>本文結束.</del><br>.<br>.<br>.</p>
+<p>Ok, 所以…. 這個Dialog到底幫我們安裝了什麼？ 安裝在哪？ 為何要安裝？</p>
+<a id="more"></a>
+<h2 id="安裝了什麼"><a href="#安裝了什麼" class="headerlink" title="安裝了什麼"></a>安裝了什麼</h2><p>如彈窗所說 命令列開發者工具 (command line developer tools)，可以從<a href="https://developer.apple.com/download/more/" target="_blank" rel="noopener">Apple Developer</a>單獨下載</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="截圖 2019-11-13 下午4.40.53"></p>
+<p>有macOS SDK, LLVM編譯器, linker…等開發環境，</p>
+<p>我們之後再來仔細地看看裡面的內容。</p>
+<blockquote>
+<p>這裡有一篇官方對常見關於Xcode Command Line發問做的FAQ <a href="https://developer.apple.com/library/archive/technotes/tn2339/_index.html" target="_blank" rel="noopener">Building from the Command Line with Xcode FAQ</a></p>
+</blockquote>
+<h2 id="安裝在哪"><a href="#安裝在哪" class="headerlink" title="安裝在哪"></a>安裝在哪</h2><p>為了得知安裝的路徑，我們使用 <a href="https://www.mothersruin.com/software/SuspiciousPackage/" target="_blank" rel="noopener">SuspiciousPackage</a>  查看下載dmg裡的.pkg</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu55548.png" alt="CommnadLineToolsForXcode.dmg - pkg"></p>
+<p>哦！ 所以 Command Line Tools 在mac的 <em>唯一路徑</em> 就是</p>
+<p><del><a href>/Library/Developer/CommandLineTools</a></del>  !!!</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15737021735496.jpg" alt></p>
+<p> 仔細看看上上張圖的描述 - 如果你是用<strong>Xcode, Xcode 是自帶 Command Line Tools的</strong> (老的Xcode是不默認安裝的)</p>
+<p> <img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053kao-bei.png" alt="Command Line Tools"></p>
+<p>那放在 Xcode 的哪呢？？</p>
+<p><code>Xcode.app/Contents/Developer</code></p>
+<p>目錄結構基本類似於安裝在 Library的目錄結構，但是多了不少東西，</p>
+<p>我們會在之後提到他們</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15737028834212.png" alt></p>
+<h2 id="多份-Command-Line-Tools"><a href="#多份-Command-Line-Tools" class="headerlink" title="多份 Command Line Tools"></a>多份 Command Line Tools</h2><p>那.. 如果說我有多份的 Xcode 哪就有多份的 Command Line Tools ?? 😱</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/giphy.gif" alt="Well yes"></p>
+<p>基於目前的討論，你的 mac 開發環境可以是以下這樣的</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/commandlinetool.png" alt="commandLineToo"></p>
+<p>於是就有了三連問，現在使用的是哪一個？我該用哪一個？怎麼切換成另一個？</p>
+<h2 id="Xcode-Select"><a href="#Xcode-Select" class="headerlink" title="Xcode-Select"></a>Xcode-Select</h2><p>To answer your question. I bring you </p>
+<p><strong><em>xcode-select</em></strong></p>
+<p> 作為一個command指令，名稱還是挺淺顯易懂的，也許你並不陌生。來讓我們敲個 <code>man xcode-select</code> 瞅瞅👀</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15737114270631.png" alt></p>
+<p>描述內容簡述如下</p>
+<blockquote>
+<p>xcode-select 管理著 xcode的Developer Directory<br>你能輕鬆得使用 xcode-select –switch 在多個版本的Xcode之間切換對應的開發工具路徑，<br>而這些路徑將被用於 <em>xcrun, xcodebuild, cc</em> …</p>
+</blockquote>
+<p>xcrun, xcodebuild，這又釣出了許多熟悉不過的指令，我們一樣後面說。</p>
+<p>xcode-select用法：</p>
+<ul>
+<li><code>-s &lt;path&gt;, --switch &lt;path&gt;</code>:<ul>
+<li>將路徑指向某個Command Line Tools, ex:<ul>
+<li><code>xcode-select --switch /Applications/Xcode.app</code></li>
+<li><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/commandlinetool2.png" alt="commandLineToo"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>-p, --print-path</code>:<ul>
+<li>打印目前指向的路徑, ex: <code>/Applications/Xcode.app/Contents/Developer</code></li>
+</ul>
+</li>
+<li><code>-r, --reset</code>:<ul>
+<li>將之前用-s 指定的路徑重置, (筆者是指回application裡的xcode)</li>
+</ul>
+</li>
+<li><code>--install</code>:<ul>
+<li>彈出安裝Command Line Tools視窗，對 還是它</li>
+<li><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu34455.png" alt="截圖 2019-11-13 下午3.44.55"></li>
+</ul>
+</li>
+</ul>
+<p>上面描述提到xcodebuild..等指令用的環境是基於xcode-select指向的路徑，xcode-select提供了一個環境變量，讓你能臨時使用其他環境來執行xcode command.</p>
+<figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">env DEVELOPER_DIR=&quot;/Applications/Xcode-beta.app&quot; /usr/bin/xcodebuild</span><br></pre></td></tr></table></figure>
+<h3 id="xcode-select的好處"><a href="#xcode-select的好處" class="headerlink" title="xcode-select的好處"></a>xcode-select的好處</h3><p>有了這個機制，我們就能同時擁有多個開發環境，不同的Swift版本, 不同的模擬器版本…而我們編譯的指令不需要用  /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild </p>
+<p>只需要統一用 <code>xcrun xcodebuild</code>。</p>
+<h3 id="xcode-select-in-Xcode"><a href="#xcode-select-in-Xcode" class="headerlink" title="xcode-select in Xcode"></a>xcode-select in Xcode</h3><p>你可以在 Xcode -&gt; Preference -&gt; Locations 去選擇自己得 Command Line Tools，</p>
+<p>在這裡選擇 效力等同於 xcode-select, 所以也是需要user密碼。</p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191114-xia-wu41814.png" alt="截圖 2019-11-14 下午4.18.14"></p>
+<h2 id="為何要安裝-Command-Line-Tools"><a href="#為何要安裝-Command-Line-Tools" class="headerlink" title="為何要安裝 Command Line Tools"></a>為何要安裝 Command Line Tools</h2><p>現在你知道 command Line Tools ‘大概是哪些東西’, ‘放在哪些地方’</p>
+<blockquote>
+<p>當然你可能也已經知道許多tool的用途，例如很熟悉的xcodebuild，<br>但既然我都從頭講了，就講全一點 😅😅</p>
+</blockquote>
+<h3 id="For-Xcode"><a href="#For-Xcode" class="headerlink" title="For Xcode"></a>For Xcode</h3><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/commandlinetool3.png" alt="commandLineTool"></p>
+<p>就像大部分的軟件一樣，我們看到的,操作的都是軟件的GUI，而Xcode的底層對應的就是Command Line Tool, </p>
+<p>例如按下 Build鍵 =&gt; xcodebuid …, 開一台模擬器 =&gt; simctl …，當然這些都不是一對一的映射，而是多個command 的組合。</p>
+<p>我們之後會介紹幾個常見的組合。</p>
+<h3 id="For-others"><a href="#For-others" class="headerlink" title="For others"></a>For others</h3><p>然而就算你不是使用Xcode開發，還是會碰到需要安裝Command Line Tools的情況(也就是使用安裝在/Library/Developer/CommandLineTools的那組)，因為Tools也有包含整個MacOS的SDK還有編譯器Clang甚至包括Make。</p>
+<p>例如有使用Homebrew在管理package的一些python開發或是js的開發，都會提示需要Xcode Command Line Tools.</p>
+<h2 id="Futher-More"><a href="#Futher-More" class="headerlink" title="Futher More"></a>Futher More</h2><p>現在我們知道 Command Line Tools 是什麼，安裝在哪，以及Command Line Tools 有多個。</p>
+<p>之後的一系列文章我會來介紹 Command Line Tools裡，確切包含了哪些命令列工具</p>
+<p>–</p>
+<p><a href>深入淺出 Xcode 命令列(1) - 初探</a><br><a href>深入淺出 Xcode 命令列(加餐) - libxcselect.dylib</a></p>
+
+        </div>
+        
+        <div class="level is-size-7 is-uppercase">
+            <div class="level-start">
+                <div class="level-item">
+                    <span class="is-size-6 has-text-grey has-mr-7">#</span>
+                    <a class="has-link-grey -link" href="/blog/tags/Command-Line-Tools/">Command Line Tools</a>, <a class="has-link-grey -link" href="/blog/tags/Xcode/">Xcode</a>, <a class="has-link-grey -link" href="/blog/tags/xcode-select/">xcode-select</a>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+</div>
+
+
+
+
+
+<div class="card card-transparent">
+    <div class="level post-navigation is-flex-wrap is-mobile">
+        
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blog/2019/12/20/xcCmdLine-1_2/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">深入淺出 Xcode 命令列(加餐) - libxcselect.dylib</span>
+            </a>
+        </div>
+        
+        
+        <div class="level-end">
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog/2019/12/19/xcCmdLine-2/">
+                <span class="level-item">深入淺出 Xcode 命令列(2)-xcrun 基礎</span>
+                <i class="level-item fas fa-chevron-right"></i>
+            </a>
+        </div>
+        
+    </div>
+</div>
+
+
+
+<div class="card">
+    <div class="card-content">
+        <h3 class="title is-5 has-text-weight-normal">Comments</h3>
+        
+<div id="comment-container"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.4.1/dist/gitalk.min.js"></script>
+<script>
+    var gitalk = new Gitalk({
+        clientID: '2d5ab80087b6beec7d25',
+        clientSecret: '631cfa9c75e7b4f09f5253c01872e41fc179726d',
+        id: '98e8052408486cefb98e8d9c052bd32b',
+        repo: 'JamesDoubleiOSBlogGitTalk',
+        owner: 'jamesdouble',
+        admin: "jamesdouble",
+        createIssueManually: false,
+        distractionFreeMode: false
+    })
+    gitalk.render('comment-container')
+</script>
+
+    </div>
+</div>
+</div>
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen  has-order-1 column-left ">
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <nav class="level">
+            <div class="level-item has-text-centered" style="flex-shrink: 1">
+                <div>
+                    
+                    <figure class="image is-128x128 has-mb-6">
+                        <img class="" src="https://avatars0.githubusercontent.com/u/9458771?s=460&amp;v=4" alt="郭介騵">
+                    </figure>
+                    
+                    <p class="is-size-4 is-block">
+                        郭介騵
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-block">
+                        一位快禿頂的iOS程序員
+                    </p>
+                    
+                    
+                    <p class="is-size-6 is-flex is-flex-center has-text-grey">
+                        <i class="fas fa-map-marker-alt has-mr-7"></i>
+                        <span>Shanghai, China</span>
+                    </p>
+                    
+                </div>
+            </div>
+        </nav>
+        <nav class="level is-mobile">
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Posts
+                    </p>
+                    <a href="/blog/archives">
+                        <p class="title has-text-weight-normal">
+                            13
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Categories
+                    </p>
+                    <a href="/blog/categories">
+                        <p class="title has-text-weight-normal">
+                            10
+                        </p>
+                    </a>
+                </div>
+            </div>
+            <div class="level-item has-text-centered is-marginless">
+                <div>
+                    <p class="heading">
+                        Tags
+                    </p>
+                    <a href="/blog/tags">
+                        <p class="title has-text-weight-normal">
+                            22
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="level">
+            <a class="level-item button is-link is-rounded" href="https://github.com/jamesdouble" target="_blank">
+                Follow</a>
+        </div>
+        
+        
+        
+        <div class="level is-mobile">
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="Github" href="https://github.com/jamesdouble">
+                
+                <i class="fab fa-github"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="Facebook" href="https://facebook.com">
+                
+                <i class="fab fa-facebook"></i>
+                
+            </a>
+            
+            <a class="level-item button is-white is-marginless" target="_blank"
+                title="RSS" href="/blog/">
+                
+                <i class="fas fa-rss"></i>
+                
+            </a>
+            
+        </div>
+        
+    </div>
+</div>
+    
+        
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Links
+        </h3>
+        <ul class="menu-list">
+        
+            <li>
+                <a class="level is-mobile" href="https://juejin.im/user/5ae1a9aaf265da0b7451dfad" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">我的掘金</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">juejin.im</span>
+                    </span>
+                </a>
+            </li>
+        
+            <li>
+                <a class="level is-mobile" href="https://github.com/ppoffice" target="_blank">
+                    <span class="level-left">
+                        <span class="level-item">Hexo主題作者</span>
+                    </span>
+                    <span class="level-right">
+                        <span class="level-item tag">github.com</span>
+                    </span>
+                </a>
+            </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+
+    
+        
+<div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Categories
+            </h3>
+            <ul class="menu-list">
+            <li>
+        <a class="level is-marginless" href="/blog/categories/Xcode/">
+            <span class="level-start">
+                <span class="level-item">Xcode</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">5</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/blog/categories/Xcode/Compiler/">
+            <span class="level-start">
+                <span class="level-item">Compiler</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blog/categories/Xcode/Framework/">
+            <span class="level-start">
+                <span class="level-item">Framework</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blog/categories/Xcode/命令列/">
+            <span class="level-start">
+                <span class="level-item">命令列</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
+            </span>
+        </a></li></ul></li><li>
+        <a class="level is-marginless" href="/blog/categories/iOS/">
+            <span class="level-start">
+                <span class="level-item">iOS</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">8</span>
+            </span>
+        </a><ul><li>
+        <a class="level is-marginless" href="/blog/categories/iOS/Http/">
+            <span class="level-start">
+                <span class="level-item">Http</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blog/categories/iOS/性能優化/">
+            <span class="level-start">
+                <span class="level-item">性能優化</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blog/categories/iOS/開源代碼/">
+            <span class="level-start">
+                <span class="level-item">開源代碼</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">4</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blog/categories/iOS/開源研究/">
+            <span class="level-start">
+                <span class="level-item">開源研究</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">2</span>
+            </span>
+        </a></li></ul></li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Tag Cloud
+        </h3>
+        <a href="/blog/tags/CGContext/" style="font-size: 10px;">CGContext</a> <a href="/blog/tags/Clang/" style="font-size: 10px;">Clang</a> <a href="/blog/tags/Codable/" style="font-size: 10px;">Codable</a> <a href="/blog/tags/ColletionView/" style="font-size: 10px;">ColletionView</a> <a href="/blog/tags/Command-Line-Tools/" style="font-size: 15px;">Command Line Tools</a> <a href="/blog/tags/Compiler/" style="font-size: 10px;">Compiler</a> <a href="/blog/tags/Framework/" style="font-size: 10px;">Framework</a> <a href="/blog/tags/LLVM/" style="font-size: 10px;">LLVM</a> <a href="/blog/tags/MapKit/" style="font-size: 10px;">MapKit</a> <a href="/blog/tags/Model/" style="font-size: 10px;">Model</a> <a href="/blog/tags/SpriteKit/" style="font-size: 10px;">SpriteKit</a> <a href="/blog/tags/UIKit/" style="font-size: 17.5px;">UIKit</a> <a href="/blog/tags/UI控件/" style="font-size: 12.5px;">UI控件</a> <a href="/blog/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/blog/tags/Xcode/" style="font-size: 17.5px;">Xcode</a> <a href="/blog/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/blog/tags/xcode-select/" style="font-size: 10px;">xcode-select</a> <a href="/blog/tags/xcrun/" style="font-size: 12.5px;">xcrun</a> <a href="/blog/tags/地圖/" style="font-size: 10px;">地圖</a> <a href="/blog/tags/庫/" style="font-size: 10px;">庫</a> <a href="/blog/tags/網路/" style="font-size: 10px;">網路</a> <a href="/blog/tags/過場動畫/" style="font-size: 12.5px;">過場動畫</a>
+    </div>
+</div>
+    
+    
+        <div class="column-right-shadow is-hidden-widescreen ">
+        
+            <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-19T16:21:00.000Z">2019-12-20</time></div>
+                    <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(加餐) - libxcselect.dylib</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2018/12/12/frameworkEasy/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://www.bignerdranch.com/assets/img/blog/2018/01/frameworky.png" alt="年轻人，听说你想使用Framework - 基礎觀念">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-11T16:21:00.000Z">2018-12-12</time></div>
+                    <a href="/blog/2018/12/12/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Framework/">Framework</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2018/11/19/Clang/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
+                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2017/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2017/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+        
+            <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/CGContext/">
+                        <span class="tag">CGContext</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Clang/">
+                        <span class="tag">Clang</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Codable/">
+                        <span class="tag">Codable</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/ColletionView/">
+                        <span class="tag">ColletionView</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Command-Line-Tools/">
+                        <span class="tag">Command Line Tools</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Compiler/">
+                        <span class="tag">Compiler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Framework/">
+                        <span class="tag">Framework</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/LLVM/">
+                        <span class="tag">LLVM</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/MapKit/">
+                        <span class="tag">MapKit</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Model/">
+                        <span class="tag">Model</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/SpriteKit/">
+                        <span class="tag">SpriteKit</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/UIKit/">
+                        <span class="tag">UIKit</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/UI控件/">
+                        <span class="tag">UI控件</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/WebView/">
+                        <span class="tag">WebView</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Xcode/">
+                        <span class="tag">Xcode</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/iOS/">
+                        <span class="tag">iOS</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcode-select/">
+                        <span class="tag">xcode-select</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcrun/">
+                        <span class="tag">xcrun</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/地圖/">
+                        <span class="tag">地圖</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/庫/">
+                        <span class="tag">庫</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/網路/">
+                        <span class="tag">網路</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/過場動畫/">
+                        <span class="tag">過場動畫</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+        
+        </div>
+    
+</div>
+
+                
+
+
+
+
+<div class="column is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only has-order-3 column-right ">
+    
+        <div class="card widget">
+    <div class="card-content">
+        <h3 class="menu-label">
+            Recent
+        </h3>
+        
+        <article class="media">
+            
+            <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-19T16:21:00.000Z">2019-12-20</time></div>
+                    <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(加餐) - libxcselect.dylib</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2018/12/12/frameworkEasy/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://www.bignerdranch.com/assets/img/blog/2018/01/frameworky.png" alt="年轻人，听说你想使用Framework - 基礎觀念">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-11T16:21:00.000Z">2018-12-12</time></div>
+                    <a href="/blog/2018/12/12/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Framework/">Framework</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2018/11/19/Clang/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
+                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+        <h3 class="menu-label">
+            Archives
+        </h3>
+        <ul class="menu-list">
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/11/">
+                <span class="level-start">
+                    <span class="level-item">November 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/04/">
+                <span class="level-start">
+                    <span class="level-item">April 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2017/07/">
+                <span class="level-start">
+                    <span class="level-item">July 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2017/06/">
+                <span class="level-start">
+                    <span class="level-item">June 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2017/01/">
+                <span class="level-start">
+                    <span class="level-item">January 2017</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">4</span>
+                </span>
+            </a>
+        </li>
+        
+        </ul>
+        </div>
+    </div>
+</div>
+    
+        <div class="card widget">
+    <div class="card-content">
+        <div class="menu">
+            <h3 class="menu-label">
+                Tags
+            </h3>
+            <div class="field is-grouped is-grouped-multiline">
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/CGContext/">
+                        <span class="tag">CGContext</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Clang/">
+                        <span class="tag">Clang</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Codable/">
+                        <span class="tag">Codable</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/ColletionView/">
+                        <span class="tag">ColletionView</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Command-Line-Tools/">
+                        <span class="tag">Command Line Tools</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Compiler/">
+                        <span class="tag">Compiler</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Framework/">
+                        <span class="tag">Framework</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/LLVM/">
+                        <span class="tag">LLVM</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/MapKit/">
+                        <span class="tag">MapKit</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Model/">
+                        <span class="tag">Model</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/SpriteKit/">
+                        <span class="tag">SpriteKit</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/UIKit/">
+                        <span class="tag">UIKit</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/UI控件/">
+                        <span class="tag">UI控件</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/WebView/">
+                        <span class="tag">WebView</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Xcode/">
+                        <span class="tag">Xcode</span>
+                        <span class="tag is-grey">5</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/iOS/">
+                        <span class="tag">iOS</span>
+                        <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcode-select/">
+                        <span class="tag">xcode-select</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcrun/">
+                        <span class="tag">xcrun</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/地圖/">
+                        <span class="tag">地圖</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/庫/">
+                        <span class="tag">庫</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/網路/">
+                        <span class="tag">網路</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/過場動畫/">
+                        <span class="tag">過場動畫</span>
+                        <span class="tag is-grey">2</span>
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    
+    
+</div>
+
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    <div class="container">
+        <div class="level">
+            <div class="level-start has-text-centered-mobile">
+                <a class="footer-logo is-block has-mb-6" href="/blog/">
+                
+                    <img src="/blog/images/logo.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探" height="28">
+                
+                </a>
+                <p class="is-size-7">
+                &copy; 2019 郭介騵&nbsp;
+                Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> & <a
+                        href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank">Icarus</a>
+                
+                </p>
+            </div>
+            <div class="level-end">
+            
+                <div class="field has-addons is-flex-center-mobile has-mt-5-mobile is-flex-wrap is-flex-middle">
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Creative Commons" href="https://creativecommons.org/">
+                        
+                        <i class="fab fa-creative-commons"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/">
+                        
+                        <i class="fab fa-creative-commons-by"></i>
+                        
+                    </a>
+                </p>
+                
+                <p class="control">
+                    <a class="button is-white is-large" target="_blank" title="GitHub" href="https://github.com/jamesdouble">
+                        
+                        <i class="fab fa-github"></i>
+                        
+                    </a>
+                </p>
+                
+                </div>
+            
+            </div>
+        </div>
+    </div>
+</footer>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script>
+<script>moment.locale("en");</script>
+
+<script>
+var IcarusThemeSettings = {
+    article: {
+        highlight: {
+            clipboard: true,
+            fold: 'unfolded'
+        }
+    }
+};
+</script>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script>
+
+
+
+    
+    
+<script src="/blog/js/animation.js"></script>
+
+    
+    
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script>
+<script src="/blog/js/gallery.js" defer></script>
+
+    
+    
+<div id="outdated">
+    <h6>Your browser is out-of-date!</h6>
+    <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update
+            my browser now </a></p>
+    <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        outdatedBrowser({
+            bgColor: '#f25648',
+            color: '#ffffff',
+            lowerThan: 'flex'
+        });
+    });
+</script>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.5/unpacked/MathJax.js?config=TeX-MML-AM_CHTML" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    MathJax.Hub.Config({
+        'HTML-CSS': {
+            matchFontHeight: false
+        },
+        SVG: {
+            matchFontHeight: false
+        },
+        CommonHTML: {
+            matchFontHeight: false
+        },
+        tex2jax: {
+            inlineMath: [
+                ['$','$'],
+                ['\\(','\\)']
+            ]
+        }
+    });
+});
+</script>
+    
+    
+<a id="back-to-top" title="Back to Top" href="javascript:;">
+    <i class="fas fa-chevron-up"></i>
+</a>
+<script src="/blog/js/back-to-top.js" defer></script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+<script src="/blog/js/main.js" defer></script>
+
+    
+    <div class="searchbox ins-search">
+    <div class="searchbox-container ins-search-container">
+        <div class="searchbox-input-wrapper">
+            <input type="text" class="searchbox-input ins-search-input" placeholder="Type something..." />
+            <span class="searchbox-close ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="searchbox-result-wrapper ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+    (function (window) {
+        var INSIGHT_CONFIG = {
+            TRANSLATION: {
+                POSTS: 'Posts',
+                PAGES: 'Pages',
+                CATEGORIES: 'Categories',
+                TAGS: 'Tags',
+                UNTITLED: '(Untitled)',
+            },
+            CONTENT_URL: '/blog/content.json',
+        };
+        window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+    })(window);
+</script>
+<script src="/blog/js/insight.js" defer></script>
+<link rel="stylesheet" href="/blog/css/search.css">
+<link rel="stylesheet" href="/blog/css/insight.css">
+    
+</body>
+</html>

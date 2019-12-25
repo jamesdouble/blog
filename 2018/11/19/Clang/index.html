@@ -10,20 +10,20 @@
 <title>(Xcode) 編譯器小白筆記 - LLVM前端Clang - JamesDouble iOS</title>
 
 
-    <meta name="description" content="本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-end），目的是输出程式码对应的抽象语法树（Abstract">
+    <meta name="description" content="(Xcode) 編譯器小白筆記 - LLVM前端Clang 本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-en">
 <meta name="keywords" content="Xcode,Compiler,Clang,LLVM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
 <meta property="og:url" content="https://jamesdouble.github.io/2018/11/19/Clang/index.html">
 <meta property="og:site_name" content="JamesDouble iOS">
-<meta property="og:description" content="本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-end），目的是输出程式码对应的抽象语法树（Abstract">
+<meta property="og:description" content="(Xcode) 編譯器小白筆記 - LLVM前端Clang 本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-en">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&h=1488&f=png&s=939364">
-<meta property="og:updated_time" content="2019-04-12T02:06:10.309Z">
+<meta property="og:image" content="https://jamesdouble.github.io/blog/images/og_image.png">
+<meta property="og:updated_time" content="2019-12-23T10:05:27.326Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
-<meta name="twitter:description" content="本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-end），目的是输出程式码对应的抽象语法树（Abstract">
-<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&h=1488&f=png&s=939364">
+<meta name="twitter:description" content="(Xcode) 編譯器小白筆記 - LLVM前端Clang 本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-en">
+<meta name="twitter:image" content="https://jamesdouble.github.io/blog/images/og_image.png">
 
 
 
@@ -141,12 +141,6 @@
                 <div class="column is-8-tablet is-8-desktop is-6-widescreen has-order-2 column-main">
 <div class="card">
     
-    <div class="card-image">
-        <span  class="image is-7by1">
-            <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&amp;h=1488&amp;f=png&amp;s=939364" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
-        </span>
-    </div>
-    
     <div class="card-content article ">
         
         <div class="level article-meta is-size-7 is-uppercase is-mobile is-overflow-x-auto">
@@ -161,7 +155,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    13 minutes read (About 1900 words)
+                    13 minutes read (About 1875 words)
                 </span>
                 
                 
@@ -174,25 +168,25 @@
             
         </h1>
         <div class="content">
-            <blockquote>
+            <h1 id="Xcode-編譯器小白筆記-LLVM前端Clang"><a href="#Xcode-編譯器小白筆記-LLVM前端Clang" class="headerlink" title="(Xcode) 編譯器小白筆記 - LLVM前端Clang"></a>(Xcode) 編譯器小白筆記 - LLVM前端Clang</h1><blockquote>
 <p>本文为笔记型式呈现，并非全部原创，来源见文末</p>
 </blockquote>
-<h1 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h1><p><img src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1100385acf?w=1766&amp;h=294&amp;f=png&amp;s=47146" alt="Three-Phase编译器架构"></p>
+<h1 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h1><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951218878.jpg" alt="Three-Phase编译器架构"></p>
 <h1 id="Clang-LLVM"><a href="#Clang-LLVM" class="headerlink" title="Clang - LLVM"></a>Clang - LLVM</h1><p>Apple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。</p>
 <p>Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-end），目的是输出程式码对应的抽象语法树（Abstract Syntax Tree, AST），并将程式码编译成LLVM Bitcode。接着在后端（back-end）使用LLVM编译成平台相关的机器语言 。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&amp;h=1488&amp;f=png&amp;s=939364" alt="MDCC2016的 session"></p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951356709.jpg" alt="MDCC2016的 session"></p>
 <a id="more"></a>
 <h2 id="先看结果"><a href="#先看结果" class="headerlink" title="先看结果"></a>先看结果</h2><p><strong><em>main.m</em></strong></p>
 <figure class="highlight objectivec hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#import <span class="hljs-meta-string">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#define DEFINEEight 8</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">int</span> main()&#123;</span><br><span class="line">    <span class="hljs-keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> eight = DEFINEEight;</span><br><span class="line">        <span class="hljs-keyword">int</span> six = <span class="hljs-number">6</span>;</span><br><span class="line">        <span class="hljs-built_in">NSString</span>* site = [[<span class="hljs-built_in">NSString</span> alloc] initWithUTF8String:<span class="hljs-string">"starming"</span>];</span><br><span class="line">        <span class="hljs-keyword">int</span> rank = eight + six;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@ rank %d"</span>, site, rank);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>直接编译成执行档</p>
 <p><strong><code>clang -fmodules  main.m</code></strong></p>
 <p>产出 .out (executable)</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/10/19/1668bb0e51c50834?w=498&amp;h=30&amp;f=png&amp;s=19270" alt="clang "></p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951503715.jpg" alt="clang"></p>
 <h1 id="Clang-Frontend前端"><a href="#Clang-Frontend前端" class="headerlink" title="Clang (Frontend前端)"></a>Clang (Frontend前端)</h1><p>是一个C、C++、Objective-C和Objective-C++程式语言的编译器前端</p>
-<h2 id="Clang源码结构"><a href="#Clang源码结构" class="headerlink" title="Clang源码结构"></a>Clang源码结构</h2><p><img src="https://user-gold-cdn.xitu.io/2018/10/22/1669ace950e69613?w=346&amp;h=502&amp;f=png&amp;s=28013" alt="source:https://llvm.org/devmtg/2017-06/2-Hal-Finkel-LLVM-2017.pdf"></p>
+<h2 id="Clang源码结构"><a href="#Clang源码结构" class="headerlink" title="Clang源码结构"></a>Clang源码结构</h2><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951771872.jpg" alt="source:https://llvm.org/devmtg/2017-06/2-Hal-Finkel-LLVM-2017.pdf"></p>
 <h2 id="Clang步骤"><a href="#Clang步骤" class="headerlink" title="Clang步骤"></a>Clang步骤</h2><p><strong><code>clang -ccc-print-phases main.m</code></strong></p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/10/19/1668bb1af7142110" alt="Clang-LLVM步骤"></p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/10/22/1669a9b4b00cfbe9?w=3108&amp;h=2048&amp;f=png&amp;s=1238136" alt="source: https://blog.csdn.net/u014795020/article/details/72514109"></p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952370804.jpg" alt="Clang-LLVM步骤"></p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952461105.jpg" alt="source: https://blog.csdn.net/u014795020/article/details/72514109"> </p>
 <h3 id="1-Input-Driver"><a href="#1-Input-Driver" class="headerlink" title="1.Input (Driver)"></a>1.Input (Driver)</h3><p>指定语言 , 架构, 输入file</p>
 <p><code>clang -x objective-c main.m</code></p>
 <h3 id="2-Preprocessor-预处理"><a href="#2-Preprocessor-预处理" class="headerlink" title="2.Preprocessor(预处理)"></a>2.Preprocessor(预处理)</h3><p>import 头文件, include头文件等 ,macro宏展开，处理’#’开头指令</p>
@@ -216,14 +210,14 @@
 <p>做词法分析并把Token分析结果展示出来</p>
 <p><code>clang -fmodules -fsyntax-only -Xclang -dump-tokens main.m</code></p>
 <p>每一个标记都包含了对应的源码内容和其在源码中的位置。注意这里的位置是宏展开之前的位置，这样一来，如果编译过程中遇到什么问题，clang 能够在源码中指出出错的具体位置。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/10/22/1669a8637c685066?w=643&amp;h=97&amp;f=png&amp;s=45906" alt="展示Token(部分)"></p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952725799.jpg" alt="展示Token(部分)"></p>
 <p><code>-fsyntax-only</code>: Run the preprocessor, parser and type checking stages.</p>
 <h3 id="4-语法分析-Semantic-Analysis-gt-AST"><a href="#4-语法分析-Semantic-Analysis-gt-AST" class="headerlink" title="4 语法分析(Semantic Analysis) -&gt; AST"></a>4 语法分析(Semantic Analysis) -&gt; AST</h3><p>语法分析，在Clang中有Parser和Sema两个模块配合完成，验证语法是否正确，并给出正确的提示。</p>
 <h4 id="4-1-Parser"><a href="#4-1-Parser" class="headerlink" title="4.1 Parser"></a>4.1 Parser</h4><p>遍历每个Token做词句分析，生成一个 节点（<strong>Nodes</strong>）该有的资讯</p>
 <h4 id="4-2-Semantic"><a href="#4-2-Semantic" class="headerlink" title="4.2 Semantic"></a>4.2 Semantic</h4><p>在Lex 跟 syntax Analysis之后, 也就是在这个阶段已经确保 词 句 语法已经是正确的形式了，semantic 接着做return values, size boundaries, uninitialized variables 等检查，之后根据当前的资讯，生成语意节点（<strong>Nodes</strong>），并将所有节点组合成抽象语法书(<strong>AST</strong>)</p>
 <p>做 语法分析 并展示 AST</p>
 <p><code>clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</code></p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/10/22/1669b41a2889f5b7?w=820&amp;h=361&amp;f=png&amp;s=212408" alt="AST"></p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952890446.jpg" alt="AST"></p>
 <h3 id="5-抽象语法树-Abstract-Syntax-Tree"><a href="#5-抽象语法树-Abstract-Syntax-Tree" class="headerlink" title="5 抽象语法树 Abstract Syntax Tree"></a>5 抽象语法树 Abstract Syntax Tree</h3><p>可以说是Clang的核心，大部分的优化, 判断都在AST处理（例如寻找Class, 替换代码…等)</p>
 <p>此步骤会将 <strong>Clang Attr</strong>  转换成 AST 上的 <strong>AttributeList</strong>，能在clang插件上透过 <code>Decl::getAttr&lt;T&gt;</code> 获取</p>
 <blockquote>
@@ -233,15 +227,15 @@
 <p>这代表着AST也能有对应的api，这让AST操作, 获取信息 都比较容易，甚至还夹带着地址跟代码位置。</p>
 <p>AST Context: 存储所有AST相关资讯, 且提供ASTMatcher等遍历方法</p>
 <p>Node三大Class <code>Decl - Declarations(声明), Stmt - Statements(陈述句), type(类型)</code> 子类过于详细不在这多写</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/10/22/1669af213c2a968f?w=2184&amp;h=1530&amp;f=png&amp;s=502455" alt="source: https://blog.csdn.net/u014795020/article/details/72514109"></p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770953688043.jpg" alt="source: https://blog.csdn.net/u014795020/article/details/72514109"></p>
 <h3 id="6-代码生成-CodeGen-gt-IR中间代码-ll"><a href="#6-代码生成-CodeGen-gt-IR中间代码-ll" class="headerlink" title="6 代码生成 CodeGen -&gt; IR中间代码(.ll)"></a>6 代码生成 CodeGen -&gt; IR中间代码(.ll)</h3><p>CodeGen负责将语法树从顶至下遍历，翻译成LLVM IR，是LLVM Backend 的输入，是前后端的桥接语言。</p>
 <p>产出IR: <code>clang -S -fobjc-arc -emit-llvm main.m -o main.ll</code></p>
 <p>LLVM IR 有三种表示格式，第一种是 bitcode 这样的存储格式，以 .bc 做后缀，第二种是可读的以 .ll，第三种是用于开发时操作 LLVM IR 的内存格式。</p>
 <p>产出Bit <code>clang -emit-llvm -c main.m -o main.bc</code></p>
 <p>查看BitCode <code>llvm-dis &lt; main.bc | less</code></p>
 <h4 id="6-1-IR-优化-Optimization"><a href="#6-1-IR-优化-Optimization" class="headerlink" title="6.1 IR 优化 Optimization"></a>6.1 IR 优化 Optimization</h4><p>IR提供了多种优化选项，-01 -02 -03 -0s…. 对应着不同的入参，有比如类似死代码清理，内联化，表达式重组，循环变量移动这样的 Pass。</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/11/7/166ed41d99b2ff83?w=710&amp;h=126&amp;f=png&amp;s=76067" alt="project Build Setting"></p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/11/7/166ed4f060601917?w=1013&amp;h=524&amp;f=png&amp;s=83963" alt="http://clang.llvm.org/docs/CommandGuide/clang.html#code-generation-options"></p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770953849319.jpg" alt="project Build Setting"></p>
+<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770953937538.jpg" alt="http://clang.llvm.org/docs/CommandGuide/clang.html#code-generation-options"></p>
 <h2 id="Extra-Clang-插件"><a href="#Extra-Clang-插件" class="headerlink" title="Extra: Clang 插件"></a>Extra: Clang 插件</h2><h3 id="使用-libclan-g-clang-LibTooling-插件"><a href="#使用-libclan-g-clang-LibTooling-插件" class="headerlink" title="使用 libclan g, clang,  LibTooling 插件"></a>使用 libclan g, clang,  LibTooling 插件</h3><p>可以改变 clang 生成代码的方式，增加更强的类型检查，或者按照自己的定义进行代码的检查分析等等。要想达成以上的目标，</p>
 <p>reference:</p>
 <blockquote>
@@ -271,10 +265,17 @@
 <div class="card card-transparent">
     <div class="level post-navigation is-flex-wrap is-mobile">
         
+        <div class="level-start">
+            <a class="level level-item has-link-grey  article-nav-prev" href="/blog/2018/12/12/frameworkEasy/">
+                <i class="level-item fas fa-chevron-left"></i>
+                <span class="level-item">年轻人，听说你想使用Framework - 基礎觀念</span>
+            </a>
+        </div>
+        
         
         <div class="level-end">
-            <a class="level level-item has-link-grey  article-nav-next" href="/blog/2018/11/19/frameworkEasy/">
-                <span class="level-item">年轻人，听说你想使用Framework - 基礎觀念</span>
+            <a class="level level-item has-link-grey  article-nav-next" href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/">
+                <span class="level-item">UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例</span>
                 <i class="level-item fas fa-chevron-right"></i>
             </a>
         </div>
@@ -352,7 +353,7 @@
                     </p>
                     <a href="/blog/archives">
                         <p class="title has-text-weight-normal">
-                            10
+                            13
                         </p>
                     </a>
                 </div>
@@ -364,7 +365,7 @@
                     </p>
                     <a href="/blog/categories">
                         <p class="title has-text-weight-normal">
-                            9
+                            10
                         </p>
                     </a>
                 </div>
@@ -376,7 +377,7 @@
                     </p>
                     <a href="/blog/tags">
                         <p class="title has-text-weight-normal">
-                            19
+                            22
                         </p>
                     </a>
                 </div>
@@ -470,7 +471,7 @@
                 <span class="level-item">Xcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">5</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/blog/categories/Xcode/Compiler/">
@@ -487,6 +488,14 @@
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blog/categories/Xcode/命令列/">
+            <span class="level-start">
+                <span class="level-item">命令列</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/blog/categories/iOS/">
@@ -539,7 +548,7 @@
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/blog/tags/CGContext/" style="font-size: 10px;">CGContext</a> <a href="/blog/tags/Clang/" style="font-size: 10px;">Clang</a> <a href="/blog/tags/Codable/" style="font-size: 10px;">Codable</a> <a href="/blog/tags/ColletionView/" style="font-size: 10px;">ColletionView</a> <a href="/blog/tags/Compiler/" style="font-size: 10px;">Compiler</a> <a href="/blog/tags/Framework/" style="font-size: 10px;">Framework</a> <a href="/blog/tags/LLVM/" style="font-size: 10px;">LLVM</a> <a href="/blog/tags/MapKit/" style="font-size: 10px;">MapKit</a> <a href="/blog/tags/Model/" style="font-size: 10px;">Model</a> <a href="/blog/tags/SpriteKit/" style="font-size: 10px;">SpriteKit</a> <a href="/blog/tags/UIKit/" style="font-size: 16.67px;">UIKit</a> <a href="/blog/tags/UI控件/" style="font-size: 13.33px;">UI控件</a> <a href="/blog/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/blog/tags/Xcode/" style="font-size: 13.33px;">Xcode</a> <a href="/blog/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/blog/tags/地圖/" style="font-size: 10px;">地圖</a> <a href="/blog/tags/庫/" style="font-size: 10px;">庫</a> <a href="/blog/tags/網路/" style="font-size: 10px;">網路</a> <a href="/blog/tags/過場動畫/" style="font-size: 13.33px;">過場動畫</a>
+        <a href="/blog/tags/CGContext/" style="font-size: 10px;">CGContext</a> <a href="/blog/tags/Clang/" style="font-size: 10px;">Clang</a> <a href="/blog/tags/Codable/" style="font-size: 10px;">Codable</a> <a href="/blog/tags/ColletionView/" style="font-size: 10px;">ColletionView</a> <a href="/blog/tags/Command-Line-Tools/" style="font-size: 15px;">Command Line Tools</a> <a href="/blog/tags/Compiler/" style="font-size: 10px;">Compiler</a> <a href="/blog/tags/Framework/" style="font-size: 10px;">Framework</a> <a href="/blog/tags/LLVM/" style="font-size: 10px;">LLVM</a> <a href="/blog/tags/MapKit/" style="font-size: 10px;">MapKit</a> <a href="/blog/tags/Model/" style="font-size: 10px;">Model</a> <a href="/blog/tags/SpriteKit/" style="font-size: 10px;">SpriteKit</a> <a href="/blog/tags/UIKit/" style="font-size: 17.5px;">UIKit</a> <a href="/blog/tags/UI控件/" style="font-size: 12.5px;">UI控件</a> <a href="/blog/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/blog/tags/Xcode/" style="font-size: 17.5px;">Xcode</a> <a href="/blog/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/blog/tags/xcode-select/" style="font-size: 10px;">xcode-select</a> <a href="/blog/tags/xcrun/" style="font-size: 12.5px;">xcrun</a> <a href="/blog/tags/地圖/" style="font-size: 10px;">地圖</a> <a href="/blog/tags/庫/" style="font-size: 10px;">庫</a> <a href="/blog/tags/網路/" style="font-size: 10px;">網路</a> <a href="/blog/tags/過場動畫/" style="font-size: 12.5px;">過場動畫</a>
     </div>
 </div>
     
@@ -554,18 +563,18 @@
         
         <article class="media">
             
-            <a href="/blog/2018/11/19/Clang/" class="media-left">
+            <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&amp;h=1488&amp;f=png&amp;s=939364" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-19T16:21:00.000Z">2019-12-20</time></div>
+                    <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(加餐) - libxcselect.dylib</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>
                 </div>
             </div>
@@ -573,7 +582,45 @@
         
         <article class="media">
             
-            <a href="/blog/2018/11/19/frameworkEasy/" class="media-left">
+            <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2018/12/12/frameworkEasy/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://www.bignerdranch.com/assets/img/blog/2018/01/frameworky.png" alt="年轻人，听说你想使用Framework - 基礎觀念">
                 </p>
@@ -581,8 +628,8 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-11T16:21:00.000Z">2018-12-12</time></div>
+                    <a href="/blog/2018/12/12/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Framework/">Framework</a>
                     </p>
@@ -592,56 +639,18 @@
         
         <article class="media">
             
-            <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="media-left">
+            <a href="/blog/2018/11/19/Clang/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/7/2/16459904878e9412?w=2262&amp;h=684&amp;f=png&amp;s=289052" alt="UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T16:21:00.000Z">2018-07-03</time></div>
-                    <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="title has-link-black-ter is-size-6 has-text-weight-normal">UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
+                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/性能優化/">性能優化</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2018/04/24/CodableModel/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://upload-images.jianshu.io/upload_images/3776017-894e8ce6434dcfab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="别只将Codable用来解Json,-玩转你的模型吧---">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-04-23T16:21:00.000Z">2018-04-24</time></div>
-                    <a href="/blog/2018/04/24/CodableModel/" class="title has-link-black-ter is-size-6 has-text-weight-normal">别只将Codable用来解Json,-玩转你的模型吧---</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2017/07/15/HeatMap/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://upload-images.jianshu.io/upload_images/3776017-db84949c6f938fc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="如何实作原生IOS热度图-CG直接做图+MapKit">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-07-14T16:21:00.000Z">2017-07-15</time></div>
-                    <a href="/blog/2017/07/15/HeatMap/" class="title has-link-black-ter is-size-6 has-text-weight-normal">如何实作原生IOS热度图-CG直接做图+MapKit</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
                     </p>
                 </div>
             </div>
@@ -659,12 +668,34 @@
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/blog/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/blog/archives/2018/11/">
                 <span class="level-start">
                     <span class="level-item">November 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">1</span>
                 </span>
             </a>
         </li>
@@ -766,6 +797,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Command-Line-Tools/">
+                        <span class="tag">Command Line Tools</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/blog/tags/Compiler/">
                         <span class="tag">Compiler</span>
                         <span class="tag is-grey">1</span>
@@ -831,7 +869,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/blog/tags/Xcode/">
                         <span class="tag">Xcode</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 
@@ -839,6 +877,20 @@
                     <a class="tags has-addons" href="/blog/tags/iOS/">
                         <span class="tag">iOS</span>
                         <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcode-select/">
+                        <span class="tag">xcode-select</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcrun/">
+                        <span class="tag">xcrun</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -894,18 +946,18 @@
         
         <article class="media">
             
-            <a href="/blog/2018/11/19/Clang/" class="media-left">
+            <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&amp;h=1488&amp;f=png&amp;s=939364" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-19T16:21:00.000Z">2019-12-20</time></div>
+                    <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(加餐) - libxcselect.dylib</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>
                 </div>
             </div>
@@ -913,7 +965,45 @@
         
         <article class="media">
             
-            <a href="/blog/2018/11/19/frameworkEasy/" class="media-left">
+            <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2018/12/12/frameworkEasy/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://www.bignerdranch.com/assets/img/blog/2018/01/frameworky.png" alt="年轻人，听说你想使用Framework - 基礎觀念">
                 </p>
@@ -921,8 +1011,8 @@
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-11T16:21:00.000Z">2018-12-12</time></div>
+                    <a href="/blog/2018/12/12/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Framework/">Framework</a>
                     </p>
@@ -932,56 +1022,18 @@
         
         <article class="media">
             
-            <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="media-left">
+            <a href="/blog/2018/11/19/Clang/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/7/2/16459904878e9412?w=2262&amp;h=684&amp;f=png&amp;s=289052" alt="UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T16:21:00.000Z">2018-07-03</time></div>
-                    <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="title has-link-black-ter is-size-6 has-text-weight-normal">UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
+                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/性能優化/">性能優化</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2018/04/24/CodableModel/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://upload-images.jianshu.io/upload_images/3776017-894e8ce6434dcfab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="别只将Codable用来解Json,-玩转你的模型吧---">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-04-23T16:21:00.000Z">2018-04-24</time></div>
-                    <a href="/blog/2018/04/24/CodableModel/" class="title has-link-black-ter is-size-6 has-text-weight-normal">别只将Codable用来解Json,-玩转你的模型吧---</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2017/07/15/HeatMap/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://upload-images.jianshu.io/upload_images/3776017-db84949c6f938fc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="如何实作原生IOS热度图-CG直接做图+MapKit">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-07-14T16:21:00.000Z">2017-07-15</time></div>
-                    <a href="/blog/2017/07/15/HeatMap/" class="title has-link-black-ter is-size-6 has-text-weight-normal">如何实作原生IOS热度图-CG直接做图+MapKit</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
                     </p>
                 </div>
             </div>
@@ -999,12 +1051,34 @@
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/blog/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/blog/archives/2018/11/">
                 <span class="level-start">
                     <span class="level-item">November 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">1</span>
                 </span>
             </a>
         </li>
@@ -1106,6 +1180,13 @@
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Command-Line-Tools/">
+                        <span class="tag">Command Line Tools</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/blog/tags/Compiler/">
                         <span class="tag">Compiler</span>
                         <span class="tag is-grey">1</span>
@@ -1171,7 +1252,7 @@
                 <div class="control">
                     <a class="tags has-addons" href="/blog/tags/Xcode/">
                         <span class="tag">Xcode</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 
@@ -1179,6 +1260,20 @@
                     <a class="tags has-addons" href="/blog/tags/iOS/">
                         <span class="tag">iOS</span>
                         <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcode-select/">
+                        <span class="tag">xcode-select</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcrun/">
+                        <span class="tag">xcrun</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 

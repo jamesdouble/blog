@@ -10,20 +10,20 @@
 <title>别只将Codable用来解Json,-玩转你的模型吧--- - JamesDouble iOS</title>
 
 
-    <meta name="description" content="本文代码使用Swift 4 代码:https://github.com/jamesdouble/JDSwiftHeatMap  前言自从 Swift 4 出来之后（现已4.1），相信不少读者已经看过无数国内外篇的文章在介绍 Swift 4 当中的一个新功能 Codable，之所以会火，不外乎就是为一个目前普遍业务上对伺服器回调Json -&amp;gt; 自定义模型这个流程开了一条捷径，也附加了不少弹性">
+    <meta name="description" content="别只将Codable用来解Json,-玩转你的模型吧 本文代码使用Swift 4 代码:https://github.com/jamesdouble/JDSwiftHeatMap  前言自从 Swift 4 出来之后（现已4.1），相信不少读者已经看过无数国内外篇的文章在介绍 Swift 4 当中的一个新功能 Codable，之所以会火，不外乎就是为一个目前普遍业务上对伺服器回调Json -&amp;gt">
 <meta name="keywords" content="iOS,Model,Codable">
 <meta property="og:type" content="article">
 <meta property="og:title" content="别只将Codable用来解Json,-玩转你的模型吧---">
 <meta property="og:url" content="https://jamesdouble.github.io/2018/04/24/CodableModel/index.html">
 <meta property="og:site_name" content="JamesDouble iOS">
-<meta property="og:description" content="本文代码使用Swift 4 代码:https://github.com/jamesdouble/JDSwiftHeatMap  前言自从 Swift 4 出来之后（现已4.1），相信不少读者已经看过无数国内外篇的文章在介绍 Swift 4 当中的一个新功能 Codable，之所以会火，不外乎就是为一个目前普遍业务上对伺服器回调Json -&amp;gt; 自定义模型这个流程开了一条捷径，也附加了不少弹性">
+<meta property="og:description" content="别只将Codable用来解Json,-玩转你的模型吧 本文代码使用Swift 4 代码:https://github.com/jamesdouble/JDSwiftHeatMap  前言自从 Swift 4 出来之后（现已4.1），相信不少读者已经看过无数国内外篇的文章在介绍 Swift 4 当中的一个新功能 Codable，之所以会火，不外乎就是为一个目前普遍业务上对伺服器回调Json -&amp;gt">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3776017-894e8ce6434dcfab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2019-04-12T02:06:10.309Z">
+<meta property="og:image" content="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770925253586.jpg">
+<meta property="og:updated_time" content="2019-12-23T09:17:09.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="别只将Codable用来解Json,-玩转你的模型吧---">
-<meta name="twitter:description" content="本文代码使用Swift 4 代码:https://github.com/jamesdouble/JDSwiftHeatMap  前言自从 Swift 4 出来之后（现已4.1），相信不少读者已经看过无数国内外篇的文章在介绍 Swift 4 当中的一个新功能 Codable，之所以会火，不外乎就是为一个目前普遍业务上对伺服器回调Json -&amp;gt; 自定义模型这个流程开了一条捷径，也附加了不少弹性">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3776017-894e8ce6434dcfab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:description" content="别只将Codable用来解Json,-玩转你的模型吧 本文代码使用Swift 4 代码:https://github.com/jamesdouble/JDSwiftHeatMap  前言自从 Swift 4 出来之后（现已4.1），相信不少读者已经看过无数国内外篇的文章在介绍 Swift 4 当中的一个新功能 Codable，之所以会火，不外乎就是为一个目前普遍业务上对伺服器回调Json -&amp;gt">
+<meta name="twitter:image" content="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770925253586.jpg">
 
 
 
@@ -143,7 +143,7 @@
     
     <div class="card-image">
         <span  class="image is-7by1">
-            <img class="thumbnail" src="https://upload-images.jianshu.io/upload_images/3776017-894e8ce6434dcfab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="别只将Codable用来解Json,-玩转你的模型吧---">
+            <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770925253586.jpg" alt="别只将Codable用来解Json,-玩转你的模型吧---">
         </span>
     </div>
     
@@ -161,7 +161,7 @@
                 <span class="level-item has-text-grey">
                     
                     
-                    14 minutes read (About 2030 words)
+                    14 minutes read (About 2038 words)
                 </span>
                 
                 
@@ -174,7 +174,7 @@
             
         </h1>
         <div class="content">
-            <p><img src="https://upload-images.jianshu.io/upload_images/3776017-894e8ce6434dcfab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="logo.png"></p>
+            <h1 id="别只将Codable用来解Json-玩转你的模型吧"><a href="#别只将Codable用来解Json-玩转你的模型吧" class="headerlink" title="别只将Codable用来解Json,-玩转你的模型吧"></a>别只将Codable用来解Json,-玩转你的模型吧</h1><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770925253586.jpg" alt="logo.png"></p>
 <p>本文代码使用Swift 4</p>
 <p>代码:<a href="https://github.com/jamesdouble/JDSwiftHeatMap" target="_blank" rel="noopener">https://github.com/jamesdouble/JDSwiftHeatMap</a></p>
 <hr>
@@ -394,7 +394,7 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
                     </p>
                     <a href="/blog/archives">
                         <p class="title has-text-weight-normal">
-                            10
+                            13
                         </p>
                     </a>
                 </div>
@@ -406,7 +406,7 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
                     </p>
                     <a href="/blog/categories">
                         <p class="title has-text-weight-normal">
-                            9
+                            10
                         </p>
                     </a>
                 </div>
@@ -418,7 +418,7 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
                     </p>
                     <a href="/blog/tags">
                         <p class="title has-text-weight-normal">
-                            19
+                            22
                         </p>
                     </a>
                 </div>
@@ -512,7 +512,7 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
                 <span class="level-item">Xcode</span>
             </span>
             <span class="level-end">
-                <span class="level-item tag">2</span>
+                <span class="level-item tag">5</span>
             </span>
         </a><ul><li>
         <a class="level is-marginless" href="/blog/categories/Xcode/Compiler/">
@@ -529,6 +529,14 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
             </span>
             <span class="level-end">
                 <span class="level-item tag">1</span>
+            </span>
+        </a></li><li>
+        <a class="level is-marginless" href="/blog/categories/Xcode/命令列/">
+            <span class="level-start">
+                <span class="level-item">命令列</span>
+            </span>
+            <span class="level-end">
+                <span class="level-item tag">3</span>
             </span>
         </a></li></ul></li><li>
         <a class="level is-marginless" href="/blog/categories/iOS/">
@@ -581,7 +589,7 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
         <h3 class="menu-label">
             Tag Cloud
         </h3>
-        <a href="/blog/tags/CGContext/" style="font-size: 10px;">CGContext</a> <a href="/blog/tags/Clang/" style="font-size: 10px;">Clang</a> <a href="/blog/tags/Codable/" style="font-size: 10px;">Codable</a> <a href="/blog/tags/ColletionView/" style="font-size: 10px;">ColletionView</a> <a href="/blog/tags/Compiler/" style="font-size: 10px;">Compiler</a> <a href="/blog/tags/Framework/" style="font-size: 10px;">Framework</a> <a href="/blog/tags/LLVM/" style="font-size: 10px;">LLVM</a> <a href="/blog/tags/MapKit/" style="font-size: 10px;">MapKit</a> <a href="/blog/tags/Model/" style="font-size: 10px;">Model</a> <a href="/blog/tags/SpriteKit/" style="font-size: 10px;">SpriteKit</a> <a href="/blog/tags/UIKit/" style="font-size: 16.67px;">UIKit</a> <a href="/blog/tags/UI控件/" style="font-size: 13.33px;">UI控件</a> <a href="/blog/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/blog/tags/Xcode/" style="font-size: 13.33px;">Xcode</a> <a href="/blog/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/blog/tags/地圖/" style="font-size: 10px;">地圖</a> <a href="/blog/tags/庫/" style="font-size: 10px;">庫</a> <a href="/blog/tags/網路/" style="font-size: 10px;">網路</a> <a href="/blog/tags/過場動畫/" style="font-size: 13.33px;">過場動畫</a>
+        <a href="/blog/tags/CGContext/" style="font-size: 10px;">CGContext</a> <a href="/blog/tags/Clang/" style="font-size: 10px;">Clang</a> <a href="/blog/tags/Codable/" style="font-size: 10px;">Codable</a> <a href="/blog/tags/ColletionView/" style="font-size: 10px;">ColletionView</a> <a href="/blog/tags/Command-Line-Tools/" style="font-size: 15px;">Command Line Tools</a> <a href="/blog/tags/Compiler/" style="font-size: 10px;">Compiler</a> <a href="/blog/tags/Framework/" style="font-size: 10px;">Framework</a> <a href="/blog/tags/LLVM/" style="font-size: 10px;">LLVM</a> <a href="/blog/tags/MapKit/" style="font-size: 10px;">MapKit</a> <a href="/blog/tags/Model/" style="font-size: 10px;">Model</a> <a href="/blog/tags/SpriteKit/" style="font-size: 10px;">SpriteKit</a> <a href="/blog/tags/UIKit/" style="font-size: 17.5px;">UIKit</a> <a href="/blog/tags/UI控件/" style="font-size: 12.5px;">UI控件</a> <a href="/blog/tags/WebView/" style="font-size: 10px;">WebView</a> <a href="/blog/tags/Xcode/" style="font-size: 17.5px;">Xcode</a> <a href="/blog/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/blog/tags/xcode-select/" style="font-size: 10px;">xcode-select</a> <a href="/blog/tags/xcrun/" style="font-size: 12.5px;">xcrun</a> <a href="/blog/tags/地圖/" style="font-size: 10px;">地圖</a> <a href="/blog/tags/庫/" style="font-size: 10px;">庫</a> <a href="/blog/tags/網路/" style="font-size: 10px;">網路</a> <a href="/blog/tags/過場動畫/" style="font-size: 12.5px;">過場動畫</a>
     </div>
 </div>
     
@@ -596,18 +604,18 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
         
         <article class="media">
             
-            <a href="/blog/2018/11/19/Clang/" class="media-left">
+            <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&amp;h=1488&amp;f=png&amp;s=939364" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-19T16:21:00.000Z">2019-12-20</time></div>
+                    <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(加餐) - libxcselect.dylib</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>
                 </div>
             </div>
@@ -615,7 +623,45 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
         
         <article class="media">
             
-            <a href="/blog/2018/11/19/frameworkEasy/" class="media-left">
+            <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2018/12/12/frameworkEasy/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://www.bignerdranch.com/assets/img/blog/2018/01/frameworky.png" alt="年轻人，听说你想使用Framework - 基礎觀念">
                 </p>
@@ -623,8 +669,8 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-11T16:21:00.000Z">2018-12-12</time></div>
+                    <a href="/blog/2018/12/12/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Framework/">Framework</a>
                     </p>
@@ -634,56 +680,18 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
         
         <article class="media">
             
-            <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="media-left">
+            <a href="/blog/2018/11/19/Clang/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/7/2/16459904878e9412?w=2262&amp;h=684&amp;f=png&amp;s=289052" alt="UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T16:21:00.000Z">2018-07-03</time></div>
-                    <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="title has-link-black-ter is-size-6 has-text-weight-normal">UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
+                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/性能優化/">性能優化</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2018/04/24/CodableModel/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://upload-images.jianshu.io/upload_images/3776017-894e8ce6434dcfab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="别只将Codable用来解Json,-玩转你的模型吧---">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-04-23T16:21:00.000Z">2018-04-24</time></div>
-                    <a href="/blog/2018/04/24/CodableModel/" class="title has-link-black-ter is-size-6 has-text-weight-normal">别只将Codable用来解Json,-玩转你的模型吧---</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2017/07/15/HeatMap/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://upload-images.jianshu.io/upload_images/3776017-db84949c6f938fc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="如何实作原生IOS热度图-CG直接做图+MapKit">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-07-14T16:21:00.000Z">2017-07-15</time></div>
-                    <a href="/blog/2017/07/15/HeatMap/" class="title has-link-black-ter is-size-6 has-text-weight-normal">如何实作原生IOS热度图-CG直接做图+MapKit</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
                     </p>
                 </div>
             </div>
@@ -701,12 +709,34 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/blog/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/blog/archives/2018/11/">
                 <span class="level-start">
                     <span class="level-item">November 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">1</span>
                 </span>
             </a>
         </li>
@@ -808,6 +838,13 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Command-Line-Tools/">
+                        <span class="tag">Command Line Tools</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/blog/tags/Compiler/">
                         <span class="tag">Compiler</span>
                         <span class="tag is-grey">1</span>
@@ -873,7 +910,7 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
                 <div class="control">
                     <a class="tags has-addons" href="/blog/tags/Xcode/">
                         <span class="tag">Xcode</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 
@@ -881,6 +918,20 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
                     <a class="tags has-addons" href="/blog/tags/iOS/">
                         <span class="tag">iOS</span>
                         <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcode-select/">
+                        <span class="tag">xcode-select</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcrun/">
+                        <span class="tag">xcrun</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
@@ -936,18 +987,18 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
         
         <article class="media">
             
-            <a href="/blog/2018/11/19/Clang/" class="media-left">
+            <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/11/19/1672ae1101134bc8?w=2308&amp;h=1488&amp;f=png&amp;s=939364" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-19T16:21:00.000Z">2019-12-20</time></div>
+                    <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(加餐) - libxcselect.dylib</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>
                 </div>
             </div>
@@ -955,7 +1006,45 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
         
         <article class="media">
             
-            <a href="/blog/2018/11/19/frameworkEasy/" class="media-left">
+            <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
+                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
+            <a href="/blog/2018/12/12/frameworkEasy/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="https://www.bignerdranch.com/assets/img/blog/2018/01/frameworky.png" alt="年轻人，听说你想使用Framework - 基礎觀念">
                 </p>
@@ -963,8 +1052,8 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
-                    <a href="/blog/2018/11/19/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-12-11T16:21:00.000Z">2018-12-12</time></div>
+                    <a href="/blog/2018/12/12/frameworkEasy/" class="title has-link-black-ter is-size-6 has-text-weight-normal">年轻人，听说你想使用Framework - 基礎觀念</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Framework/">Framework</a>
                     </p>
@@ -974,56 +1063,18 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
         
         <article class="media">
             
-            <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="media-left">
+            <a href="/blog/2018/11/19/Clang/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="https://user-gold-cdn.xitu.io/2018/7/2/16459904878e9412?w=2262&amp;h=684&amp;f=png&amp;s=289052" alt="UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
                 </p>
             </a>
             
             <div class="media-content">
                 <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-07-02T16:21:00.000Z">2018-07-03</time></div>
-                    <a href="/blog/2018/07/03/UICollectionViewLayoutInvalidationContext/" class="title has-link-black-ter is-size-6 has-text-weight-normal">UICollectionViewLayoutInvalidationContext性能优化 详细流程图 + 范例</a>
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-11-18T16:21:00.000Z">2018-11-19</time></div>
+                    <a href="/blog/2018/11/19/Clang/" class="title has-link-black-ter is-size-6 has-text-weight-normal">(Xcode) 編譯器小白筆記 - LLVM前端Clang</a>
                     <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/性能優化/">性能優化</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2018/04/24/CodableModel/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="https://upload-images.jianshu.io/upload_images/3776017-894e8ce6434dcfab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="别只将Codable用来解Json,-玩转你的模型吧---">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2018-04-23T16:21:00.000Z">2018-04-24</time></div>
-                    <a href="/blog/2018/04/24/CodableModel/" class="title has-link-black-ter is-size-6 has-text-weight-normal">别只将Codable用来解Json,-玩转你的模型吧---</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2017/07/15/HeatMap/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://upload-images.jianshu.io/upload_images/3776017-db84949c6f938fc4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="如何实作原生IOS热度图-CG直接做图+MapKit">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2017-07-14T16:21:00.000Z">2017-07-15</time></div>
-                    <a href="/blog/2017/07/15/HeatMap/" class="title has-link-black-ter is-size-6 has-text-weight-normal">如何实作原生IOS热度图-CG直接做图+MapKit</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/iOS/">iOS</a> / <a class="has-link-grey -link" href="/blog/categories/iOS/開源代碼/">開源代碼</a>
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/Compiler/">Compiler</a>
                     </p>
                 </div>
             </div>
@@ -1041,12 +1092,34 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
         <ul class="menu-list">
         
         <li>
+            <a class="level is-marginless" href="/blog/archives/2019/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2019</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">3</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
+            <a class="level is-marginless" href="/blog/archives/2018/12/">
+                <span class="level-start">
+                    <span class="level-item">December 2018</span>
+                </span>
+                <span class="level-end">
+                    <span class="level-item tag">1</span>
+                </span>
+            </a>
+        </li>
+        
+        <li>
             <a class="level is-marginless" href="/blog/archives/2018/11/">
                 <span class="level-start">
                     <span class="level-item">November 2018</span>
                 </span>
                 <span class="level-end">
-                    <span class="level-item tag">2</span>
+                    <span class="level-item tag">1</span>
                 </span>
             </a>
         </li>
@@ -1148,6 +1221,13 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
                 </div>
                 
                 <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/Command-Line-Tools/">
+                        <span class="tag">Command Line Tools</span>
+                        <span class="tag is-grey">3</span>
+                    </a>
+                </div>
+                
+                <div class="control">
                     <a class="tags has-addons" href="/blog/tags/Compiler/">
                         <span class="tag">Compiler</span>
                         <span class="tag is-grey">1</span>
@@ -1213,7 +1293,7 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
                 <div class="control">
                     <a class="tags has-addons" href="/blog/tags/Xcode/">
                         <span class="tag">Xcode</span>
-                        <span class="tag is-grey">2</span>
+                        <span class="tag is-grey">5</span>
                     </a>
                 </div>
                 
@@ -1221,6 +1301,20 @@ Mirror 在取得变量名称与变量类型的判断上明显比看起来简易�
                     <a class="tags has-addons" href="/blog/tags/iOS/">
                         <span class="tag">iOS</span>
                         <span class="tag is-grey">8</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcode-select/">
+                        <span class="tag">xcode-select</span>
+                        <span class="tag is-grey">1</span>
+                    </a>
+                </div>
+                
+                <div class="control">
+                    <a class="tags has-addons" href="/blog/tags/xcrun/">
+                        <span class="tag">xcrun</span>
+                        <span class="tag is-grey">2</span>
                     </a>
                 </div>
                 
