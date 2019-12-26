@@ -56,40 +56,6 @@
   </entry>
   
   <entry>
-    <title>深入淺出 Xcode 命令列(2)-xcrun 基礎</title>
-    <link href="https://jamesdouble.github.io/2019/12/19/xcCmdLine-2/"/>
-    <id>https://jamesdouble.github.io/2019/12/19/xcCmdLine-2/</id>
-    <published>2019-12-18T16:21:00.000Z</published>
-    <updated>2019-12-25T06:57:35.055Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>Xcode命令列 = Xcode Command Lines Tool</p></blockquote><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>回顧一下<a href>上一篇加餐</a>, </p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">libxcselect.dylib</span><br><span class="line">-&gt;</span><br><span class="line">_xcselect_invoke_xcrun</span><br><span class="line">-&gt; </span><br><span class="line">libxcrun.dylib</span><br><span class="line">-&gt;</span><br><span class="line">xcrun_main</span><br></pre></td></tr></table></figure><p>我們最後發現所有Xcode Command Line 都會先被導向 xcrun_main，也就是 xcrun。</p><p>於是xcrun就成了第一個探討對象 </p><a id="more"></a><h1 id="xcrun"><a href="#xcrun" class="headerlink" title="xcrun"></a>xcrun</h1><p>xcrun 本名 : command-line tool runner,</p><p>如果把<a href>第一篇</a>說的xcode-select形容成多組Command Line tools中的引路人，</p><p>xcrun就可以理解為某一組Command Line tools的敲門磚。</p><p>先來看xcrun的man, <code>man xcrun</code></p><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt></p><p>描述裡說的，跟 <a href>xcode-select</a>基本上大同小異，例如：</p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xcrun  provides a means to locate or invoke developer tools from the command-line, without requiring users to modify Makefiles</span><br><span class="line">       or otherwise take inconvenient measures to support multiple Xcode tool chains</span><br></pre></td></tr></table></figure><p>不外乎就是說可以再多組Command Line Tools裡面找到定位到該執行的指令。</p><p>描述甚至在還提到了<code>xcode-select</code>，就像我上面說的要走到真正的executable，</p><p>是 xcode-select(引路人)、xcrun(敲門磚) 兩位相輔相成才走得到。</p><p>由xcode-selct -s 決定的xcode command Line路徑，xcrun再依照這路徑 定位／執行命令。</p><p>把<a href>第一篇</a>的這張圖擴充一下：</p><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/xcrun1.png" alt="xcrun"></p><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>已 Command line tools 裡的 <code>clang</code> 為例:</p><blockquote><p>作為參考, xcode-select 的 path<br>xcode-select -p<br>/Applications/Xcode.app/Contents/Developer</p></blockquote><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765701868414.png" alt></p><ul><li><p><code>xcrun clang</code></p><ul><li>此指令等價於執行以下指令 ⬇️<ul><li>clang </li><li>/usr/bin/clang == (which clang) 詳情參考<a href>上一篇加餐</a></li><li>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang</li></ul></li></ul></li><li><p><code>xcrun --find clang</code></p><ul><li>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang</li></ul></li><li><p><code>xcrun --find git</code></p><ul><li>/Applications/Xcode.app/Contents/Developer/usr/bin/git</li></ul></li></ul><h2 id="Futher-More"><a href="#Futher-More" class="headerlink" title="Futher More"></a>Futher More</h2><p>一般介紹xcrun的文章到這邊大概就會止住了，大概的總結：xcrun 後面接指令就可以怎麼樣怎麼樣，然後接著介紹後面的指令。</p><p>但看到 <code>xcrun --find clang</code> &amp; <code>xcrun --find git</code> 的輸出，</p><p>一個是 <dev>/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang</dev></p><p>一個是 <dev>/usr/bin/git</dev></p><p>給我一個感覺就是 xcrun 除了走xcode-select指引的大路，自己裡面還有很多小路！</p><p>所以我想就這個問題在深挖 xcrun。而的確一組command line Tools裡還能在拆分成三類的指令 </p><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/l0exdm9ubthafcji0.gif" alt="l0Exdm9UbTHAFcJi0"></p><p>這三大類分別為 -</p><ul><li>Developer</li><li>SDKs(Platforms)</li><li>ToolChain</li></ul><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15766563864092.png" alt></p><p>關於這三類之間的依賴，以及xcrun剩餘的用法，請允許我拖更到下一篇文章😅</p><p>reference:</p><ul><li><a href="https://github.com/b-man/xcode-tools/blob/master/README.md" target="_blank" rel="noopener">b-man/xcode-tools</a></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;Xcode命令列 = Xcode Command Lines Tool&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;回顧一下&lt;a href&gt;上一篇加餐&lt;/a&gt;, &lt;/p&gt;
-&lt;figure class=&quot;highlight plain hljs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;libxcselect.dylib&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;_xcselect_invoke_xcrun&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-&amp;gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;libxcrun.dylib&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xcrun_main&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;我們最後發現所有Xcode Command Line 都會先被導向 xcrun_main，也就是 xcrun。&lt;/p&gt;
-&lt;p&gt;於是xcrun就成了第一個探討對象 &lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Xcode" scheme="https://jamesdouble.github.io/categories/Xcode/"/>
-    
-      <category term="命令列" scheme="https://jamesdouble.github.io/categories/Xcode/%E5%91%BD%E4%BB%A4%E5%88%97/"/>
-    
-    
-      <category term="Xcode" scheme="https://jamesdouble.github.io/tags/Xcode/"/>
-    
-      <category term="Command Line Tools" scheme="https://jamesdouble.github.io/tags/Command-Line-Tools/"/>
-    
-      <category term="xcrun" scheme="https://jamesdouble.github.io/tags/xcrun/"/>
-    
-  </entry>
-  
-  <entry>
     <title>深入淺出 Xcode Command Lines Tool(1) - 初探</title>
     <link href="https://jamesdouble.github.io/2019/12/19/xcCmdLine-1/"/>
     <id>https://jamesdouble.github.io/2019/12/19/xcCmdLine-1/</id>
@@ -125,6 +91,40 @@
       <category term="Command Line Tools" scheme="https://jamesdouble.github.io/tags/Command-Line-Tools/"/>
     
       <category term="xcode-select" scheme="https://jamesdouble.github.io/tags/xcode-select/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入淺出 Xcode 命令列(2)-xcrun 基礎</title>
+    <link href="https://jamesdouble.github.io/2019/12/19/xcCmdLine-2/"/>
+    <id>https://jamesdouble.github.io/2019/12/19/xcCmdLine-2/</id>
+    <published>2019-12-18T16:21:00.000Z</published>
+    <updated>2019-12-25T06:57:35.055Z</updated>
+    
+    <content type="html"><![CDATA[<blockquote><p>Xcode命令列 = Xcode Command Lines Tool</p></blockquote><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>回顧一下<a href>上一篇加餐</a>, </p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">libxcselect.dylib</span><br><span class="line">-&gt;</span><br><span class="line">_xcselect_invoke_xcrun</span><br><span class="line">-&gt; </span><br><span class="line">libxcrun.dylib</span><br><span class="line">-&gt;</span><br><span class="line">xcrun_main</span><br></pre></td></tr></table></figure><p>我們最後發現所有Xcode Command Line 都會先被導向 xcrun_main，也就是 xcrun。</p><p>於是xcrun就成了第一個探討對象 </p><a id="more"></a><h1 id="xcrun"><a href="#xcrun" class="headerlink" title="xcrun"></a>xcrun</h1><p>xcrun 本名 : command-line tool runner,</p><p>如果把<a href>第一篇</a>說的xcode-select形容成多組Command Line tools中的引路人，</p><p>xcrun就可以理解為某一組Command Line tools的敲門磚。</p><p>先來看xcrun的man, <code>man xcrun</code></p><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt></p><p>描述裡說的，跟 <a href>xcode-select</a>基本上大同小異，例如：</p><figure class="highlight plain hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xcrun  provides a means to locate or invoke developer tools from the command-line, without requiring users to modify Makefiles</span><br><span class="line">       or otherwise take inconvenient measures to support multiple Xcode tool chains</span><br></pre></td></tr></table></figure><p>不外乎就是說可以再多組Command Line Tools裡面找到定位到該執行的指令。</p><p>描述甚至在還提到了<code>xcode-select</code>，就像我上面說的要走到真正的executable，</p><p>是 xcode-select(引路人)、xcrun(敲門磚) 兩位相輔相成才走得到。</p><p>由xcode-selct -s 決定的xcode command Line路徑，xcrun再依照這路徑 定位／執行命令。</p><p>把<a href>第一篇</a>的這張圖擴充一下：</p><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/xcrun1.png" alt="xcrun"></p><h2 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h2><p>已 Command line tools 裡的 <code>clang</code> 為例:</p><blockquote><p>作為參考, xcode-select 的 path<br>xcode-select -p<br>/Applications/Xcode.app/Contents/Developer</p></blockquote><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765701868414.png" alt></p><ul><li><p><code>xcrun clang</code></p><ul><li>此指令等價於執行以下指令 ⬇️<ul><li>clang </li><li>/usr/bin/clang == (which clang) 詳情參考<a href>上一篇加餐</a></li><li>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang</li></ul></li></ul></li><li><p><code>xcrun --find clang</code></p><ul><li>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang</li></ul></li><li><p><code>xcrun --find git</code></p><ul><li>/Applications/Xcode.app/Contents/Developer/usr/bin/git</li></ul></li></ul><h2 id="Futher-More"><a href="#Futher-More" class="headerlink" title="Futher More"></a>Futher More</h2><p>一般介紹xcrun的文章到這邊大概就會止住了，大概的總結：xcrun 後面接指令就可以怎麼樣怎麼樣，然後接著介紹後面的指令。</p><p>但看到 <code>xcrun --find clang</code> &amp; <code>xcrun --find git</code> 的輸出，</p><p>一個是 <dev>/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang</dev></p><p>一個是 <dev>/usr/bin/git</dev></p><p>給我一個感覺就是 xcrun 除了走xcode-select指引的大路，自己裡面還有很多小路！</p><p>所以我想就這個問題在深挖 xcrun。而的確一組command line Tools裡還能在拆分成三類的指令 </p><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/l0exdm9ubthafcji0.gif" alt="l0Exdm9UbTHAFcJi0"></p><p>這三大類分別為 -</p><ul><li>Developer</li><li>SDKs(Platforms)</li><li>ToolChain</li></ul><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15766563864092.png" alt></p><p>關於這三類之間的依賴，以及xcrun剩餘的用法，請允許我拖更到下一篇文章😅</p><p>reference:</p><ul><li><a href="https://github.com/b-man/xcode-tools/blob/master/README.md" target="_blank" rel="noopener">b-man/xcode-tools</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;blockquote&gt;
+&lt;p&gt;Xcode命令列 = Xcode Command Lines Tool&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;回顧一下&lt;a href&gt;上一篇加餐&lt;/a&gt;, &lt;/p&gt;
+&lt;figure class=&quot;highlight plain hljs&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;libxcselect.dylib&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;_xcselect_invoke_xcrun&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-&amp;gt; &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;libxcrun.dylib&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;xcrun_main&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;我們最後發現所有Xcode Command Line 都會先被導向 xcrun_main，也就是 xcrun。&lt;/p&gt;
+&lt;p&gt;於是xcrun就成了第一個探討對象 &lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Xcode" scheme="https://jamesdouble.github.io/categories/Xcode/"/>
+    
+      <category term="命令列" scheme="https://jamesdouble.github.io/categories/Xcode/%E5%91%BD%E4%BB%A4%E5%88%97/"/>
+    
+    
+      <category term="Xcode" scheme="https://jamesdouble.github.io/tags/Xcode/"/>
+    
+      <category term="Command Line Tools" scheme="https://jamesdouble.github.io/tags/Command-Line-Tools/"/>
+    
+      <category term="xcrun" scheme="https://jamesdouble.github.io/tags/xcrun/"/>
     
   </entry>
   
