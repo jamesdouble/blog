@@ -18,12 +18,12 @@
 <meta property="og:site_name" content="JamesDouble iOS">
 <meta property="og:description" content="WebView如何处理不受信任的http网路凭证本篇使用Swift 并附上官方文档前阵子接了（公司Ａ）一个专案，再加上要毕业了，学校各种忙碌，距离上一篇文章也有好大一段时间…，也是因为这个专案碰到了些小问题，才想来写写笔记。 一、起因公司Ａ有个只限内网用的公文系统（似乎是用java写的网页?），到目前为止都是单纯在Windows上的小程式利用『URL Scheme』跟这个系统互相丢接资料，我则是要">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770892244658.jpg">
-<meta property="og:updated_time" content="2019-12-23T08:40:56.359Z">
+<meta property="og:image" content="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770892244658.jpg">
+<meta property="og:updated_time" content="2019-12-27T06:09:43.997Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebView如何处理不受信任的http网路凭证">
 <meta name="twitter:description" content="WebView如何处理不受信任的http网路凭证本篇使用Swift 并附上官方文档前阵子接了（公司Ａ）一个专案，再加上要毕业了，学校各种忙碌，距离上一篇文章也有好大一段时间…，也是因为这个专案碰到了些小问题，才想来写写笔记。 一、起因公司Ａ有个只限内网用的公文系统（似乎是用java写的网页?），到目前为止都是单纯在Windows上的小程式利用『URL Scheme』跟这个系统互相丢接资料，我则是要">
-<meta name="twitter:image" content="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770892244658.jpg">
+<meta name="twitter:image" content="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770892244658.jpg">
 
 
 
@@ -143,7 +143,7 @@
     
     <div class="card-image">
         <span  class="image is-7by1">
-            <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770892244658.jpg" alt="WebView如何处理不受信任的http网路凭证">
+            <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770892244658.jpg" alt="WebView如何处理不受信任的http网路凭证">
         </span>
     </div>
     
@@ -196,7 +196,7 @@
 </li>
 <li><p><strong><em>Safari可开启？</em></strong></p>
 <p>  会突然使用Safari是因为我不想一直重新Build，内心想说结果一样，没想到，跳出来一个这样的提示：</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770892244658.jpg" alt="Safari开启系统"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770892244658.jpg" alt="Safari开启系统"></p>
 <p>按下”Continue”后，就显示出系统的页面了！</p>
 </li>
 <li><p><strong><em>不信任的的凭证</em></strong></p>
@@ -212,13 +212,13 @@
 <h3 id="三、问题一解法📖"><a href="#三、问题一解法📖" class="headerlink" title="三、问题一解法📖"></a>三、问题一解法📖</h3><ul>
 <li><p><strong><em>设定Info.plist</em></strong></p>
 <p> 第一个方法最简单就是直接关掉ATS，直接在Info.plist增加以下其中一对Key Value Pair</p>
-<p> <img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770892902183.jpg" alt="Info.plist"></p>
+<p> <img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770892902183.jpg" alt="Info.plist"></p>
 <p> <strong>1.Allow Arbitary Loads （NSAllowArbitrayLoads)</strong></p>
-<p> <img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770893925603.jpg" alt></p>
+<p> <img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770893925603.jpg" alt></p>
 <p>   用途是？解除所有连线的ATS限制，这里指的所有连线包括URLRequest,URLConnection,URLSession,UIWebView….等。</p>
 <p> 但是官方文件里也很表明写了，只要Allow Arbitary Loads这个值被设为True，就没有办法通过上架审核，所以我不采用此方法。</p>
 <p> <strong>2.Exception Domain （NSExceptionDomains)</strong></p>
-<p> <img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770894410890.jpg" alt></p>
+<p> <img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770894410890.jpg" alt></p>
 <p> 用途是？排除某个Domain使其不受ATS的限制。<br> 个人认为这个Key比较适合拿来使用，如果你明确知道自己会在某个Domain之下的话。<br> 这个Key我不知道会不会影响上架？    </p>
 <blockquote>
 <p>官方文档：<a href="https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW35" target="_blank" rel="noopener">https://developer.apple.com/library/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW35</a></p>
@@ -233,7 +233,7 @@
 </blockquote>
 <p> 另一种方法就是实作官方文档里的『Trust Customization for Specific APIs』，也就是自定义某个要求的凭证检查</p>
 <p> 1.URLSession</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770894715589.jpg" alt></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770894715589.jpg" alt></p>
 <p>依照官方文档，我们需要实作 urlSession(_:task:didReceive:completionHandler:)，如果凭证无法验证，会发出一个Challenge供你判断你要拒绝这个连线还是提供一个凭证来解决：</p>
 </li>
 <li><p>遵守URLSessionDelegate</p>
@@ -259,7 +259,7 @@
 
 3.***URLCredential*** : 这个类有几种差异满大的Init()，主要就是看authenticationMethod来决定你要回传的是什么。
 
-![](http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770897288708.jpg)
+![](https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770897288708.jpg)
 
 我们这次要做的是凭证的处理，所以用第二个建构。
 
@@ -270,7 +270,7 @@
 5.利用completionHandle告知结果：（使用凭证,这个凭证）
 </code></pre><hr>
 <p>2.UIWebView - 回归正题我们要用UIWebView，但官方文档即提到无法自定义Https server trust，但我们还是要用上面的方法解决。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770896892881.jpg" alt></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770896892881.jpg" alt></p>
 <p>棘手的地方是UIWebView只能单纯LoadingRequest跟管理URLSession，必须绕道而行。</p>
 <ul>
 <li>实作UIWebViewDelegate记住失败的Request，并且建立一个URLConnection。</li>
@@ -602,6 +602,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -623,7 +642,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -631,25 +650,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>
@@ -985,6 +985,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -1006,7 +1025,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -1014,25 +1033,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>

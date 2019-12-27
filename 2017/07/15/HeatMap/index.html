@@ -19,7 +19,7 @@
 <meta property="og:description" content="本教程使用Swift 3.1, Xcode 8.0 代码:https://github.com/jamesdouble/JDSwiftHeatMap  现在Iphone使用者常使用的地图插件，不外乎就是高德与百度，国外则是Google，看来看去就是没啥人在用本地端自带的MKMapView，一个原因是起步晚所以欠缺很多使用者经验跟资料，再来一个我自己认为是现成API极少，MKMapView基本上只">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://jamesdouble.github.io/blog/images/og_image.png">
-<meta property="og:updated_time" content="2019-12-23T07:52:30.602Z">
+<meta property="og:updated_time" content="2019-12-27T06:09:44.102Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何实作原生IOS热度图-CG直接做图+MapKit">
 <meta name="twitter:description" content="本教程使用Swift 3.1, Xcode 8.0 代码:https://github.com/jamesdouble/JDSwiftHeatMap  现在Iphone使用者常使用的地图插件，不外乎就是高德与百度，国外则是Google，看来看去就是没啥人在用本地端自带的MKMapView，一个原因是起步晚所以欠缺很多使用者经验跟资料，再来一个我自己认为是现成API极少，MKMapView基本上只">
@@ -168,14 +168,14 @@
             
         </h1>
         <div class="content">
-            <p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770813170619.jpg" alt></p>
+            <p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770813170619.jpg" alt></p>
 <p>本教程使用Swift 3.1, Xcode 8.0</p>
 <p>代码:<a href="https://github.com/jamesdouble/JDSwiftHeatMap" target="_blank" rel="noopener">https://github.com/jamesdouble/JDSwiftHeatMap</a></p>
 <hr>
 <p>现在Iphone使用者常使用的地图插件，不外乎就是高德与百度，国外则是Google，看来看去就是没啥人在用本地端自带的MKMapView，一个原因是起步晚所以欠缺很多使用者经验跟资料，再来一个我自己认为是现成API极少，MKMapView基本上只有Annotaion,Overlay是Developer可以自订的，而百度有轨迹,雷达…等已经是现成的API。</p>
 <p>于是我越想越不顺心，要用还是要用咱IOS原生自带的，在网上搜了一圈只看到一个用OC写的古老项目，用起来总不顺心，现在想经由开源的方法汇整大家意见来提高整体的自由度跟使用性。</p>
 <blockquote>
-<h3 id="热度图"><a href="#热度图" class="headerlink" title="热度图"></a>热度图</h3><p>热度图是早期(1991)就已经出现的资料表达形式(矩阵表示)，其成熟度以及相对应衍生图像也是相对于其他的地图表达方式成熟。<br><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770813321799.jpg" alt="热度图种类 - source:WIKI"></p>
+<h3 id="热度图"><a href="#热度图" class="headerlink" title="热度图"></a>热度图</h3><p>热度图是早期(1991)就已经出现的资料表达形式(矩阵表示)，其成熟度以及相对应衍生图像也是相对于其他的地图表达方式成熟。<br><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770813321799.jpg" alt="热度图种类 - source:WIKI"></p>
 </blockquote>
 <a id="more"></a>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>实作起来不需要用太广的知识或是什么深不见底的技术，基本上只要熟悉两个区块：</p>
@@ -189,7 +189,7 @@
 <h2 id="HeatMap-on-MapKit-记录位置"><a href="#HeatMap-on-MapKit-记录位置" class="headerlink" title="HeatMap on MapKit - 记录位置"></a>HeatMap on MapKit - 记录位置</h2><p>MapKit该做的就是MapKit“能”做的，记录相关的<strong>地理资料</strong>，包括资料的“<strong>经纬度座标</strong>“以及距离。</p>
 <ol>
 <li><p>MKOVeraly:很明显，热度图这样超级不规则的图形，MKCircle,MKPolyline,MKPolygon…等，并不能满足我们需要的，还是得从最根本的MKOverlay重新创造一个子类别。</p>
-<p> <img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770813807687.jpg" alt="JDHeatOverlay"></p>
+<p> <img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770813807687.jpg" alt="JDHeatOverlay"></p>
 <ul>
 <li><p>计算Overlay的BoudingMapRect(涵盖范围)：</p>
 <figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-comment">/**</span></span><br><span class="line"><span class="hljs-comment">    有新的点加进来 -&gt;</span></span><br><span class="line"><span class="hljs-comment">    重新计算这个Overlay的涵盖</span></span><br><span class="line"><span class="hljs-comment">    */</span></span><br><span class="line">   <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">caculateMaprect</span><span class="hljs-params">(newPoint:JDHeatPoint)</span></span>&#123;</span><br><span class="line">       <span class="hljs-keyword">var</span> <span class="hljs-type">MaxX</span>:<span class="hljs-type">Double</span> = -<span class="hljs-number">9999999999999</span></span><br><span class="line">       <span class="hljs-keyword">var</span> <span class="hljs-type">MaxY</span>:<span class="hljs-type">Double</span> = -<span class="hljs-number">9999999999999</span></span><br><span class="line">       <span class="hljs-keyword">var</span> <span class="hljs-type">MinX</span>:<span class="hljs-type">Double</span> = <span class="hljs-number">99999999999999</span></span><br><span class="line">       <span class="hljs-keyword">var</span> <span class="hljs-type">MinY</span>:<span class="hljs-type">Double</span> = <span class="hljs-number">99999999999999</span></span><br><span class="line">       <span class="hljs-keyword">if</span> <span class="hljs-keyword">let</span> <span class="hljs-type">BeenCaculatedMapRect</span> = <span class="hljs-type">CaculatedMapRect</span>&#123;</span><br><span class="line">           <span class="hljs-comment">//非首次计算 -&gt; 把上次计算的MapRect拿出来，比MaxX,Y MinX,Y</span></span><br><span class="line">           <span class="hljs-type">MaxX</span> = <span class="hljs-type">MKMapRectGetMaxX</span>(<span class="hljs-type">BeenCaculatedMapRect</span>)</span><br><span class="line">           <span class="hljs-keyword">let</span> heatmaprect = newPoint.<span class="hljs-type">MapRect</span></span><br><span class="line">           <span class="hljs-keyword">let</span> tMaxX = <span class="hljs-type">MKMapRectGetMaxX</span>(heatmaprect)</span><br><span class="line">           <span class="hljs-type">MaxX</span> = (tMaxX &gt; <span class="hljs-type">MaxX</span>) ? tMaxX : <span class="hljs-type">MaxX</span></span><br><span class="line">           .</span><br><span class="line">           .</span><br><span class="line">           <span class="hljs-comment">//每次计算新的资料点，MapRect都会变大。&#125;</span></span><br><span class="line">       <span class="hljs-keyword">else</span>&#123;</span><br><span class="line">           <span class="hljs-comment">//首次计算 -&gt; 取第一个点的Maprecr</span></span><br><span class="line">           <span class="hljs-keyword">let</span> heatmaprect = newPoint.<span class="hljs-type">MapRect</span></span><br><span class="line">           .</span><br><span class="line">           .        &#125;</span><br><span class="line">       <span class="hljs-keyword">let</span> rect = <span class="hljs-type">MKMapRectMake</span>(<span class="hljs-type">MinX</span>, <span class="hljs-type">MinY</span>, <span class="hljs-type">MaxX</span> - <span class="hljs-type">MinX</span>, <span class="hljs-type">MaxY</span> - <span class="hljs-type">MinY</span>)</span><br><span class="line">       <span class="hljs-keyword">self</span>.<span class="hljs-type">CaculatedMapRect</span> = rect</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
@@ -199,7 +199,7 @@
 </ol>
 <ol>
 <li><p>同理，现有的OverlayRender都无法满足，我们要的形状，所以也是重新定义一个类别。</p>
-<p> <img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770814011409.jpg" alt="JDHeatOverlayRender"></p>
+<p> <img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770814011409.jpg" alt="JDHeatOverlayRender"></p>
 <ul>
 <li><p><strong>draw</strong>是这个类最重要的Func，再之后Core Graphic 那段一起写。</p>
 <figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">draw</span><span class="hljs-params">(<span class="hljs-number">_</span> mapRect: MKMapRect, zoomScale: MKZoomScale, <span class="hljs-keyword">in</span> context: CGContext)</span></span></span><br></pre></td></tr></table></figure>
@@ -208,7 +208,7 @@
 </li>
 </ol>
 <h2 id="过渡-MapKit-gt-Core-Graphic"><a href="#过渡-MapKit-gt-Core-Graphic" class="headerlink" title="过渡(ＭapKit -&gt; Core Graphic)"></a>过渡(ＭapKit -&gt; Core Graphic)</h2><p>熟悉MapKit的朋友们一定都知道，MKMapRect与CGRect的差别，也清楚他的转换方法，通常只会在上述的<strong>“ draw “</strong>，也就是要画的时候进行转换，但我这边必须提早进行，因为我必须先知道我要画什么，所以我这里自带一个名词<strong><em>[ RowFormData ]</em></strong>。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770814336848.jpg" alt="过度过程"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770814336848.jpg" alt="过度过程"></p>
 <ul>
 <li><p>使用者资料丛集转换前：</p>
 <p>  单位:MKMapRect,位置:MKMapPoint,范围:KilloMeter,原点:很大</p>
@@ -219,13 +219,13 @@
 </li>
 </ul>
 <h2 id="计算层：将RowFormData-gt-CGImage"><a href="#计算层：将RowFormData-gt-CGImage" class="headerlink" title="计算层：将RowFormData-&gt;CGImage"></a>计算层：将RowFormData-&gt;CGImage</h2><p>我们有了RowFormData后，就能开始计算什么位置放什么颜色，我们这里自创一个简易的类别，来帮助我们区隔该做的事：</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770814608440.jpg" alt="RowDataProducer"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770814608440.jpg" alt="RowDataProducer"></p>
 <p><strong><em>这边会用到的Core Graphic并不是一般常见的UIGraphicsBeginImageContext之后，GetContext在做movePoint,addArc,addPath….等，因为要再次强调我们图层的形状是超级不规则，甚至还要计算颜色。</em></strong></p>
 <h4 id="超级踩坑区"><a href="#超级踩坑区" class="headerlink" title="超级踩坑区"></a>超级踩坑区</h4><h4 id="超级踩坑区-1"><a href="#超级踩坑区-1" class="headerlink" title="超级踩坑区"></a>超级踩坑区</h4><h4 id="超级踩坑区-2"><a href="#超级踩坑区-2" class="headerlink" title="超级踩坑区"></a>超级踩坑区</h4><p>我们要用的是CGContex里的建构式</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770814875962.jpg" alt></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770814875962.jpg" alt></p>
 <p>参数有data,width,height,bitsPerComponent,bytesPerRow,space,bitmapInfo<br>该怎么看呢？<br>（对于图片概念不熟悉的朋友，我在这也扯不完，网上搜索Bitmap或Pixels还有RGB应该就很多了。）</p>
 <blockquote>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770815031176.jpg" alt="Color Bitmap http://jbrd.github.io/2008/02/01/bitmap-and-indexed-images.html"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770815031176.jpg" alt="Color Bitmap http://jbrd.github.io/2008/02/01/bitmap-and-indexed-images.html"></p>
 <p>参数只要配对错误就会报错，而且不会跟你说错哪</p>
 <ul>
 <li>上图的width,height已经有了，就是刚刚计算出来的CGRect</li>
@@ -562,6 +562,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -583,7 +602,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -591,25 +610,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>
@@ -945,6 +945,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -966,7 +985,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -974,25 +993,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>

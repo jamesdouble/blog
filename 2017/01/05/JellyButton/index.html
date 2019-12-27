@@ -19,7 +19,7 @@
 <meta property="og:description" content="本篇教程使用Swift 源碼:https://github.com/jamesdouble/JDJellyButton，以下稱JDJellyButton 0)何謂導航浮動按鈕 当你的应用开发到一定程度的规模时，必须要有个十分清晰明了的导航功能，才不会让使用者卡在某一页，不知道如何前往他们想去的页面。常见的导航方式，不外乎最常用UITabBarController、UINavigationBar，另">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://jamesdouble.github.io/blog/images/og_image.png">
-<meta property="og:updated_time" content="2019-12-23T07:52:19.296Z">
+<meta property="og:updated_time" content="2019-12-27T06:10:00.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="如何刻出一个可拖动的导航浮動按钮">
 <meta name="twitter:description" content="本篇教程使用Swift 源碼:https://github.com/jamesdouble/JDJellyButton，以下稱JDJellyButton 0)何謂導航浮動按鈕 当你的应用开发到一定程度的规模时，必须要有个十分清晰明了的导航功能，才不会让使用者卡在某一页，不知道如何前往他们想去的页面。常见的导航方式，不外乎最常用UITabBarController、UINavigationBar，另">
@@ -171,21 +171,21 @@
             <p><em>本篇教程使用Swift</em> 源碼:<a href="https://github.com/jamesdouble/JDJellyButton" target="_blank" rel="noopener">https://github.com/jamesdouble/JDJellyButton</a><br>，以下稱JDJellyButton</p>
 <h1 id="0-何謂導航浮動按鈕"><a href="#0-何謂導航浮動按鈕" class="headerlink" title="0)何謂導航浮動按鈕"></a>0)何謂導航浮動按鈕</h1><hr>
 <p>当你的应用开发到一定程度的规模时，必须要有个十分清晰明了的导航功能，才不会让使用者卡在某一页，不知道如何前往他们想去的页面。<br>常见的导航方式，不外乎最常用UITabBarController、UINavigationBar，另外有一种虽然常见，但是因为不是IOS原生就有的UIControl，所以还是比较少人使用，那就是 “<strong>floating navigation button</strong>“。<br>之所以会有<strong>‘Floating’</strong>这个字眼，是大多这样的导航按钮会凌驾在所有视图控制器(UI…ViewController)上，不管底下的视图控制器如何切页他都会保持在同样的位置。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/12/20/15767537053348.png" alt="浮动导航按钮"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/12/20/15767537053348.png" alt="浮动导航按钮"></p>
 <a id="more"></a>
 <h4 id="0-1-JDJellyButton特色：按鈕群組"><a href="#0-1-JDJellyButton特色：按鈕群組" class="headerlink" title="0.1)JDJellyButton特色：按鈕群組"></a>0.1)JDJellyButton特色：按鈕群組</h4><p>源碼其中一個特色就是浮動按鈕附有群組的功能，能讓一個浮動按鈕能包含更多的子按鈕以處理更多不同的事件。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/12/20/15767510385280.gif" alt="jellybutton_delegate.gif"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/12/20/15767510385280.gif" alt="jellybutton_delegate.gif"></p>
 <h4 id="0-2-UIView-or-UIButton"><a href="#0-2-UIView-or-UIButton" class="headerlink" title="0.2)UIView or UIButton?"></a>0.2)UIView or UIButton?</h4><p>大部分的按钮控件虽然都是‘按钮’，但是比起继承实作UIButton,还不如继承实作他的父类别UIView, 可做的事比较多，限制也比较少，本文的JDJellyButton继承自UIView。</p>
 <h4 id="0-3-Gesturer-or-UIResponder"><a href="#0-3-Gesturer-or-UIResponder" class="headerlink" title="0.3)Gesturer or UIResponder"></a>0.3)Gesturer or UIResponder</h4><p>因为我们是自己实作继承UIView的类别，比起每个按钮都要加上手势，我比较偏好在类别下实作几个常见的UIResponder方法 - touchesBegan, touchesMoved。一来省去还要宣告selector这样拐个弯的做法。</p>
 <h1 id="1-代碼架構＆解析"><a href="#1-代碼架構＆解析" class="headerlink" title="1)代碼架構＆解析"></a>1)代碼架構＆解析</h1><hr>
 <p>以下是JDJelllyButton的元件，我將由底層的子元件往上講解。<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">var</span> <span class="hljs-type">MainButton</span>:<span class="hljs-type">JDJellyMainButton</span>!</span><br><span class="line"><span class="hljs-keyword">var</span> <span class="hljs-type">Container</span>:<span class="hljs-type">JelllyContainer</span>!</span><br><span class="line"><span class="hljs-keyword">var</span> <span class="hljs-type">RootView</span>:<span class="hljs-type">UIView</span>?</span><br><span class="line"><span class="hljs-keyword">var</span> delegate:<span class="hljs-type">JellyButtonDelegate</span>?</span><br><span class="line"><span class="hljs-keyword">var</span> _datasource:<span class="hljs-type">JDJellyButtonDataSource</span>?</span><br><span class="line"><span class="hljs-keyword">var</span> jellybutton:<span class="hljs-type">JDJellyButtonView</span>?</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/12/20/15767510112519.png" alt="架构图"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/12/20/15767510112519.png" alt="架构图"></p>
 <h5 id="1-1-ButtonGroups"><a href="#1-1-ButtonGroups" class="headerlink" title="1.1)ButtonGroups"></a>1.1)ButtonGroups</h5><p>紀錄了多個JDJellyButtonView跟它們個別的位置，此為“一組”Button<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">ButtonGroups</span> </span>&#123;</span><br><span class="line">    <span class="hljs-keyword">var</span> buttongroup:[<span class="hljs-type">JDJellyButtonView</span>]!</span><br><span class="line">    <span class="hljs-keyword">var</span> groupPositionDiff:[<span class="hljs-type">CGPoint</span>]?</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h5 id="1-2-JDJellyButtonView-UIView"><a href="#1-2-JDJellyButtonView-UIView" class="headerlink" title="1.2)JDJellyButtonView:UIView"></a>1.2)JDJellyButtonView:UIView</h5><p>此一类别是实作每个按钮的基础样式与点击，一个圆配一张图片。<br>别忘了要处理点击的事件。我做的方法是通知委任（上层接口JDJellyButton）被点击的是第几的Group的第几个Button。</p>
 <figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-class"><span class="hljs-keyword">protocol</span> <span class="hljs-title">JellyButtonDelegate</span> </span>&#123;</span><br><span class="line">    <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">JellyButtonHasBeenTap</span><span class="hljs-params">(touch:UITouch,image:UIImage,groupindex:Int,arrindex:Int)</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">touchesBegan</span><span class="hljs-params">(<span class="hljs-number">_</span> touches: Set&lt;UITouch&gt;, with event: UIEvent?)</span></span></span><br><span class="line">    &#123;</span><br><span class="line">       <span class="hljs-keyword">let</span> image = <span class="hljs-keyword">self</span>.imgView?.image</span><br><span class="line">       <span class="hljs-keyword">let</span> groupindex = dependingMainButton?.getGroupIndex()</span><br><span class="line">       <span class="hljs-keyword">let</span> arrindex = dependingMainButton?.getJellyButtonIndex(jelly: <span class="hljs-keyword">self</span>)</span><br><span class="line">       <span class="hljs-built_in">print</span>(<span class="hljs-string">"\(groupindex),\(arrindex)"</span>)</span><br><span class="line">       tapdelegate?.<span class="hljs-type">JellyButtonHasBeenTap</span>(touch: touches.first!,image: image!,groupindex: groupindex!,arrindex: arrindex!)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <h4 id="1-3-JDJellyMainButton-JDJellyButtonView"><a href="#1-3-JDJellyMainButton-JDJellyButtonView" class="headerlink" title="1.3)JDJellyMainButton:JDJellyButtonView"></a>1.3)JDJellyMainButton:JDJellyButtonView</h4><p>本控件最主要的类别，也是整个导航浮动按钮的主体。样式跟其他的按钮一样，差别是在点击后的事件以及它可以拖动，所以就直接继承<br><strong>JDJellyButtonView</strong>并且覆写touchesBegan, touchesMoved，并且也由它来管理ButtonGroups。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/12/20/15767509591588.gif" alt="JDJellyButtonDemo.gif"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/12/20/15767509591588.gif" alt="JDJellyButtonDemo.gif"></p>
 <figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">appendButtonGroup</span><span class="hljs-params">(bgs:ButtonGroups)</span></span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="hljs-keyword">var</span> temp_bgs:<span class="hljs-type">ButtonGroups</span> = bgs</span><br><span class="line">    <span class="hljs-keyword">for</span> jelly <span class="hljs-keyword">in</span> temp_bgs.buttongroup</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-comment">//让每个按钮知道自己依附的是谁</span></span><br><span class="line">        <span class="hljs-comment">//因為只有MainButton知道子Button位在第幾個Group</span></span><br><span class="line">        jelly.dependingMainButton = <span class="hljs-keyword">self</span></span><br><span class="line">    &#125;</span><br><span class="line">    temp_bgs.groupPositionDiff = [<span class="hljs-type">CGPoint</span>]()</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..&lt;bgs.buttongroup.<span class="hljs-built_in">count</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-comment">//计算位置</span></span><br><span class="line">        <span class="hljs-keyword">let</span> cgpoint:<span class="hljs-type">CGPoint</span> = <span class="hljs-type">CGPoint</span>(x: x[i] , y: y[i])</span><br><span class="line">        temp_bgs.groupPositionDiff?.append(cgpoint)</span><br><span class="line">    &#125;</span><br><span class="line">    buttongroups.append(temp_bgs)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>需要注意的是因为JDJellyButton有分群组，而触发的条件是“<em>长按</em>”，因此我们不再touchesBegan做立即展开，而是在touchesEnded处理。</p>
 <figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"> <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">touchesBegan</span><span class="hljs-params">(<span class="hljs-number">_</span> touches: Set&lt;UITouch&gt;, with event: UIEvent?)</span></span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">          略</span></span><br><span class="line"><span class="hljs-comment">        */</span></span><br><span class="line">        <span class="hljs-keyword">if</span>(<span class="hljs-type">Expanding</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            expandignMove = <span class="hljs-literal">true</span></span><br><span class="line">            closingButtonGroup(expandagain: <span class="hljs-literal">false</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-comment">//紀錄點下去的時間</span></span><br><span class="line">        <span class="hljs-type">LastTime</span> = touches.first!.timestamp</span><br><span class="line">         <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">          略</span></span><br><span class="line"><span class="hljs-comment">        */</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">touchesEnded</span><span class="hljs-params">(<span class="hljs-number">_</span> touches: Set&lt;UITouch&gt;, with event: UIEvent?)</span></span> &#123;</span><br><span class="line">        <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">          略</span></span><br><span class="line"><span class="hljs-comment">        */</span></span><br><span class="line">        <span class="hljs-comment">//短按</span></span><br><span class="line">        <span class="hljs-keyword">if</span>(touches.first!.timestamp - <span class="hljs-type">LastTime</span>! &lt; <span class="hljs-number">0.15</span>)&#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(!<span class="hljs-type">Expanding</span>) &#123;</span><br><span class="line">                expandButtonGroup()</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">else</span> &#123;</span><br><span class="line">                closingButtonGroup(expandagain: <span class="hljs-literal">false</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-keyword">else</span>    <span class="hljs-comment">//長按</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-keyword">if</span>(!<span class="hljs-type">Moving</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                switchButtonGroup()</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="hljs-keyword">if</span>(expandignMove &amp;&amp; <span class="hljs-type">Moving</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                expandButtonGroup()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="hljs-type">Moving</span> = <span class="hljs-literal">false</span></span><br><span class="line">        expandignMove = <span class="hljs-literal">false</span></span><br><span class="line">        <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">          略</span></span><br><span class="line"><span class="hljs-comment">        */</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
@@ -506,6 +506,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -527,7 +546,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -535,25 +554,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>
@@ -889,6 +889,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -910,7 +929,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -918,25 +937,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>

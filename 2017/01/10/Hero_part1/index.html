@@ -18,12 +18,12 @@
 <meta property="og:site_name" content="JamesDouble iOS">
 <meta property="og:description" content="向Hero致敬與分析-(一)0)Who is Hero?其实我一直都十分钟意有关强化UI功能或是做一些过场动画的开源库，最近在网上出现一款非常火的过场动划开源库，短短几天内就4000+ Strar，它的名字也十分的好记，就叫 “Hero”。 https://github.com/lkzhao/Hero 本文撰写前，已知会作者">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770908204533.jpg">
-<meta property="og:updated_time" content="2019-12-23T08:55:26.950Z">
+<meta property="og:image" content="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770908204533.jpg">
+<meta property="og:updated_time" content="2019-12-27T06:09:03.251Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="向Hero致敬與分析-(一)">
 <meta name="twitter:description" content="向Hero致敬與分析-(一)0)Who is Hero?其实我一直都十分钟意有关强化UI功能或是做一些过场动画的开源库，最近在网上出现一款非常火的过场动划开源库，短短几天内就4000+ Strar，它的名字也十分的好记，就叫 “Hero”。 https://github.com/lkzhao/Hero 本文撰写前，已知会作者">
-<meta name="twitter:image" content="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770908204533.jpg">
+<meta name="twitter:image" content="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770908204533.jpg">
 
 
 
@@ -143,7 +143,7 @@
     
     <div class="card-image">
         <span  class="image is-7by1">
-            <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770908204533.jpg" alt="向Hero致敬與分析-(一)">
+            <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770908204533.jpg" alt="向Hero致敬與分析-(一)">
         </span>
     </div>
     
@@ -177,18 +177,18 @@
             <h1 id="向Hero致敬與分析-一"><a href="#向Hero致敬與分析-一" class="headerlink" title="向Hero致敬與分析-(一)"></a>向Hero致敬與分析-(一)</h1><h2 id="0-Who-is-Hero"><a href="#0-Who-is-Hero" class="headerlink" title="0)Who is Hero?"></a>0)Who is Hero?</h2><p>其实我一直都十分钟意有关强化UI功能或是做一些过场动画的开源库，最近在网上出现一款非常火的过场动划开源库，短短几天内就4000+ Strar，它的名字也十分的好记，就叫 <em>“Hero”</em>。</p>
 <p><a href="https://github.com/lkzhao/Hero" target="_blank" rel="noopener">https://github.com/lkzhao/Hero</a> <em>本文撰写前，已知会作者</em></p>
 <a id="more"></a>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770908204533.jpg" alt="Hero&#39;s Logo"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770908204533.jpg" alt="Hero&#39;s Logo"></p>
 <h5 id="0-1-对此英雄的第一印象"><a href="#0-1-对此英雄的第一印象" class="headerlink" title="0.1)对此英雄的第一印象"></a>0.1)对此英雄的第一印象</h5><p>其实Hero真正吸引我的是他精美的文案，如Hero它是Foucus在两个UIViewController之间的UIViewControllerAnimatedTransitioning，也就是两个UIViewController切换时的过场动画，而以下是它针对他的功能提供的示意动画：</p>
 <p><img src="https://camo.githubusercontent.com/c33962467b29e6eeae1744ced0147580677cd2f0/68747470733a2f2f63646e2e7261776769742e636f6d2f6c6b7a68616f2f4865726f2f653663373736323966636632656131633962383532366637346432353061326665613638616535632f5265736f75726365732f62617369632e737667" alt="Hero&#39;s Features"></p>
 <p>很简洁又一目了然。</p>
 <h2 id="1-Hero’s-Show-1-Simple-Present"><a href="#1-Hero’s-Show-1-Simple-Present" class="headerlink" title="1)Hero’s Show #1 - Simple Present"></a>1)Hero’s Show #1 - Simple Present</h2><p>咱们废话不多说，直接让各位客官来看咱英雄大爷最基本的能耐。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770908693352.jpg" alt="Present"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770908693352.jpg" alt="Present"></p>
 <p>这样的过场需要几行程式码呢？</p>
 <h5 id="View-Controller-1"><a href="#View-Controller-1" class="headerlink" title="View Controller 1"></a>View Controller 1</h5><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">blueView.heroID = <span class="hljs-string">"blue"</span></span><br><span class="line">purpleView.heroID = <span class="hljs-string">"purple"</span></span><br><span class="line">greenView.heroID = <span class="hljs-string">"green"</span></span><br><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment"> Label同理</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br></pre></td></tr></table></figure>
 <h5 id="View-Controller-2"><a href="#View-Controller-2" class="headerlink" title="View Controller 2"></a>View Controller 2</h5><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">isHeroEnabled = <span class="hljs-literal">true</span></span><br><span class="line"></span><br><span class="line">blueView.heroID = <span class="hljs-string">"blue"</span></span><br><span class="line">purpleView.heroID = <span class="hljs-string">"purple"</span></span><br><span class="line">greenView.heroID = <span class="hljs-string">"green"</span></span><br><span class="line"><span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment"> Label同理</span></span><br><span class="line"><span class="hljs-comment">*/</span></span><br></pre></td></tr></table></figure>
 <p>长话短说，Hero在两个UIViewController切换之间，将前控制器里ID a的物件位置移到后控制器同为ID a的物件位置。而我们将要探讨的即是这个“切换”中间，作者是如何实作的。</p>
 <h3 id="1-2-Present-流程"><a href="#1-2-Present-流程" class="headerlink" title="1.2)Present 流程"></a>1.2)Present 流程</h3><hr>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770909388714.jpg" alt="Present前半段(蓝字为Hero有继承之类别)"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770909388714.jpg" alt="Present前半段(蓝字为Hero有继承之类别)"></p>
 <h5 id="1-2-1-Hero为Transitioning做准备"><a href="#1-2-1-Hero为Transitioning做准备" class="headerlink" title="1.2.1)Hero为Transitioning做准备"></a>1.2.1)Hero为Transitioning做准备</h5><ul>
 <li><p>Hero:UIViewControllerTransitioningDelegate </p>
 <ul>
@@ -537,6 +537,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -558,7 +577,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -566,25 +585,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>
@@ -920,6 +920,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -941,7 +960,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -949,25 +968,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>

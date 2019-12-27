@@ -19,7 +19,7 @@
 <meta property="og:description" content="(Xcode) 編譯器小白筆記 - LLVM前端Clang 本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-en">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://jamesdouble.github.io/blog/images/og_image.png">
-<meta property="og:updated_time" content="2019-12-23T10:05:27.326Z">
+<meta property="og:updated_time" content="2019-12-27T06:07:07.310Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="(Xcode) 編譯器小白筆記 - LLVM前端Clang">
 <meta name="twitter:description" content="(Xcode) 編譯器小白筆記 - LLVM前端Clang 本文为笔记型式呈现，并非全部原创，来源见文末  Compiler Clang - LLVMApple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。 Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-en">
@@ -171,22 +171,22 @@
             <h1 id="Xcode-編譯器小白筆記-LLVM前端Clang"><a href="#Xcode-編譯器小白筆記-LLVM前端Clang" class="headerlink" title="(Xcode) 編譯器小白筆記 - LLVM前端Clang"></a>(Xcode) 編譯器小白筆記 - LLVM前端Clang</h1><blockquote>
 <p>本文为笔记型式呈现，并非全部原创，来源见文末</p>
 </blockquote>
-<h1 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h1><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951218878.jpg" alt="Three-Phase编译器架构"></p>
+<h1 id="Compiler"><a href="#Compiler" class="headerlink" title="Compiler"></a>Compiler</h1><p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951218878.jpg" alt="Three-Phase编译器架构"></p>
 <h1 id="Clang-LLVM"><a href="#Clang-LLVM" class="headerlink" title="Clang - LLVM"></a>Clang - LLVM</h1><p>Apple（包括中后期的NeXT） 一直使用GCC作为官方的编译器。GCC作为开源世界的编译器标准一直做得不错，但Apple对编译工具会提出更高的要求。</p>
 <p>Clang这个软体专案在2005年由苹果电脑发起，是LLVM编译器工具集的前端（front-end），目的是输出程式码对应的抽象语法树（Abstract Syntax Tree, AST），并将程式码编译成LLVM Bitcode。接着在后端（back-end）使用LLVM编译成平台相关的机器语言 。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951356709.jpg" alt="MDCC2016的 session"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951356709.jpg" alt="MDCC2016的 session"></p>
 <a id="more"></a>
 <h2 id="先看结果"><a href="#先看结果" class="headerlink" title="先看结果"></a>先看结果</h2><p><strong><em>main.m</em></strong></p>
 <figure class="highlight objectivec hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-meta">#import <span class="hljs-meta-string">&lt;Foundation/Foundation.h&gt;</span></span></span><br><span class="line"><span class="hljs-meta">#define DEFINEEight 8</span></span><br><span class="line"></span><br><span class="line"><span class="hljs-keyword">int</span> main()&#123;</span><br><span class="line">    <span class="hljs-keyword">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="hljs-keyword">int</span> eight = DEFINEEight;</span><br><span class="line">        <span class="hljs-keyword">int</span> six = <span class="hljs-number">6</span>;</span><br><span class="line">        <span class="hljs-built_in">NSString</span>* site = [[<span class="hljs-built_in">NSString</span> alloc] initWithUTF8String:<span class="hljs-string">"starming"</span>];</span><br><span class="line">        <span class="hljs-keyword">int</span> rank = eight + six;</span><br><span class="line">        <span class="hljs-built_in">NSLog</span>(<span class="hljs-string">@"%@ rank %d"</span>, site, rank);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>直接编译成执行档</p>
 <p><strong><code>clang -fmodules  main.m</code></strong></p>
 <p>产出 .out (executable)</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951503715.jpg" alt="clang"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951503715.jpg" alt="clang"></p>
 <h1 id="Clang-Frontend前端"><a href="#Clang-Frontend前端" class="headerlink" title="Clang (Frontend前端)"></a>Clang (Frontend前端)</h1><p>是一个C、C++、Objective-C和Objective-C++程式语言的编译器前端</p>
-<h2 id="Clang源码结构"><a href="#Clang源码结构" class="headerlink" title="Clang源码结构"></a>Clang源码结构</h2><p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951771872.jpg" alt="source:https://llvm.org/devmtg/2017-06/2-Hal-Finkel-LLVM-2017.pdf"></p>
+<h2 id="Clang源码结构"><a href="#Clang源码结构" class="headerlink" title="Clang源码结构"></a>Clang源码结构</h2><p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770951771872.jpg" alt="source:https://llvm.org/devmtg/2017-06/2-Hal-Finkel-LLVM-2017.pdf"></p>
 <h2 id="Clang步骤"><a href="#Clang步骤" class="headerlink" title="Clang步骤"></a>Clang步骤</h2><p><strong><code>clang -ccc-print-phases main.m</code></strong></p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952370804.jpg" alt="Clang-LLVM步骤"></p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952461105.jpg" alt="source: https://blog.csdn.net/u014795020/article/details/72514109"> </p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952370804.jpg" alt="Clang-LLVM步骤"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952461105.jpg" alt="source: https://blog.csdn.net/u014795020/article/details/72514109"> </p>
 <h3 id="1-Input-Driver"><a href="#1-Input-Driver" class="headerlink" title="1.Input (Driver)"></a>1.Input (Driver)</h3><p>指定语言 , 架构, 输入file</p>
 <p><code>clang -x objective-c main.m</code></p>
 <h3 id="2-Preprocessor-预处理"><a href="#2-Preprocessor-预处理" class="headerlink" title="2.Preprocessor(预处理)"></a>2.Preprocessor(预处理)</h3><p>import 头文件, include头文件等 ,macro宏展开，处理’#’开头指令</p>
@@ -210,14 +210,14 @@
 <p>做词法分析并把Token分析结果展示出来</p>
 <p><code>clang -fmodules -fsyntax-only -Xclang -dump-tokens main.m</code></p>
 <p>每一个标记都包含了对应的源码内容和其在源码中的位置。注意这里的位置是宏展开之前的位置，这样一来，如果编译过程中遇到什么问题，clang 能够在源码中指出出错的具体位置。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952725799.jpg" alt="展示Token(部分)"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952725799.jpg" alt="展示Token(部分)"></p>
 <p><code>-fsyntax-only</code>: Run the preprocessor, parser and type checking stages.</p>
 <h3 id="4-语法分析-Semantic-Analysis-gt-AST"><a href="#4-语法分析-Semantic-Analysis-gt-AST" class="headerlink" title="4 语法分析(Semantic Analysis) -&gt; AST"></a>4 语法分析(Semantic Analysis) -&gt; AST</h3><p>语法分析，在Clang中有Parser和Sema两个模块配合完成，验证语法是否正确，并给出正确的提示。</p>
 <h4 id="4-1-Parser"><a href="#4-1-Parser" class="headerlink" title="4.1 Parser"></a>4.1 Parser</h4><p>遍历每个Token做词句分析，生成一个 节点（<strong>Nodes</strong>）该有的资讯</p>
 <h4 id="4-2-Semantic"><a href="#4-2-Semantic" class="headerlink" title="4.2 Semantic"></a>4.2 Semantic</h4><p>在Lex 跟 syntax Analysis之后, 也就是在这个阶段已经确保 词 句 语法已经是正确的形式了，semantic 接着做return values, size boundaries, uninitialized variables 等检查，之后根据当前的资讯，生成语意节点（<strong>Nodes</strong>），并将所有节点组合成抽象语法书(<strong>AST</strong>)</p>
 <p>做 语法分析 并展示 AST</p>
 <p><code>clang -fmodules -fsyntax-only -Xclang -ast-dump main.m</code></p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952890446.jpg" alt="AST"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770952890446.jpg" alt="AST"></p>
 <h3 id="5-抽象语法树-Abstract-Syntax-Tree"><a href="#5-抽象语法树-Abstract-Syntax-Tree" class="headerlink" title="5 抽象语法树 Abstract Syntax Tree"></a>5 抽象语法树 Abstract Syntax Tree</h3><p>可以说是Clang的核心，大部分的优化, 判断都在AST处理（例如寻找Class, 替换代码…等)</p>
 <p>此步骤会将 <strong>Clang Attr</strong>  转换成 AST 上的 <strong>AttributeList</strong>，能在clang插件上透过 <code>Decl::getAttr&lt;T&gt;</code> 获取</p>
 <blockquote>
@@ -227,15 +227,15 @@
 <p>这代表着AST也能有对应的api，这让AST操作, 获取信息 都比较容易，甚至还夹带着地址跟代码位置。</p>
 <p>AST Context: 存储所有AST相关资讯, 且提供ASTMatcher等遍历方法</p>
 <p>Node三大Class <code>Decl - Declarations(声明), Stmt - Statements(陈述句), type(类型)</code> 子类过于详细不在这多写</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770953688043.jpg" alt="source: https://blog.csdn.net/u014795020/article/details/72514109"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770953688043.jpg" alt="source: https://blog.csdn.net/u014795020/article/details/72514109"></p>
 <h3 id="6-代码生成-CodeGen-gt-IR中间代码-ll"><a href="#6-代码生成-CodeGen-gt-IR中间代码-ll" class="headerlink" title="6 代码生成 CodeGen -&gt; IR中间代码(.ll)"></a>6 代码生成 CodeGen -&gt; IR中间代码(.ll)</h3><p>CodeGen负责将语法树从顶至下遍历，翻译成LLVM IR，是LLVM Backend 的输入，是前后端的桥接语言。</p>
 <p>产出IR: <code>clang -S -fobjc-arc -emit-llvm main.m -o main.ll</code></p>
 <p>LLVM IR 有三种表示格式，第一种是 bitcode 这样的存储格式，以 .bc 做后缀，第二种是可读的以 .ll，第三种是用于开发时操作 LLVM IR 的内存格式。</p>
 <p>产出Bit <code>clang -emit-llvm -c main.m -o main.bc</code></p>
 <p>查看BitCode <code>llvm-dis &lt; main.bc | less</code></p>
 <h4 id="6-1-IR-优化-Optimization"><a href="#6-1-IR-优化-Optimization" class="headerlink" title="6.1 IR 优化 Optimization"></a>6.1 IR 优化 Optimization</h4><p>IR提供了多种优化选项，-01 -02 -03 -0s…. 对应着不同的入参，有比如类似死代码清理，内联化，表达式重组，循环变量移动这样的 Pass。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770953849319.jpg" alt="project Build Setting"></p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770953937538.jpg" alt="http://clang.llvm.org/docs/CommandGuide/clang.html#code-generation-options"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770953849319.jpg" alt="project Build Setting"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770953937538.jpg" alt="http://clang.llvm.org/docs/CommandGuide/clang.html#code-generation-options"></p>
 <h2 id="Extra-Clang-插件"><a href="#Extra-Clang-插件" class="headerlink" title="Extra: Clang 插件"></a>Extra: Clang 插件</h2><h3 id="使用-libclan-g-clang-LibTooling-插件"><a href="#使用-libclan-g-clang-LibTooling-插件" class="headerlink" title="使用 libclan g, clang,  LibTooling 插件"></a>使用 libclan g, clang,  LibTooling 插件</h3><p>可以改变 clang 生成代码的方式，增加更强的类型检查，或者按照自己的定义进行代码的检查分析等等。要想达成以上的目标，</p>
 <p>reference:</p>
 <blockquote>
@@ -563,6 +563,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -584,7 +603,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -592,25 +611,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>
@@ -946,6 +946,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -967,7 +986,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -975,25 +994,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>

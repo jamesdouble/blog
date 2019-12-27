@@ -19,7 +19,7 @@
 <meta property="og:description" content="本文适合SpriteKit初心者 源码：https://github.com/jamesdouble/JDGamePaddle 虚拟摇杆16年，MOBA手游市场打得可火热（这里咱不帮任何游戏背书），撸瑟如我也是在16年开始玩SpriteKit，也就是苹果自制的2D游戏框架。有玩过MOBA手游的，一定十分熟悉游戏里我们是如何移动主人公的吧？没玩过的……咱们不啰唆，先上图。  这样想不起来的也想起来了">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="https://jamesdouble.github.io/blog/images/og_image.png">
-<meta property="og:updated_time" content="2019-12-23T07:52:24.674Z">
+<meta property="og:updated_time" content="2019-12-27T06:09:44.195Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpriteKit - 實做虛擬搖桿">
 <meta name="twitter:description" content="本文适合SpriteKit初心者 源码：https://github.com/jamesdouble/JDGamePaddle 虚拟摇杆16年，MOBA手游市场打得可火热（这里咱不帮任何游戏背书），撸瑟如我也是在16年开始玩SpriteKit，也就是苹果自制的2D游戏框架。有玩过MOBA手游的，一定十分熟悉游戏里我们是如何移动主人公的吧？没玩过的……咱们不啰唆，先上图。  这样想不起来的也想起来了">
@@ -170,23 +170,23 @@
         <div class="content">
             <p><em>本文适合SpriteKit初心者</em> 源码：<a href="https://github.com/jamesdouble/JDGamePaddle" target="_blank" rel="noopener">https://github.com/jamesdouble/JDGamePaddle</a></p>
 <h2 id="虚拟摇杆"><a href="#虚拟摇杆" class="headerlink" title="虚拟摇杆"></a>虚拟摇杆</h2><p>16年，MOBA手游市场打得可火热（这里咱不帮任何游戏背书），撸瑟如我也是在16年开始玩SpriteKit，也就是苹果自制的2D游戏框架。<br>有玩过MOBA手游的，一定十分熟悉游戏里我们是如何移动主人公的吧？没玩过的……咱们不啰唆，先上图。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770808314796.jpg" alt="图片取自网路"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770808314796.jpg" alt="图片取自网路"></p>
 <p>这样想不起来的也想起来了呗，因为SpriteKit本身并没有提供像摇杆这样元件(有提供反而奇怪)，为了以防朋友们采坑(也没有很多坑)，我就写了一个简易的摇杆Lib，SKScene,SKView(SpriteKit的UIView), UIView皆可直接加上。</p>
 <a id="more"></a>
 <h2 id="简单的出发"><a href="#简单的出发" class="headerlink" title="简单的出发"></a>简单的出发</h2><p>一开始若把问题想得太复杂，那歪路肯定会走的特别的多，我们就照着上面的图来刻吧，外面一个圆圈，嗯，里面一个小圆…..好，<del>结束了</del> ，就从拉出两个圆来出发吧！！ </p>
 <h2 id="组件1-SKShapeNode"><a href="#组件1-SKShapeNode" class="headerlink" title="组件1:SKShapeNode"></a>组件1:SKShapeNode</h2><p>For SpriteKit初心者：<br>UIKit里每个元件几乎都是UIView的子类别，而SpriteKit里的每个元件几乎都是SKNode的子类别。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770808740333.jpg" alt="是吧？有错请指正"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770808740333.jpg" alt="是吧？有错请指正"></p>
 <p>那SKShapeNode又是什么？它是SKNode的子类别，<em>若是你不是要用图片来初始化一个物件而是纯几何形状或是线条的话</em>，使用它来做Node会快上许多，看它的建构值就能知道，真的很“几何”。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770809060128.jpg" alt="https://developer.apple.com/reference/spritekit/skshapenode"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770809060128.jpg" alt="https://developer.apple.com/reference/spritekit/skshapenode"></p>
 <p>来吧！第一步！两个圆形！<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-type">MovingPing</span> = <span class="hljs-type">SKShapeNode</span>(circleOfRadius: paddleSize.width * <span class="hljs-number">0.18</span>)</span><br><span class="line"><span class="hljs-type">MovingPing</span>?.fillColor = <span class="hljs-type">UIColor</span>.black  <span class="hljs-comment">//内圆黑色实心</span></span><br><span class="line"><span class="hljs-type">PaddleBorder</span> = <span class="hljs-type">SKShapeNode</span>(circleOfRadius: paddleSize.width * <span class="hljs-number">0.5</span> )</span><br><span class="line"><span class="hljs-type">PaddleBorder</span>?.fillColor = <span class="hljs-type">UIColor</span>.clear <span class="hljs-comment">//外圆中间空心</span></span><br><span class="line"><span class="hljs-type">PaddleBorder</span>?.strokeColor = <span class="hljs-type">UIColor</span>.black</span><br></pre></td></tr></table></figure></p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770809254420.jpg" alt="Simulator Screen Shot"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770809254420.jpg" alt="Simulator Screen Shot"></p>
 <h2 id="组件2：点击、滑动"><a href="#组件2：点击、滑动" class="headerlink" title="组件2：点击、滑动"></a>组件2：点击、滑动</h2><p>Hmm…. We almost here, right? 不过现在你不管怎么拨弄它，它都不会移动的，在SpriteKit里常做的处理点击方式是实作覆写UIResponder大家常见的Method。</p>
 <figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">touchesBegan</span><span class="hljs-params">(<span class="hljs-number">_</span> touches: Set&lt;UITouch&gt;, with event: UIEvent?)</span></span> &#123;</span><br><span class="line">        <span class="hljs-keyword">let</span> touch = touches.first!</span><br><span class="line">        touching = <span class="hljs-literal">true</span></span><br><span class="line">        <span class="hljs-keyword">let</span> position = touch.location(<span class="hljs-keyword">in</span>: <span class="hljs-keyword">self</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span>((<span class="hljs-type">PaddleBorder</span>!.<span class="hljs-built_in">contains</span>(position))) <span class="hljs-comment">//若是手指还在边界内</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-type">MovingPing</span>?.position = touch.location(<span class="hljs-keyword">in</span>: <span class="hljs-keyword">self</span>) <span class="hljs-comment">//内圆移到手指位置</span></span><br><span class="line">        &#125;</span><br><span class="line">        didMove()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="hljs-keyword">override</span> <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">touchesMoved</span><span class="hljs-params">(<span class="hljs-number">_</span> touches: Set&lt;UITouch&gt;, with event: UIEvent?)</span></span> &#123;</span><br><span class="line">        <span class="hljs-keyword">let</span> touch = touches.first!</span><br><span class="line">        <span class="hljs-keyword">let</span> postion = touch.location(<span class="hljs-keyword">in</span>: <span class="hljs-keyword">self</span>)</span><br><span class="line">        <span class="hljs-keyword">if</span>((<span class="hljs-type">PaddleBorder</span>!.<span class="hljs-built_in">contains</span>(postion)))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="hljs-type">MovingPing</span>?.position = postion</span><br><span class="line">        &#125;</span><br><span class="line">     </span><br><span class="line">        <span class="hljs-comment">/*</span></span><br><span class="line"><span class="hljs-comment">        略</span></span><br><span class="line"><span class="hljs-comment">        */</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>结束了吗？执行起来试试吧。看起来听生硬的对吧，若是有MOBA手游只做到这边，主人公一定是脚抽了筋。会发生这样的杯具是在touchesMoved只判断是否手指在外圈内，而忽略了若是使用者从内圈滑到外圈的情况。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770809581254.jpg" alt="paddleerroe"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770809581254.jpg" alt="paddleerroe"></p>
 <p>让我们把上面那段注解换成<br><figure class="highlight swift hljs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">  <span class="hljs-keyword">else</span>&#123;</span><br><span class="line">          movingpaddleSmoothly(position: postion)</span><br><span class="line">      &#125;</span><br><span class="line"><span class="hljs-comment">//算出边界外手指跟中心连成一线后，跟边界的交点。</span></span><br><span class="line">  <span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">movingpaddleSmoothly</span><span class="hljs-params">(position:CGPoint)</span></span></span><br><span class="line">  &#123;</span><br><span class="line">      <span class="hljs-keyword">let</span> centerPoint = <span class="hljs-type">PaddleBorder</span>!.position</span><br><span class="line">      <span class="hljs-keyword">let</span> radius = <span class="hljs-keyword">self</span>.frame.width * <span class="hljs-number">0.5</span></span><br><span class="line">      <span class="hljs-keyword">var</span> <span class="hljs-built_in">distance</span>:<span class="hljs-type">CGFloat</span> = <span class="hljs-number">0</span></span><br><span class="line">      <span class="hljs-keyword">let</span> diffx:<span class="hljs-type">CGFloat</span> = (centerPoint.x - position.x) * (centerPoint.x - position.x)</span><br><span class="line">      <span class="hljs-keyword">let</span> diffy:<span class="hljs-type">CGFloat</span> = (centerPoint.y - position.y) * (centerPoint.y - position.y)</span><br><span class="line">      <span class="hljs-built_in">distance</span> = sqrt(diffx + diffy)</span><br><span class="line">      <span class="hljs-keyword">let</span> ratio:<span class="hljs-type">CGFloat</span> = radius/<span class="hljs-built_in">distance</span></span><br><span class="line">      <span class="hljs-keyword">let</span> newPostition:<span class="hljs-type">CGPoint</span> = <span class="hljs-type">CGPoint</span>(x: position.x * ratio, y: position.y * ratio)</span><br><span class="line">      <span class="hljs-type">MovingPing</span>?.position = newPostition</span><br><span class="line">      </span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
 <p>最后我们再每次移动摇杆时，回传一个经过正规化的CGVector出去给委任，以便使用者能随着滑动摇杆，做出适当的回应。</p>
-<p><img src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770809745432.jpg" alt="paddleError.gif"></p>
+<p><img src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15770809745432.jpg" alt="paddleError.gif"></p>
 
         </div>
         
@@ -509,6 +509,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -530,7 +549,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -538,25 +557,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>
@@ -892,6 +892,25 @@
         
         <article class="media">
             
+            <a href="/blog/2019/12/23/xcCmdLine-2/" class="media-left">
+                <p class="image is-64x64">
+                    <img class="thumbnail" src="https://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
+                </p>
+            </a>
+            
+            <div class="media-content">
+                <div class="content">
+                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-22T16:21:00.000Z">2019-12-23</time></div>
+                    <a href="/blog/2019/12/23/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
+                    <p class="is-size-7 is-uppercase">
+                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
+                    </p>
+                </div>
+            </div>
+        </article>
+        
+        <article class="media">
+            
             <a href="/blog/2019/12/20/xcCmdLine-1_2/" class="media-left">
                 <p class="image is-64x64">
                     <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode 命令列(加餐) - libxcselect.dylib">
@@ -913,7 +932,7 @@
             
             <a href="/blog/2019/12/19/xcCmdLine-1/" class="media-left">
                 <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/jie-tu-20191113-xia-wu44053.png" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
+                    <img class="thumbnail" src="/blog/images/thumbnail.svg" alt="深入淺出 Xcode Command Lines Tool(1) - 初探">
                 </p>
             </a>
             
@@ -921,25 +940,6 @@
                 <div class="content">
                     <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
                     <a href="/blog/2019/12/19/xcCmdLine-1/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode Command Lines Tool(1) - 初探</a>
-                    <p class="is-size-7 is-uppercase">
-                        <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
-                    </p>
-                </div>
-            </div>
-        </article>
-        
-        <article class="media">
-            
-            <a href="/blog/2019/12/19/xcCmdLine-2/" class="media-left">
-                <p class="image is-64x64">
-                    <img class="thumbnail" src="http://jamesdoubleblogphoto.oss-cn-shanghai.aliyuncs.com/iOSBlog/ArticleImages/2019/15765640091016.png" alt="深入淺出 Xcode 命令列(2)-xcrun 基礎">
-                </p>
-            </a>
-            
-            <div class="media-content">
-                <div class="content">
-                    <div><time class="has-text-grey is-size-7 is-uppercase" datetime="2019-12-18T16:21:00.000Z">2019-12-19</time></div>
-                    <a href="/blog/2019/12/19/xcCmdLine-2/" class="title has-link-black-ter is-size-6 has-text-weight-normal">深入淺出 Xcode 命令列(2)-xcrun 基礎</a>
                     <p class="is-size-7 is-uppercase">
                         <a class="has-link-grey -link" href="/blog/categories/Xcode/">Xcode</a> / <a class="has-link-grey -link" href="/blog/categories/Xcode/命令列/">命令列</a>
                     </p>

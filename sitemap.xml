@@ -2,23 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://jamesdouble.github.io/2019/12/19/xcCmdLine-2/</loc>
+    <loc>https://jamesdouble.github.io/2019/12/19/xcCmdLine-1/</loc>
     
-    <lastmod>2019-12-25T06:57:35.055Z</lastmod>
+    <lastmod>2019-12-27T06:10:03.652Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jamesdouble.github.io/2017/01/05/JellyButton/</loc>
+    
+    <lastmod>2019-12-27T06:10:00.134Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jamesdouble.github.io/2017/01/06/SpriteKit_GamePaddle/</loc>
+    
+    <lastmod>2019-12-27T06:09:44.195Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jamesdouble.github.io/2017/07/15/HeatMap/</loc>
+    
+    <lastmod>2019-12-27T06:09:44.102Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jamesdouble.github.io/2017/06/06/WebViewVerify/</loc>
+    
+    <lastmod>2019-12-27T06:09:43.997Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jamesdouble.github.io/2017/01/10/Hero_part1/</loc>
+    
+    <lastmod>2019-12-27T06:09:03.251Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jamesdouble.github.io/2018/04/24/CodableModel/</loc>
+    
+    <lastmod>2019-12-27T06:08:20.012Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jamesdouble.github.io/2017/01/18/Hero_Part2/</loc>
+    
+    <lastmod>2019-12-27T06:08:11.596Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jamesdouble.github.io/2018/07/03/UICollectionViewLayoutInvalidationContext/</loc>
+    
+    <lastmod>2019-12-27T06:07:23.553Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://jamesdouble.github.io/2018/11/19/Clang/</loc>
+    
+    <lastmod>2019-12-27T06:07:07.310Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://jamesdouble.github.io/2019/12/20/xcCmdLine-1_2/</loc>
     
-    <lastmod>2019-12-25T06:57:26.689Z</lastmod>
+    <lastmod>2019-12-27T06:07:07.290Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://jamesdouble.github.io/2019/12/19/xcCmdLine-1/</loc>
+    <loc>https://jamesdouble.github.io/2019/12/23/xcCmdLine-2/</loc>
     
-    <lastmod>2019-12-23T10:21:15.705Z</lastmod>
+    <lastmod>2019-12-27T06:06:39.878Z</lastmod>
     
   </url>
   
@@ -26,69 +89,6 @@
     <loc>https://jamesdouble.github.io/2018/12/12/frameworkEasy/</loc>
     
     <lastmod>2019-12-23T10:14:43.440Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jamesdouble.github.io/2018/11/19/Clang/</loc>
-    
-    <lastmod>2019-12-23T10:05:27.326Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jamesdouble.github.io/2018/07/03/UICollectionViewLayoutInvalidationContext/</loc>
-    
-    <lastmod>2019-12-23T09:49:57.529Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jamesdouble.github.io/2018/04/24/CodableModel/</loc>
-    
-    <lastmod>2019-12-23T09:17:09.616Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jamesdouble.github.io/2017/01/18/Hero_Part2/</loc>
-    
-    <lastmod>2019-12-23T09:08:43.340Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jamesdouble.github.io/2017/01/10/Hero_part1/</loc>
-    
-    <lastmod>2019-12-23T08:55:26.950Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jamesdouble.github.io/2017/06/06/WebViewVerify/</loc>
-    
-    <lastmod>2019-12-23T08:40:56.359Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jamesdouble.github.io/2017/07/15/HeatMap/</loc>
-    
-    <lastmod>2019-12-23T07:52:30.602Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jamesdouble.github.io/2017/01/06/SpriteKit_GamePaddle/</loc>
-    
-    <lastmod>2019-12-23T07:52:24.674Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://jamesdouble.github.io/2017/01/05/JellyButton/</loc>
-    
-    <lastmod>2019-12-23T07:52:19.296Z</lastmod>
     
   </url>
   
